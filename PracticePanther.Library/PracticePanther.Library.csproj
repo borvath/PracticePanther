@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <RootNamespace>PracticePanther.Library</RootNamespace>
+        <AssemblyName>PracticePanther.Library</AssemblyName>
+        <TargetFramework>net7.0</TargetFramework>
+        <LangVersion>11.0</LangVersion>
+    </PropertyGroup>
+    <PropertyGroup>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <WarningLevel>7</WarningLevel>
+        <ReportAnalyzer>true</ReportAnalyzer>
+    </PropertyGroup>
+    <ItemGroup>
+      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
+    </ItemGroup>
+
+</Project>

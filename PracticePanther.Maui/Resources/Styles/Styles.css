@@ -1,0 +1,30 @@
+﻿.page {
+    min-width: 720;
+    min-height: 600;
+    width: 880;
+    height: 720;
+    max-width: 1500;
+    max-height: 1200;
+}
+.title {
+    font-size: 32;
+    color: #f2f2f2;
+    padding: 0 0 0 20;
+}
+#button-edit {
+    background-color: #8B8000;
+}
+.add-entry {
+    background-color: #a9a9a9;
+    margin: 20 20 0 20;
+}
+.entry-field {
+    background-color: #696969;
+}
+.entry-label {
+    color: #111111;
+}
+.frame-entry {
+    background-color: #a9a9a9;
+    padding: 2 10 2 10;
+}
