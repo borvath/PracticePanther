@@ -36,14 +36,14 @@ public class Client {
 			$"Dates: {OpenDate:MM/dd/yyyy} - {CloseDate:MM/dd/yyyy}\tActive: {IsActive}\n" +
 			$"Notes: {Notes}\n";
 		if (Projects.Count == 0) {
-			clientString += "Client has no projects\n";
+			clientString += "Client has no projects";
 		}
 		else {
 			clientString += "Projects: ";
 			for (var i = 0; i < Projects.Count - 1; i++) {
 				clientString += $"{Projects[i].LongName}, ";
 			}
-			clientString += $"{Projects[^1].LongName}\n";
+			clientString += $"{Projects[^1].LongName}";
 		}
 		return clientString;
 	}

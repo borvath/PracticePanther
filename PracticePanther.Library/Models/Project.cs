@@ -63,6 +63,6 @@ public class Project {
 	
 	public override string ToString() {
 		return $"Project ID: {Id}\tClient ID: {ClientId}\n" + $"Long Name: {LongName}\tShort Name: {ShortName}\n" +
-		       $"Start: {OpenDate:MM/dd/yyyy}\tEnd: {CloseDate:MM/dd/yyyy}\tActive: {IsActive}\n";
+		       $"Start: {OpenDate:MM/dd/yyyy}\tEnd: {CloseDate:MM/dd/yyyy}\tActive: {IsActive}";
 	}
 }

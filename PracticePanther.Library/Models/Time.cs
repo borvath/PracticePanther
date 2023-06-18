@@ -7,6 +7,7 @@ public class Time {
 	public double Hours { get; set; }
 	public DateTime Date { get; set; }
 	public string? Narrative { get; set; }
+	public string AsString => ToString();
 
 	public Time() {
 		ProjectId = -1;
@@ -15,9 +16,9 @@ public class Time {
 		Date = DateTime.MaxValue;
 		Narrative = "Bad Entry";
 	}
-	public Time(Project proj, Employee emp, int hours, DateTime date, string narrative) {
-		ProjectId = proj.Id;
-		EmployeeId = emp.Id;
+	public Time(int projectId, int empId, double hours, DateTime date, string narrative) {
+		ProjectId = projectId;
+		EmployeeId = empId;
 		Hours = hours;
 		Date = date;
 		Narrative = narrative;

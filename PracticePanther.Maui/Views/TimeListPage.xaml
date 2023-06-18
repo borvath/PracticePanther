@@ -2,8 +2,87 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:PracticePanther.Maui.ViewModels"
              x:Class="PracticePanther.Maui.Views.TimeListPage">
-    <ContentPage.Content>
-        
-    </ContentPage.Content>
+    
+    <ContentPage.BindingContext>
+        <viewmodel:TimeListViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ScrollView>
+        <Grid StyleClass="page">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="12*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            
+            <Grid Grid.Row="0" BackgroundColor="#0337cc">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="7*"/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Label Grid.Column="0"  
+                       StyleClass="title"
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Start"
+                       TextColor="#f2f2f2"
+                       Text="PracticePanther"/>
+                <SearchBar Grid.Column="2"
+                           Text="{Binding Path=Query}"
+                           Placeholder="Project or Employee ID"
+                           HorizontalOptions="Fill"
+                           VerticalOptions="Fill"
+                           TextColor="#f2f2f2"
+                           BackgroundColor="#000000"
+                           TextChanged="SearchTextChanged"/>
+            </Grid>
+            
+            <Grid Grid.Row="1" BackgroundColor="#ffffff">
+                <ListView ItemsSource="{Binding Times}" 
+                          SelectedItem="{Binding SelectedTime}"
+                          BackgroundColor="#faf9f6"
+                          SeparatorColor="#000000"
+                          Margin="20, 10, 20, 0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Frame BorderColor="#6b7b7b" BackgroundColor="#faf9f6"
+                                       CornerRadius="30" Margin="10, 5, 10, 0">
+                                    <Grid Margin="2" ColumnSpacing="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0" 
+                                               Text="{Binding AsString, Mode=OneWay}" TextColor="#000000"/>
+                                    </Grid>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+            
+            <Grid Grid.Row="2" StyleClass="interaction-buttons">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Button Grid.Column="0"
+                        FontSize="Large"
+                        BackgroundColor="#008000"
+                        Text="Add"
+                        Clicked="AddClicked"/>
+                <Button Grid.Column="1"
+                        FontSize="Large"
+                        BackgroundColor="#8b0000"
+                        Text="Delete"
+                        Clicked="DeleteClicked"/>
+            </Grid>
+        </Grid>
+    </ScrollView>
 </ContentPage>

@@ -2,8 +2,100 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:PracticePanther.Maui.ViewModels"
              x:Class="PracticePanther.Maui.Views.TimeBuilderPage">
-    <ContentPage.Content>
-        
-    </ContentPage.Content>
+    <ContentPage.BindingContext>
+        <viewmodel:TimeBuilderViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ScrollView StyleClass="page">
+        <VerticalStackLayout Margin="20, 0, 20, 0" 
+                             Spacing="0" 
+                             VerticalOptions="Center"
+                             WidthRequest="450"
+                             BackgroundColor="#a9a9a9">
+            <Label FontSize="48" HorizontalTextAlignment="Center" TextColor="#151515">Add Time Entry</Label>
+            <Frame StyleClass="frame-entry">
+                <HorizontalStackLayout StyleClass="add-entry" Spacing="20">
+                    <HorizontalStackLayout>
+                        <Label Text="Project ID: "
+                               VerticalOptions="Center" 
+                               WidthRequest="70"
+                               StyleClass="entry-label"/>
+                        <Entry Placeholder="0"
+                               Text="{Binding ProjectId, Mode=OneWayToSource}"
+                               VerticalOptions="Center" 
+                               WidthRequest="100"
+                               StyleClass="entry-field"/>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout>
+                        <Label Text="Employee ID: "
+                               VerticalOptions="Center" 
+                               WidthRequest="90"
+                               StyleClass="entry-label"/>
+                        <Entry Placeholder="0"
+                               Text="{Binding EmployeeId, Mode=OneWayToSource}"
+                               VerticalOptions="Center" 
+                               WidthRequest="100"
+                               StyleClass="entry-field"/>
+                    </HorizontalStackLayout>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame StyleClass="frame-entry">
+                <HorizontalStackLayout StyleClass="add-entry" Spacing="20">
+                    <HorizontalStackLayout>
+                        <Label Text="Hours: " 
+                               VerticalOptions="Center" 
+                               WidthRequest="70"
+                               StyleClass="entry-label"/>
+                        <Entry Keyboard="Numeric"
+                               VerticalOptions="Center"
+                               Placeholder="20.0"
+                               WidthRequest="100"
+                               StyleClass="entry-field"
+                               Text="{Binding Hours, Mode=OneWayToSource}"/>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout>
+                        <Label Text="Date: " 
+                               VerticalOptions="Center" 
+                               WidthRequest="70"
+                               StyleClass="entry-label"/>
+                        <DatePicker VerticalOptions="Center"
+                                    Date="{Binding Date}"
+                                    MinimumDate="January 1, 2000"
+                                    WidthRequest="120"
+                                    StyleClass="entry-field"/>
+                    </HorizontalStackLayout>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame StyleClass="frame-entry">
+                <HorizontalStackLayout StyleClass="add-entry">
+                    <Label Text="Summary: "
+                           VerticalOptions="Start"
+                           WidthRequest="70"
+                           StyleClass="entry-label"/>
+                    <Editor Placeholder="Reason for entry..."
+                            Text="{Binding Narrative}"
+                            WidthRequest="250"
+                            HeightRequest="250"
+                            StyleClass="entry-field"/>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame BackgroundColor="Transparent">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Column="0" Grid.Row="0"
+                            Clicked="AddClicked"
+                            BackgroundColor="#006699"
+                            FontSize="24"
+                            Text="Add"/>
+                </Grid>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

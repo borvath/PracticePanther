@@ -29,12 +29,12 @@ public class ClientListViewModel : INotifyPropertyChanged {
 	public void EditClient(Shell s) {
 		int clientId = SelectedClient?.Id ?? -1;
 		if (clientId >= 0) 
-			s.GoToAsync($"//ClientEditPage?clientId={clientId}");
+			s.GoToAsync($"//ClientBuilderPage?clientId={clientId}");
 	}
 	public void DisplayClient(Shell s) {
 		int clientId = SelectedClient?.Id ?? -1;
 		if (clientId >= 0) 
-			s.GoToAsync($"//ClientDisplayPage?clientId={clientId}");
+			s.GoToAsync($"//ClientBuilderPage?clientId={clientId}");
 	}
 	public void DeleteClient() {
 		if (SelectedClient == null)

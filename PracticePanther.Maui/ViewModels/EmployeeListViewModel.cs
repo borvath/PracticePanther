@@ -30,12 +30,12 @@ public class EmployeeListViewModel : INotifyPropertyChanged {
 	public void EditEmployee(Shell s) {
 		int empId = SelectedEmployee?.Id ?? -1;
 		if (empId >= 0) 
-			s.GoToAsync($"//EmployeeEditPage?empId={empId}");
+			s.GoToAsync($"//EmployeeBuilderPage?empId={empId}");
 	}
 	public void DisplayEmployee(Shell s) {
 		int empId = SelectedEmployee?.Id ?? -1;
 		if (empId >= 0) 
-			s.GoToAsync($"//EmployeeEditPage?empId={empId}");
+			s.GoToAsync($"//EmployeeBuilderPage?empId={empId}");
 	}
 	public void DeleteEmployee() {
 		if (SelectedEmployee == null)
