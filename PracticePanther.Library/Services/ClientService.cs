@@ -32,7 +32,7 @@ public class ClientService {
 		if (index > 0 && index < Clients.Count) 
 			Clients.RemoveAt(index);
 	}
-	private int GetClientIndex(int id) {
+	public int GetClientIndex(int id) {
 		if (id < 0) 
 			return -1;
 		var i = 0;
@@ -42,7 +42,7 @@ public class ClientService {
 		}
 		return -1;
 	}
-	private Client GetClientAtIndex(int index) {
+	public Client GetClientAtIndex(int index) {
 		return Clients[index];
 	}
 }

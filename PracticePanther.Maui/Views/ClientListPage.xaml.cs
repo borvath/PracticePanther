@@ -21,9 +21,6 @@ public partial class ClientListPage : ContentPage {
 	private void DeleteClicked(object sender, EventArgs e) {
 		((ClientListViewModel)BindingContext).DeleteClient();
 	}
-	private void ClientSelected(object sender, EventArgs e) {
-		
-	}
 	private void DisplayClient(object sender, EventArgs e) {
 		((ClientListViewModel)BindingContext).DisplayClient(Shell.Current);
 	}

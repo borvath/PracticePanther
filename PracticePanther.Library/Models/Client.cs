@@ -7,8 +7,8 @@ public class Client {
 	
 	public int Id { get; set; }
 	public string Name { get; set; }
-	public DateTime OpenDate { get; set; }
-	public DateTime? CloseDate { get; set; }
+	public DateTime Open { get; set; }
+	public DateTime? Close { get; set; }
 	public bool IsActive { get; set; }
 	public string Notes { get; set; }
 	public List<Project> Projects { get; set; } = new List<Project>();
@@ -16,8 +16,8 @@ public class Client {
 
 	public Client() {
 		Id = -1;
-		OpenDate = DateTime.MinValue;
-		CloseDate = DateTime.MaxValue;
+		Open = DateTime.MinValue;
+		Close = DateTime.MaxValue;
 		IsActive = false;
 		Name = "John Doe";
 		Notes = String.Empty;
@@ -25,15 +25,15 @@ public class Client {
 	public Client(List<Client> clients,  string name, DateTime open, DateTime? close, string? notes) {
 		Id = (clients.Count == 0) ? 1 : clients[^1].Id + 1;
 		Name = name;
-		OpenDate = open;
-		CloseDate = close;
-		IsActive = (CloseDate == null) || (CloseDate > DateTime.Today);
+		Open = open;
+		Close = close;
+		IsActive = (Close == null) || (Close > DateTime.Today);
 		Notes = notes ?? "No notes";
 	}
 	public override string ToString() {
 		string clientString = 
 			$"Client ID: {Id}\tClient Name: {Name}\n"                                                     +
-			$"Dates: {OpenDate:MM/dd/yyyy} - {CloseDate:MM/dd/yyyy}\tActive: {IsActive}\n" +
+			$"Dates: {Open:MM/dd/yyyy} - {Close:MM/dd/yyyy}\tActive: {IsActive}\n" +
 			$"Notes: {Notes}\n";
 		if (Projects.Count == 0) {
 			clientString += "Client has no projects";

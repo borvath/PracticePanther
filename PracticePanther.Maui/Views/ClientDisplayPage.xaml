@@ -2,8 +2,77 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PracticePanther.Maui.Views.ClientDisplayPage">
-    <ContentPage.Content>
-        
-    </ContentPage.Content>
+             xmlns:viewmodel="clr-namespace:PracticePanther.Maui.ViewModels"
+             x:Class="PracticePanther.Maui.Views.ClientDisplayPage"
+             Title="">
+    
+    <ContentPage.BindingContext>
+        <viewmodel:ClientDisplayViewModel/>
+    </ContentPage.BindingContext>
+    
+    <VerticalStackLayout Margin="20, 0, 20, 0" 
+                         Spacing="0" 
+                         VerticalOptions="Center"
+                         WidthRequest="600"
+                         BackgroundColor="#a9a9a9">
+        <Label FontSize="48" HorizontalTextAlignment="Center" TextColor="#151515">Client Info</Label>
+        <Frame StyleClass="frame-entry">
+            <HorizontalStackLayout BackgroundColor="#a9a9a9" Margin="20" Spacing="10">
+                <Label Text="{Binding SelectedClient.Id, StringFormat='Client ID: {0}'}"
+                       VerticalOptions="Center" 
+                       WidthRequest="125"
+                       StyleClass="entry-label"/>
+                <Label Text="{Binding SelectedClient.Name, StringFormat='Name: {0}'}"
+                       VerticalOptions="Center" 
+                       WidthRequest="200"
+                       StyleClass="entry-label"/>
+            </HorizontalStackLayout>
+        </Frame>
+        <Frame StyleClass="frame-entry">
+            <HorizontalStackLayout BackgroundColor="#a9a9a9" Margin="20" Spacing="10">
+                <Label Text="{Binding SelectedClient.Open, StringFormat='Open: {0:M/d/yyyy}'}" 
+                       VerticalOptions="Center" 
+                       WidthRequest="125"
+                       StyleClass="entry-label"/>
+                <Label Text="{Binding SelectedClient.Close, StringFormat='Close: {0:M/d/yyyy}'}" 
+                       VerticalOptions="Center" 
+                       WidthRequest="125"
+                       StyleClass="entry-label"/>
+                <Label Text="{Binding SelectedClient.IsActive, StringFormat='Active Account: {0}'}" 
+                       VerticalOptions="Center" 
+                       WidthRequest="150"
+                       StyleClass="entry-label"/>
+            </HorizontalStackLayout>
+        </Frame>
+        <Frame StyleClass="frame-entry">
+            <HorizontalStackLayout BackgroundColor="#a9a9a9" Margin="20" Spacing="20">
+                <Label Text="{Binding SelectedClient.Notes, StringFormat='Notes: {0}'}"
+                       VerticalOptions="Center" 
+                       WidthRequest="500"
+                       HeightRequest="200"
+                       StyleClass="entry-label"/>
+            </HorizontalStackLayout>
+        </Frame>
+        <Frame BackgroundColor="Transparent">
+            <ListView ItemsSource="{Binding SelectedClient.Projects}"
+                      SelectedItem="SelectedProject"
+                      BackgroundColor="Transparent"
+                      Margin="20, 0, 0, 0">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding AsString}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Frame>
+        <VerticalStackLayout>
+            <Label WidthRequest="550" Text="Project Management" FontSize="32"></Label>
+            <HorizontalStackLayout WidthRequest="550">
+                <Button Text="Add"/>
+                <Button Text="Display"/>
+                <Button Text="Update"/>
+                <Button Text="Close"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </VerticalStackLayout>
 </ContentPage>

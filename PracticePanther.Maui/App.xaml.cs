@@ -1,6 +1,5 @@
 ﻿using Microsoft.Maui;
 using Microsoft.Maui.Controls;
-using PracticePanther.Maui.Views;
 
 namespace PracticePanther.Maui;
 

@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Microsoft.Maui.Controls;
 using PracticePanther.Library.Models;
 using PracticePanther.Library.Services;
+using PracticePanther.Maui.Views;
 namespace PracticePanther.Maui.ViewModels; 
 
 public class ClientListViewModel : INotifyPropertyChanged {
@@ -33,8 +36,23 @@ public class ClientListViewModel : INotifyPropertyChanged {
 	}
 	public void DisplayClient(Shell s) {
 		int clientId = SelectedClient?.Id ?? -1;
-		if (clientId >= 0) 
-			s.GoToAsync($"//ClientBuilderPage?clientId={clientId}");
+		int index = ClientService.Current.GetClientIndex(clientId);
+		var clientFound = true;
+		Client? client = null;
+		if (index != -1) {
+			try {
+				client = ClientService.Current.Clients[index];
+			}
+			catch (IndexOutOfRangeException) {
+				clientFound = false;
+				client = null;
+			}
+		}
+		else {
+			clientFound = false;
+		}
+		if (clientFound && client != null) 
+			s.GoToAsync(nameof(ClientDisplayPage), new Dictionary<string, object>{{"SelectedClient", client}});
 	}
 	public void DeleteClient() {
 		if (SelectedClient == null)
