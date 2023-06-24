@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Maui.Controls;
 using PracticePanther.Maui.ViewModels;
 
@@ -13,7 +14,7 @@ public partial class ClientListPage : ContentPage {
 		((ClientListViewModel)BindingContext).GetSearchResults(searchBar.Text);
 	}
 	private void AddClicked(object sender, EventArgs e) {
-		Shell.Current.GoToAsync(nameof(ClientBuilderPage));
+		Shell.Current.GoToAsync(nameof(ClientBuilderPage), new Dictionary<string, object>{{"ClientId", "-1" as object}});
 	}
 	private void EditClicked(object sender, EventArgs e) {
 		((ClientListViewModel)BindingContext).EditClient(Shell.Current);
@@ -21,7 +22,7 @@ public partial class ClientListPage : ContentPage {
 	private void DeleteClicked(object sender, EventArgs e) {
 		((ClientListViewModel)BindingContext).DeleteClient();
 	}
-	private void DisplayClient(object sender, EventArgs e) {
+	private void DisplayClicked(object sender, EventArgs e) {
 		((ClientListViewModel)BindingContext).DisplayClient(Shell.Current);
 	}
 	protected override void OnAppearing() {

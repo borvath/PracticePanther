@@ -11,49 +11,60 @@
     </ContentPage.BindingContext>
     
     <VerticalStackLayout Margin="20, 0, 20, 0" 
-                         Spacing="0" 
+                         Spacing="20" 
                          VerticalOptions="Center"
                          WidthRequest="600"
-                         BackgroundColor="#a9a9a9">
+                         BackgroundColor="#a9a9a9"
+                         HorizontalOptions="Center">
         <Label FontSize="48" HorizontalTextAlignment="Center" TextColor="#151515">Client Info</Label>
         <Frame StyleClass="frame-entry">
-            <HorizontalStackLayout BackgroundColor="#a9a9a9" Margin="20" Spacing="10">
+            <VerticalStackLayout BackgroundColor="#a9a9a9" Margin="10, 0, 10, 0" Spacing="5">
                 <Label Text="{Binding SelectedClient.Id, StringFormat='Client ID: {0}'}"
-                       VerticalOptions="Center" 
+                       FontSize="26"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Start"
                        WidthRequest="125"
                        StyleClass="entry-label"/>
                 <Label Text="{Binding SelectedClient.Name, StringFormat='Name: {0}'}"
+                       FontSize="26"
                        VerticalOptions="Center" 
+                       HorizontalOptions="Start"
                        WidthRequest="200"
                        StyleClass="entry-label"/>
-            </HorizontalStackLayout>
+            </VerticalStackLayout>
         </Frame>
         <Frame StyleClass="frame-entry">
-            <HorizontalStackLayout BackgroundColor="#a9a9a9" Margin="20" Spacing="10">
+            <VerticalStackLayout BackgroundColor="#a9a9a9" Margin="10, 0, 10, 0" Spacing="5" HorizontalOptions="Start">
                 <Label Text="{Binding SelectedClient.Open, StringFormat='Open: {0:M/d/yyyy}'}" 
+                       FontSize="26"
                        VerticalOptions="Center" 
-                       WidthRequest="125"
+                       HorizontalOptions="Start"
+                       WidthRequest="200"
                        StyleClass="entry-label"/>
                 <Label Text="{Binding SelectedClient.Close, StringFormat='Close: {0:M/d/yyyy}'}" 
-                       VerticalOptions="Center" 
-                       WidthRequest="125"
+                       FontSize="26"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Start"
+                       WidthRequest="200"
                        StyleClass="entry-label"/>
                 <Label Text="{Binding SelectedClient.IsActive, StringFormat='Active Account: {0}'}" 
+                       FontSize="26"
                        VerticalOptions="Center" 
-                       WidthRequest="150"
+                       WidthRequest="300"
                        StyleClass="entry-label"/>
-            </HorizontalStackLayout>
+            </VerticalStackLayout>
         </Frame>
         <Frame StyleClass="frame-entry">
-            <HorizontalStackLayout BackgroundColor="#a9a9a9" Margin="20" Spacing="20">
+            <HorizontalStackLayout BackgroundColor="#a9a9a9" Margin="10, 0, 10, 0" Spacing="0" HorizontalOptions="Start">
                 <Label Text="{Binding SelectedClient.Notes, StringFormat='Notes: {0}'}"
+                       FontSize="26"
                        VerticalOptions="Center" 
                        WidthRequest="500"
                        HeightRequest="200"
                        StyleClass="entry-label"/>
             </HorizontalStackLayout>
         </Frame>
-        <Frame BackgroundColor="Transparent">
+        <ScrollView>
             <ListView ItemsSource="{Binding SelectedClient.Projects}"
                       SelectedItem="SelectedProject"
                       BackgroundColor="Transparent"
@@ -64,9 +75,9 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </Frame>
+        </ScrollView>
         <VerticalStackLayout>
-            <Label WidthRequest="550" Text="Project Management" FontSize="32"></Label>
+            <Label WidthRequest="550" Text="Project Management" FontSize="32" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
             <HorizontalStackLayout WidthRequest="550">
                 <Button Text="Add"/>
                 <Button Text="Display"/>

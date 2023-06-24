@@ -23,6 +23,12 @@ public class ClientService {
 	public void Add(Client newClient) {
 		Clients.Add(newClient);
 	}
+	public void AddProjectToClient(int clientId, Project p) {
+		int clientIndex = GetClientIndex(clientId);
+		if (clientIndex >= 0) {
+			Clients[clientIndex].AddProjectToClient(p);
+		}
+	}
 	public List<Client> Search(string query) {
 		return Int32.TryParse(query, out int clientId) ? 
 			       Clients.Where(c => (c.Id.ToString().Contains(clientId.ToString()))).ToList() : 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -31,28 +30,16 @@ public class ClientListViewModel : INotifyPropertyChanged {
 	}
 	public void EditClient(Shell s) {
 		int clientId = SelectedClient?.Id ?? -1;
-		if (clientId >= 0) 
-			s.GoToAsync($"//ClientBuilderPage?clientId={clientId}");
+		int index = ClientService.Current.GetClientIndex(clientId);
+		if (index >= 0) 
+			s.GoToAsync(nameof(ClientBuilderPage), new Dictionary<string, object>{{"ClientId", clientId.ToString()}});
 	}
 	public void DisplayClient(Shell s) {
 		int clientId = SelectedClient?.Id ?? -1;
 		int index = ClientService.Current.GetClientIndex(clientId);
-		var clientFound = true;
-		Client? client = null;
 		if (index != -1) {
-			try {
-				client = ClientService.Current.Clients[index];
-			}
-			catch (IndexOutOfRangeException) {
-				clientFound = false;
-				client = null;
-			}
+			s.GoToAsync(nameof(ClientDisplayPage), new Dictionary<string, object>{{"ClientId", clientId}});
 		}
-		else {
-			clientFound = false;
-		}
-		if (clientFound && client != null) 
-			s.GoToAsync(nameof(ClientDisplayPage), new Dictionary<string, object>{{"SelectedClient", client}});
 	}
 	public void DeleteClient() {
 		if (SelectedClient == null)

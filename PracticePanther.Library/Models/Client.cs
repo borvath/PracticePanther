@@ -36,7 +36,7 @@ public class Client {
 			$"Dates: {Open:MM/dd/yyyy} - {Close:MM/dd/yyyy}\tActive: {IsActive}\n" +
 			$"Notes: {Notes}\n";
 		if (Projects.Count == 0) {
-			clientString += "Client has no projects";
+			clientString += "Projects: None";
 		}
 		else {
 			clientString += "Projects: ";
@@ -49,8 +49,7 @@ public class Client {
 	}
 	
 	// Project Management - Client acts as the service for project (for now at least)
-	public void AddProjectToClient() {
-		var p = Project.CreateProject();
+	public void AddProjectToClient(Project p) {
 		if (Projects.Count > 0)
 			p.Id = Projects[^1].Id + 1;
 		else {

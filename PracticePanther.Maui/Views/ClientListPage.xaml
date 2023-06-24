@@ -56,12 +56,6 @@
                                         </Grid.ColumnDefinitions>
                                         <Label Grid.Column="0" 
                                                Text="{Binding AsString, Mode=OneWay}" TextColor="#000000"/>
-                                        <Button Grid.Column="1" 
-                                                Text=">" FontSize="Medium" TextColor="#333333"
-                                                BackgroundColor="#b0b0b0" 
-                                                HeightRequest="40" WidthRequest="40"
-                                                VerticalOptions="Fill" HorizontalOptions="Fill"
-                                                Clicked="DisplayClient"/>
                                     </Grid>
                                 </Frame>
                             </ViewCell>
@@ -74,18 +68,31 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 
+                
                 <Button Grid.Column="0"
-                        FontSize="Large"
+                        FontSize="Medium"
                         BackgroundColor="#008000"
                         Text="Add"
                         Clicked="AddClicked"/>
                 <Button Grid.Column="1"
-                        FontSize="Large"
+                        FontSize="Medium"
+                        BackgroundColor="#8B8000"
+                        Text="Edit"
+                        Clicked="EditClicked"/>
+                <Button Grid.Column="2"
+                        FontSize="Medium"
                         BackgroundColor="#8b0000"
                         Text="Delete"
                         Clicked="DeleteClicked"/>
+                <Button Grid.Column="3"
+                        FontSize="Medium"
+                        BackgroundColor="#008888"
+                        Text="Manage Projects"
+                        Clicked="DisplayClicked"/>
             </Grid>
         </Grid>
     </ScrollView>
