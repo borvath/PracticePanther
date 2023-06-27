@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PracticePanther.Library.Models;
 
@@ -7,7 +8,7 @@ public class Client {
 	
 	public int Id { get; set; }
 	public string Name { get; set; }
-	public DateTime Open { get; set; }
+	public DateTime? Open { get; set; }
 	public DateTime? Close { get; set; }
 	public bool IsActive { get; set; }
 	public string Notes { get; set; }
@@ -15,75 +16,38 @@ public class Client {
 	public string AsString => ToString();
 
 	public Client() {
-		Id = -1;
-		Open = DateTime.MinValue;
-		Close = DateTime.MaxValue;
-		IsActive = false;
+		Id = 0;
 		Name = "John Doe";
+		Open = DateTime.Today;
+		Close = DateTime.Today.AddYears(1);
+		IsActive = true;
 		Notes = String.Empty;
 	}
-	public Client(List<Client> clients,  string name, DateTime open, DateTime? close, string? notes) {
-		Id = (clients.Count == 0) ? 1 : clients[^1].Id + 1;
+	public Client(string name, DateTime? open, DateTime? close, string? notes) {
 		Name = name;
 		Open = open;
 		Close = close;
-		IsActive = (Close == null) || (Close > DateTime.Today);
+		IsActive = true;
 		Notes = notes ?? "No notes";
 	}
 	public override string ToString() {
-		string clientString = 
-			$"Client ID: {Id}\tClient Name: {Name}\n"                                                     +
-			$"Dates: {Open:MM/dd/yyyy} - {Close:MM/dd/yyyy}\tActive: {IsActive}\n" +
-			$"Notes: {Notes}\n";
-		if (Projects.Count == 0) {
-			clientString += "Projects: None";
-		}
-		else {
-			clientString += "Projects: ";
-			for (var i = 0; i < Projects.Count - 1; i++) {
-				clientString += $"{Projects[i].LongName}, ";
-			}
-			clientString += $"{Projects[^1].LongName}";
-		}
-		return clientString;
+		return $"Client ID: {Id}\tClient Name: {Name}\n";
 	}
-	
+
 	// Project Management - Client acts as the service for project (for now at least)
-	public void AddProjectToClient(Project p) {
-		if (Projects.Count > 0)
+	public void AddProject(Project p) {
+		if (p.Id == 0) {
 			p.Id = Projects[^1].Id + 1;
-		else {
-			p.Id = 1;
 		}
 		p.ClientId = Id;
 		Projects.Add(p);
 	}
-	
-	public void UpdateClientProject(int index) {
-		Projects[index] = Project.UpdateProject(GetProjectAtIndex(index));
-	}
 	public void RemoveProject(int id) {
-		int projectIndex = GetProjectIndex(id);
-		if (projectIndex != -1)
-			Projects.RemoveAt(projectIndex); 
+		Project? p = GetProject(id);
+		if (p != null)
+			Projects.Remove(p); 
 	}
-	public void DisplayProject(int index) {
-		Console.Write(GetProjectAtIndex(index));
-	}
-	public void DisplayAllProjects() {
-		foreach (Project project in Projects)
-			Console.WriteLine(project);
-	}
-	private int GetProjectIndex(int id) {
-		if (id < 0) return -1;
-		var i = 0;
-		foreach (Project p in Projects) {
-			if (p.Id == id) return i;
-			i++;
-		}
-		return -1;
-	}
-	private Project GetProjectAtIndex(int index) {
-		return Projects[index];
+	public Project? GetProject(int id) {
+		return Projects.FirstOrDefault(p => p.Id == id);
 	}
 }

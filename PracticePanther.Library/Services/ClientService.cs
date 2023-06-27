@@ -20,35 +20,18 @@ public class ClientService {
 	private ClientService() {
 		Clients = new List<Client>();
 	}
-	public void Add(Client newClient) {
-		Clients.Add(newClient);
-	}
-	public void AddProjectToClient(int clientId, Project p) {
-		int clientIndex = GetClientIndex(clientId);
-		if (clientIndex >= 0) {
-			Clients[clientIndex].AddProjectToClient(p);
+	public void Add(Client c) {
+		if (c.Id == 0) {
+			c.Id = Clients[^1].Id + 1;
 		}
+		Clients.Add(c);
 	}
 	public List<Client> Search(string query) {
 		return Int32.TryParse(query, out int clientId) ? 
 			       Clients.Where(c => (c.Id.ToString().Contains(clientId.ToString()))).ToList() : 
 			       Clients.Where(c => (c.Name.Contains(query, StringComparison.OrdinalIgnoreCase))).ToList();
 	}
-	public void RemoveClient(int index) {
-		if (index > 0 && index < Clients.Count) 
-			Clients.RemoveAt(index);
-	}
-	public int GetClientIndex(int id) {
-		if (id < 0) 
-			return -1;
-		var i = 0;
-		foreach (Client c in Clients) {
-			if (c.Id == id) return i;
-			i++;
-		}
-		return -1;
-	}
-	public Client GetClientAtIndex(int index) {
-		return Clients[index];
+	public Client? GetClient(int id) {
+		return Clients.FirstOrDefault(c => c.Id == id);
 	}
 }

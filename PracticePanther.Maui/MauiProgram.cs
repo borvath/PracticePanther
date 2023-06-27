@@ -24,6 +24,8 @@ public static class MauiProgram {
 
 		builder.Services.AddTransient<ProjectBuilderPage>();
 		builder.Services.AddTransient<ProjectBuilderViewModel>();
+		builder.Services.AddTransient<ProjectDisplayPage>();
+		builder.Services.AddTransient<ProjectDisplayViewModel>();
 
 		builder.Services.AddSingleton<EmployeeListPage>();
 		builder.Services.AddSingleton<EmployeeListViewModel>();

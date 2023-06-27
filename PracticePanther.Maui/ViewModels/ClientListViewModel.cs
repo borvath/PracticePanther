@@ -32,7 +32,7 @@ public class ClientListViewModel : INotifyPropertyChanged {
 		int clientId = SelectedClient?.Id ?? -1;
 		int index = ClientService.Current.GetClientIndex(clientId);
 		if (index >= 0) 
-			s.GoToAsync(nameof(ClientBuilderPage), new Dictionary<string, object>{{"ClientId", clientId.ToString()}});
+			s.GoToAsync(nameof(ClientBuilderPage), new Dictionary<string, object>{{"ClientId", clientId}});
 	}
 	public void DisplayClient(Shell s) {
 		int clientId = SelectedClient?.Id ?? -1;

@@ -12,7 +12,7 @@ namespace PracticePanther.Maui.ViewModels;
 
 public class ClientBuilderViewModel : IQueryAttributable, INotifyPropertyChanged {
 	public string? Name { get; set; }
-	public DateTime Open { get; set; }
+	public DateTime? Open { get; set; }
 	public DateTime? Close { get; set; }
 	public string? Notes { get; set; }
 
@@ -21,6 +21,7 @@ public class ClientBuilderViewModel : IQueryAttributable, INotifyPropertyChanged
 	public void AddClient() {
 		if (clientId == -1) {
 			Name ??= "No Name";
+			Open ??= DateTime.Today;
 			Close ??= DateTime.ParseExact("1/1/2030", "M/d/yyyy", CultureInfo.CurrentCulture);
 			Notes ??= "No Notes";
 			ClientService.Current.Add(new Client(ClientService.Current.Clients, Name, Open, Close, Notes));
