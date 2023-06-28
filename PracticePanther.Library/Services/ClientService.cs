@@ -20,18 +20,19 @@ public class ClientService {
 	private ClientService() {
 		Clients = new List<Client>();
 	}
+	
 	public void Add(Client c) {
 		if (c.Id == 0) {
 			c.Id = Clients[^1].Id + 1;
 		}
 		Clients.Add(c);
 	}
-	public List<Client> Search(string query) {
-		return Int32.TryParse(query, out int clientId) ? 
-			       Clients.Where(c => (c.Id.ToString().Contains(clientId.ToString()))).ToList() : 
-			       Clients.Where(c => (c.Name.Contains(query, StringComparison.OrdinalIgnoreCase))).ToList();
-	}
 	public Client? GetClient(int id) {
 		return Clients.FirstOrDefault(c => c.Id == id);
+	}
+	public List<Client> Search(string query) {
+		return Int32.TryParse(query, out int clientId) ? 
+			       Clients.Where(c => (c.Id.ToString().StartsWith(clientId.ToString()))).ToList() : 
+			       Clients.Where(c => (c.Name.Contains(query, StringComparison.OrdinalIgnoreCase))).ToList();
 	}
 }

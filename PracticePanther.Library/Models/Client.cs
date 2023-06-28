@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using PracticePanther.Library.Services;
 
 namespace PracticePanther.Library.Models;
 
@@ -12,7 +11,7 @@ public class Client {
 	public DateTime? Close { get; set; }
 	public bool IsActive { get; set; }
 	public string Notes { get; set; }
-	public List<Project> Projects { get; set; } = new List<Project>();
+	public ProjectService Projects { get; set; } = new ProjectService();
 	public string AsString => ToString();
 
 	public Client() {
@@ -32,22 +31,5 @@ public class Client {
 	}
 	public override string ToString() {
 		return $"Client ID: {Id}\tClient Name: {Name}\n";
-	}
-
-	// Project Management - Client acts as the service for project (for now at least)
-	public void AddProject(Project p) {
-		if (p.Id == 0) {
-			p.Id = Projects[^1].Id + 1;
-		}
-		p.ClientId = Id;
-		Projects.Add(p);
-	}
-	public void RemoveProject(int id) {
-		Project? p = GetProject(id);
-		if (p != null)
-			Projects.Remove(p); 
-	}
-	public Project? GetProject(int id) {
-		return Projects.FirstOrDefault(p => p.Id == id);
 	}
 }

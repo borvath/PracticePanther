@@ -10,11 +10,11 @@ public class Time {
 	public string AsString => ToString();
 
 	public Time() {
-		ProjectId = -1;
-		EmployeeId = -1;
-		Hours = -1.0;
-		Date = DateTime.MaxValue;
-		Narrative = "Bad Entry";
+		ProjectId = 0;
+		EmployeeId = 0;
+		Hours = 0;
+		Date = DateTime.Today;
+		Narrative = "Default Entry";
 	}
 	public Time(int projectId, int empId, double hours, DateTime date, string narrative) {
 		ProjectId = projectId;

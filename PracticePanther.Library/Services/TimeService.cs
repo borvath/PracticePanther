@@ -20,21 +20,10 @@ public class TimeService {
 	private TimeService() {
 		Times = new List<Time>();
 	}
-	public void Add(Time newTime) {
-		Times.Add(newTime);
-	}
+
 	public List<Time> Search(string query) {
-		List<Time>? ret = null;
-		if (Int32.TryParse(query, out int id)) {
-			ret = Times.Where(t => (t.ProjectId.ToString().Contains(id.ToString()))).ToList();
-			if (ret.Count == 0) {
-				ret = Times.Where(t => (t.EmployeeId.ToString().Contains(id.ToString()))).ToList();
-			}
-		}
-		if (ret == null) {
-			ret = new List<Time>();
-			// if program is upset about empty list add a default time
-		}
-		return ret;
+		return Int32.TryParse(query, out int id) ? 
+			       Times.Where(t => (t.ProjectId.ToString().StartsWith(id.ToString()))).ToList() : 
+			       Times.Where(t => (t.EmployeeId.ToString().StartsWith(id.ToString()))).ToList();
 	}
 }
