@@ -29,23 +29,19 @@ public class ClientListViewModel : INotifyPropertyChanged {
 		RefreshView();
 	}
 	public void EditClient(Shell s) {
-		int clientId = SelectedClient?.Id ?? -1;
-		int index = ClientService.Current.GetClientIndex(clientId);
-		if (index >= 0) 
-			s.GoToAsync(nameof(ClientBuilderPage), new Dictionary<string, object>{{"ClientId", clientId}});
+		if (SelectedClient != null)
+			s.GoToAsync(nameof(ClientBuilderPage), new Dictionary<string, object>{{"ClientId", SelectedClient.Id.ToString()}});
 	}
 	public void DisplayClient(Shell s) {
-		int clientId = SelectedClient?.Id ?? -1;
-		int index = ClientService.Current.GetClientIndex(clientId);
-		if (index != -1) {
-			s.GoToAsync(nameof(ClientDisplayPage), new Dictionary<string, object>{{"ClientId", clientId}});
-		}
+		if (SelectedClient != null)
+			s.GoToAsync(nameof(ClientDisplayPage), new Dictionary<string, object>{{"ClientId", SelectedClient.Id.ToString()}});
 	}
 	public void DeleteClient() {
-		if (SelectedClient == null)
-			return;
-		ClientService.Current.Clients.Remove(SelectedClient);
-		RefreshView();
+		if (SelectedClient != null) {
+			ClientService.Current.Clients.Remove(SelectedClient);
+			RefreshView();
+		}
+		SelectedClient = null;
 	}
 	public void RefreshView() {
 		NotifyPropertyChanged(nameof(Clients));

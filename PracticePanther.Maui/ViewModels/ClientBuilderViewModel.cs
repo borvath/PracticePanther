@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Microsoft.Maui.Controls;
@@ -18,13 +17,13 @@ public class ClientBuilderViewModel : IQueryAttributable, INotifyPropertyChanged
 
 	private int clientId;
 	
-	public void AddClient() {
+	public void AddOrUpdateClient() {
 		if (clientId == -1) {
 			Name ??= "No Name";
 			Open ??= DateTime.Today;
-			Close ??= DateTime.ParseExact("1/1/2030", "M/d/yyyy", CultureInfo.CurrentCulture);
+			Close ??= DateTime.Today.AddYears(1);
 			Notes ??= "No Notes";
-			ClientService.Current.Add(new Client(ClientService.Current.Clients, Name, Open, Close, Notes));
+			ClientService.Current.Add(new Client(Name, Open, Close, Notes));
 		}
 		else {
 			foreach (Client c in ClientService.Current.Clients.Where(c => c.Id == clientId)) {
@@ -38,20 +37,20 @@ public class ClientBuilderViewModel : IQueryAttributable, INotifyPropertyChanged
 	}
 	public void ApplyQueryAttributes(IDictionary<string, object> query) {
 		Int32.TryParse((query["ClientId"] as string), out clientId);
-		if (clientId >= 0) {
-			foreach (Client c in ClientService.Current.Clients.Where(c => c.Id == clientId)) {
+		if (clientId > 0) {
+			Client? c = ClientService.Current.GetClient(clientId);
+			if (c != null) {
 				Name = c.Name;
 				Open = c.Open;
 				Close = c.Close;
 				Notes = c.Notes;
-				break;
 			}
 		}
 		else {
-			Name = null;
+			Name = "John Doe";
 			Open = DateTime.Today;
-			Close = DateTime.ParseExact("1/1/2030", "M/d/yyyy", CultureInfo.CurrentCulture);
-			Notes = null;
+			Close = DateTime.Today.AddYears(1);
+			Notes = "No notes";
 		}
 		NotifyPropertyChanged(nameof(Name));
 		NotifyPropertyChanged(nameof(Open));

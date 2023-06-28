@@ -9,7 +9,7 @@ public partial class ClientBuilderPage : ContentPage {
 		BindingContext = vm;
 	}
 	private void AddClicked(object sender, EventArgs eventArgs) {
-		((ClientBuilderViewModel)BindingContext).AddClient();
+		((ClientBuilderViewModel)BindingContext).AddOrUpdateClient();
 		Shell.Current.GoToAsync("..");
 	}
 }

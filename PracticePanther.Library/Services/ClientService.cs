@@ -22,9 +22,7 @@ public class ClientService {
 	}
 	
 	public void Add(Client c) {
-		if (c.Id == 0) {
-			c.Id = Clients[^1].Id + 1;
-		}
+		c.Id = Clients.Count == 0 ? 1 : Clients[^1].Id + 1;
 		Clients.Add(c);
 	}
 	public Client? GetClient(int id) {

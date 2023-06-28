@@ -22,9 +22,7 @@ public class EmployeeService {
 		Employees = new List<Employee>();
 	}
 	public void Add(Employee e) {
-		if (e.Id == 0) {
-			e.Id = Employees[^1].Id + 1;
-		}
+		e.Id = Employees.Count == 0 ? 1 : Employees[^1].Id + 1;
 		Employees.Add(e);
 	}
 	public Employee? GetEmployee(int id) {

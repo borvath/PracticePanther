@@ -9,6 +9,6 @@ public class EmployeeBuilderViewModel {
 
 	public void AddEmployee() {
 		Name ??= "No Name";
-		EmployeeService.Current.Add(new Employee(EmployeeService.Current.Employees, Name, Rate));
+		EmployeeService.Current.Add(new Employee(Name, Rate));
 	}
 }

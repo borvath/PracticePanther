@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -15,34 +16,25 @@ public class ClientDisplayViewModel : IQueryAttributable, INotifyPropertyChanged
 	public Project? SelectedProject { get; set; }
 
 	public void ApplyQueryAttributes(IDictionary<string, object> query) {
-		var clientId = query["ClientId"] as int?;
-		foreach (Client c in ClientService.Current.Clients.Where(c => c.Id == clientId)) {
-			DisplayedClient = c;
-			break;
-		}
+		Int32.TryParse((query["ClientId"] as string), out int clientId);
+		DisplayedClient = ClientService.Current.Clients.FirstOrDefault(c => c.Id == clientId);
 		NotifyPropertyChanged(nameof(DisplayedClient));
 	}
-	
 	public void EditProject(Shell s) {
-		int projectId = SelectedProject?.Id ?? -1;
-		int? index = DisplayedClient?.GetProjectIndex(projectId);
-		if (index >= 0) 
-			s.GoToAsync(nameof(ProjectBuilderPage), new Dictionary<string, object>{{"ProjectId", projectId}});
+		if (SelectedProject != null) 
+			s.GoToAsync(nameof(ProjectBuilderPage), new Dictionary<string, object>{{"ProjectId", SelectedProject.Id}});
 	}
 	public void DeleteProject() {
-		if (SelectedProject == null)
-			return;
-		DisplayedClient?.RemoveProject(SelectedProject.Id);
+		if (DisplayedClient != null && SelectedProject != null)
+			ClientService.Current.GetClient(DisplayedClient.Id)?.ProjectList.Projects.Remove(SelectedProject);
 		RefreshView();
 	}
 	public void DisplayProject(Shell s) {
-		int projectId = SelectedProject?.Id ?? -1;
-		int index = ClientService.Current.GetClientIndex(projectId);
-		if (index != -1) {
-			s.GoToAsync(nameof(ProjectDisplayPage), new Dictionary<string, object>{{"ProjectId", projectId}});
+		if (DisplayedClient != null && SelectedProject != null) {
+			s.GoToAsync(nameof(ProjectDisplayPage), new Dictionary<string, object>{{"ProjectId", SelectedProject.Id}, {"ClientId", DisplayedClient.Id}});
 		}
 	}
-	public void RefreshView() {
+	private void RefreshView() {
 		NotifyPropertyChanged(nameof(DisplayedClient));
 	}
 	public event PropertyChangedEventHandler? PropertyChanged;

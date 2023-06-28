@@ -12,7 +12,7 @@ public class TimeBuilderViewModel {
 	public string? Narrative { get; set; }
 	
 	public void AddTime() {
-		Narrative ??= "Bad Entry";
-		TimeService.Current.Add(new Time(ProjectId, EmployeeId, Hours, Date, Narrative));
+		Narrative ??= "Default Entry";
+		TimeService.Current.Times.Add(new Time(ProjectId, EmployeeId, Hours, Date, Narrative));
 	}
 }

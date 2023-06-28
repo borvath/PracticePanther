@@ -14,9 +14,7 @@ public class ProjectService {
 	}
 	
 	public void AddProject(Project p, int clientId) {
-		if (p.Id == 0) {
-			p.Id = Projects[^1].Id + 1;
-		}
+		p.Id = Projects.Count == 0 ? 1 : Projects[^1].Id + 1;
 		p.ClientId = clientId;
 		Projects.Add(p);
 	}
