@@ -1,4 +1,8 @@
-﻿namespace PracticePanther.Library.Models;
+﻿using System;
+using System.Globalization;
+using System.Linq;
+using System.Xml;
+namespace PracticePanther.Library.Models;
 
 public class Employee {
 
@@ -17,6 +21,10 @@ public class Employee {
 		Rate = rate;
 	}
 	public override string ToString() {
-		return $"EmpID: {Id}\tName: {Name}\tRate: {Rate}";
+		string idString = "EmpID: {0, -7}";
+		string nameString = "Name: {1, -" + (Name.Length + 7) + "}";
+		string rateString = "Rate: {2}";
+		string ret = idString + nameString + rateString;
+		return String.Format(ret, Id, Name, Rate);
 	}
 }

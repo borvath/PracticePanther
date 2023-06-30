@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Microsoft.Maui.Controls;
 using PracticePanther.Library.Models;
 using PracticePanther.Library.Services;
+using PracticePanther.Maui.Views;
 namespace PracticePanther.Maui.ViewModels; 
 public class TimeListViewModel : INotifyPropertyChanged {
 	private string? m_query;
@@ -26,16 +28,17 @@ public class TimeListViewModel : INotifyPropertyChanged {
 		RefreshView();
 	}
 	public void EditTime(Shell s) {
-		int projectId = SelectedTime?.ProjectId ?? -1;
-		int empId = SelectedTime?.EmployeeId    ?? -1;
-		if (projectId >= 1 && empId >= 1) 
-			s.GoToAsync($"//TimeBuilderPage?projectId={projectId}&empId={empId}");
+		if (SelectedTime != null)
+			s.GoToAsync(nameof(TimeBuilderPage), new Dictionary<string, object>{{"ProjectId", SelectedTime.ProjectId}, {"EmployeeId", SelectedTime.EmployeeId}});
 	}
 	public void DeleteTime() {
 		if (SelectedTime == null)
 			return;
 		TimeService.Current.Times.Remove(SelectedTime);
 		RefreshView();
+	}
+	public void DisplayTime(Shell s) {
+		throw new NotImplementedException();
 	}
 	public void RefreshView() {
 		NotifyPropertyChanged(nameof(Times));

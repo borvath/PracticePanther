@@ -9,7 +9,7 @@ public partial class EmployeeBuilderPage : ContentPage {
 		BindingContext = vm;
 	}
 	private void AddClicked(object sender, EventArgs eventArgs) {
-		((EmployeeBuilderViewModel)BindingContext).AddEmployee();
+		((EmployeeBuilderViewModel)BindingContext).AddOrUpdateEmployee();
 		Shell.Current.GoToAsync("..");
 	}
 }

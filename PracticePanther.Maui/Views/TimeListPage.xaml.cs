@@ -21,8 +21,8 @@ public partial class TimeListPage : ContentPage {
 	private void DeleteClicked(object sender, EventArgs e) {
 		((TimeListViewModel)BindingContext).DeleteTime();
 	}
-	private void TimeSelected(object sender, EventArgs e) {
-		
+	private void DisplayClicked(object sender, EventArgs e) {
+		((TimeListViewModel)BindingContext).DisplayTime(Shell.Current);
 	}
 	protected override void OnAppearing() {
 		((TimeListViewModel)BindingContext).RefreshView();

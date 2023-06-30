@@ -28,6 +28,7 @@ public class ClientDisplayViewModel : IQueryAttributable, INotifyPropertyChanged
 		if (DisplayedClient != null && SelectedProject != null)
 			ClientService.Current.GetClient(DisplayedClient.Id)?.ProjectList.Projects.Remove(SelectedProject);
 		RefreshView();
+		SelectedProject = null;
 	}
 	public void DisplayProject(Shell s) {
 		if (DisplayedClient != null && SelectedProject != null) {

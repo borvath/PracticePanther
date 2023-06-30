@@ -22,7 +22,7 @@
                            WidthRequest="60"
                            StyleClass="entry-label"/>
                     <Entry Placeholder="John Doe"
-                           Text="{Binding Name, Mode=OneWayToSource}"
+                           Text="{Binding Name, Mode=TwoWay}"
                            VerticalOptions="Center" 
                            WidthRequest="200"
                            StyleClass="entry-field"
@@ -35,12 +35,12 @@
                            VerticalOptions="Center" 
                            WidthRequest="60"
                            StyleClass="entry-label"/>
-                    <Entry Keyboard="Numeric"
+                    <Entry Placeholder="0.0"
+                           Text="{Binding Rate, Mode=TwoWay}"
+                           Keyboard="Numeric"
                            VerticalOptions="Center"
-                           Placeholder="20.0"
                            WidthRequest="125"
-                           StyleClass="entry-field"
-                           Text="{Binding Rate, Mode=OneWayToSource}"/>
+                           StyleClass="entry-field"/>
                 </HorizontalStackLayout>
             </Frame>
             <Frame BackgroundColor="Transparent">
@@ -55,7 +55,7 @@
                             Clicked="AddClicked"
                             BackgroundColor="#006699"
                             FontSize="24"
-                            Text="Add"/>
+                            Text="Confirm"/>
                 </Grid>
             </Frame>
         </VerticalStackLayout>

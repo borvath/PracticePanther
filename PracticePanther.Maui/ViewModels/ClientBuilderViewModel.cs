@@ -19,11 +19,8 @@ public class ClientBuilderViewModel : IQueryAttributable, INotifyPropertyChanged
 	
 	public void AddOrUpdateClient() {
 		if (clientId == -1) {
-			Name ??= "No Name";
-			Open ??= DateTime.Today;
-			Close ??= DateTime.Today.AddYears(1);
-			Notes ??= "No Notes";
-			ClientService.Current.Add(new Client(Name, Open, Close, Notes));
+			ClientService.Current.Add(new Client(Name ?? "John Doe", Open ?? DateTime.Today,
+									Close ?? DateTime.Today.AddYears(1), Notes ?? "No notes"));
 		}
 		else {
 			foreach (Client c in ClientService.Current.Clients.Where(c => c.Id == clientId)) {

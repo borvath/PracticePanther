@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Maui.Controls;
 using PracticePanther.Maui.ViewModels;
 
@@ -13,19 +14,13 @@ public partial class EmployeeListPage : ContentPage {
 		((EmployeeListViewModel)BindingContext).GetSearchResults(searchBar.Text);
 	}
 	private void AddClicked(object sender, EventArgs e) {
-		Shell.Current.GoToAsync("EmployeeBuilderPage");
+		Shell.Current.GoToAsync(nameof(EmployeeBuilderPage), new Dictionary<string, object>{{"EmployeeId", "-1"}});
 	}
 	private void EditClicked(object sender, EventArgs e) {
 		((EmployeeListViewModel)BindingContext).EditEmployee(Shell.Current);
 	}
 	private void DeleteClicked(object sender, EventArgs e) {
 		((EmployeeListViewModel)BindingContext).DeleteEmployee();
-	}
-	private void EmployeeSelected(object sender, EventArgs e) {
-		
-	}
-	private void DisplayEmployee(object sender, EventArgs e) {
-		((EmployeeListViewModel)BindingContext).DisplayEmployee(Shell.Current);
 	}
 	protected override void OnAppearing() {
 		((EmployeeListViewModel)BindingContext).RefreshView();

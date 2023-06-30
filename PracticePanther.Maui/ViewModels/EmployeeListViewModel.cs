@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Microsoft.Maui.Controls;
 using PracticePanther.Library.Models;
 using PracticePanther.Library.Services;
+using PracticePanther.Maui.Views;
 
 namespace PracticePanther.Maui.ViewModels; 
 
@@ -28,20 +30,16 @@ public class EmployeeListViewModel : INotifyPropertyChanged {
 		RefreshView();
 	}
 	public void EditEmployee(Shell s) {
-		int empId = SelectedEmployee?.Id ?? -1;
-		if (empId >= 0) 
-			s.GoToAsync($"//EmployeeBuilderPage?empId={empId}");
-	}
-	public void DisplayEmployee(Shell s) {
-		int empId = SelectedEmployee?.Id ?? -1;
-		if (empId >= 0) 
-			s.GoToAsync($"//EmployeeBuilderPage?empId={empId}");
+		if (SelectedEmployee != null) {
+			s.GoToAsync(nameof(EmployeeBuilderPage), new Dictionary<string, object>{{"EmployeeId", SelectedEmployee.Id.ToString()}});
+		}
 	}
 	public void DeleteEmployee() {
-		if (SelectedEmployee == null)
-			return;
-		EmployeeService.Current.Employees.Remove(SelectedEmployee);
-		RefreshView();
+		if (SelectedEmployee != null) {
+			EmployeeService.Current.Employees.Remove(SelectedEmployee);
+			RefreshView();
+		}
+		SelectedEmployee = null;
 	}
 	public void RefreshView() {
 		NotifyPropertyChanged(nameof(Employees));
