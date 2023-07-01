@@ -55,27 +55,31 @@
             </VerticalStackLayout>
         </Frame>
         <Frame StyleClass="frame-entry">
-            <HorizontalStackLayout BackgroundColor="#a9a9a9" Margin="10, 0, 10, 0" Spacing="0" HorizontalOptions="Start">
+            <HorizontalStackLayout BackgroundColor="#a9a9a9" Margin="10, 0" Spacing="0" HorizontalOptions="Start">
                 <Label Text="{Binding DisplayedClient.Notes, StringFormat='Notes: {0}'}"
                        FontSize="22"
+                       LineBreakMode="WordWrap"
                        VerticalOptions="Center" 
                        WidthRequest="500"
-                       HeightRequest="200"
+                       HeightRequest="70"
                        StyleClass="entry-label"/>
             </HorizontalStackLayout>
         </Frame>
-        <ScrollView>
-            <ListView ItemsSource="{Binding DisplayedClient.Projects}"
-                      SelectedItem="SelectedProject"
-                      BackgroundColor="Transparent"
-                      Margin="10, 0, 10, 0">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding AsString}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </ScrollView>
+        <Frame StyleClass="frame-entry">
+            <VerticalStackLayout Margin="10, 0">
+                <Label Text="Projects: " FontSize="22" TextColor="#000000"/>
+                <ListView ItemsSource="{Binding Projects}"
+                          SelectedItem="{Binding SelectedProject}"
+                          BackgroundColor="Transparent"
+                          Margin="10, 0, 10, 0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Text="{Binding AsShortString}" TextColor="#000000"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </VerticalStackLayout>
+        </Frame>
         <VerticalStackLayout>
             <Label WidthRequest="550" 
                    Text="Project Management" 
@@ -92,8 +96,8 @@
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" Text="Add" BackgroundColor="#008000" Clicked="AddClicked"/>
                 <Button Grid.Column="1" Text="Edit" BackgroundColor="#8B8000" Clicked="EditClicked"/>
-                <Button Grid.Column="3" Text="Delete" BackgroundColor="#8b0000" Clicked="DeleteClicked"/>
-                <Button Grid.Column="2" Text="Display" BackgroundColor="#008888" Clicked="DisplayClicked"/>
+                <Button Grid.Column="2" Text="Delete" BackgroundColor="#8b0000" Clicked="DeleteClicked"/>
+                <Button Grid.Column="3" Text="Project Info" BackgroundColor="#008888" Clicked="DisplayClicked"/>
             </Grid>
         </VerticalStackLayout>
     </VerticalStackLayout>

@@ -18,23 +18,19 @@
             <Frame StyleClass="frame-entry">
                 <HorizontalStackLayout StyleClass="add-entry" Spacing="20">
                     <HorizontalStackLayout>
-                        <Label Text="Project ID: "
-                               VerticalOptions="Center" 
-                               WidthRequest="70"
-                               StyleClass="entry-label"/>
-                        <Entry Placeholder="0"
-                               Text="{Binding ProjectId, Mode=OneWayToSource}"
-                               VerticalOptions="Center" 
-                               WidthRequest="100"
-                               StyleClass="entry-field"/>
+                        <!-- Fix Picker Binding -->
+                        <Picker Title="Select a client"
+                                WidthRequest="150"
+                                StyleClass="entry-field">
+                        </Picker>
                     </HorizontalStackLayout>
                     <HorizontalStackLayout>
                         <Label Text="Employee ID: "
                                VerticalOptions="Center" 
                                WidthRequest="90"
                                StyleClass="entry-label"/>
-                        <Entry Placeholder="0"
-                               Text="{Binding EmployeeId, Mode=OneWayToSource}"
+                        <Entry Text="{Binding EmployeeId, Mode=TwoWay}"
+                               Placeholder="0"
                                VerticalOptions="Center" 
                                WidthRequest="100"
                                StyleClass="entry-field"/>
@@ -48,21 +44,20 @@
                                VerticalOptions="Center" 
                                WidthRequest="70"
                                StyleClass="entry-label"/>
-                        <Entry Keyboard="Numeric"
-                               VerticalOptions="Center"
+                        <Entry Text="{Binding Hours, Mode=TwoWay}"
                                Placeholder="20.0"
+                               Keyboard="Numeric"
+                               VerticalOptions="Center"
                                WidthRequest="100"
-                               StyleClass="entry-field"
-                               Text="{Binding Hours, Mode=OneWayToSource}"/>
+                               StyleClass="entry-field"/>
                     </HorizontalStackLayout>
                     <HorizontalStackLayout>
                         <Label Text="Date: " 
                                VerticalOptions="Center" 
                                WidthRequest="70"
                                StyleClass="entry-label"/>
-                        <DatePicker VerticalOptions="Center"
-                                    Date="{Binding Date}"
-                                    MinimumDate="January 1, 2000"
+                        <DatePicker Date="{Binding Date}"
+                                    VerticalOptions="Center"
                                     WidthRequest="120"
                                     StyleClass="entry-field"/>
                     </HorizontalStackLayout>
@@ -74,8 +69,8 @@
                            VerticalOptions="Start"
                            WidthRequest="70"
                            StyleClass="entry-label"/>
-                    <Editor Placeholder="Reason for entry..."
-                            Text="{Binding Narrative}"
+                    <Editor Text="{Binding Narrative}"
+                            Placeholder="Reason for entry..."
                             WidthRequest="250"
                             HeightRequest="250"
                             StyleClass="entry-field"/>
@@ -93,7 +88,7 @@
                             Clicked="AddClicked"
                             BackgroundColor="#006699"
                             FontSize="24"
-                            Text="Add"/>
+                            Text="Confirm"/>
                 </Grid>
             </Frame>
         </VerticalStackLayout>

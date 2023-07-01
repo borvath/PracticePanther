@@ -24,6 +24,7 @@ public class Time {
 		Narrative = narrative;
 	}
 	public override string ToString() {
-		return $"Project: {ProjectId}\tEmployee: {EmployeeId}\nDate: {Date}\tHours: {Hours}\nEntry Notes: {Narrative}";
+		string dateString = $"{Date:MM/dd/yyyy}";
+		return String.Format("Project: {0, -13}Employee: {1}\nDate: {2, -15}Hours: {3}\nEntry Notes: {4}", ProjectId, EmployeeId, dateString, Hours, Narrative);
 	}
 }

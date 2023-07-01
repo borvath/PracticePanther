@@ -12,6 +12,7 @@ public class Project {
 	public string LongName { get; set; }
 	public string? ShortName { get; set; }
 	public string AsString => ToString();
+	public string AsShortString => ShortToString();
 
 	public Project() {
 		Id = 0;
@@ -27,6 +28,9 @@ public class Project {
 		IsActive = true;
 		LongName = longName;
 		ShortName = shortName;
+	}
+	public string ShortToString() {
+		return $"Project ID: {Id, -7}Project Name: {LongName}";
 	}
 	public override string ToString() {
 		return $"Project ID: {Id}\tClient ID: {ClientId}\tProject Name: {LongName}";

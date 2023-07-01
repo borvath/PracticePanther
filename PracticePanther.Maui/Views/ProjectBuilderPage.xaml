@@ -2,8 +2,86 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:PracticePanther.Maui.ViewModels"
              x:Class="PracticePanther.Maui.Views.ProjectBuilderPage">
-    <ContentPage.Content>
-        
-    </ContentPage.Content>
+    <ContentPage.BindingContext>
+        <viewmodel:ProjectBuilderViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ScrollView StyleClass="page">
+        <VerticalStackLayout Margin="20, 0, 20, 0" 
+                             Spacing="0" 
+                             VerticalOptions="Center"
+                             WidthRequest="450"
+                             BackgroundColor="#a9a9a9">
+            <Label FontSize="48" HorizontalTextAlignment="Center" TextColor="#151515">Add Project</Label>
+            <Frame StyleClass="frame-entry">
+                <HorizontalStackLayout StyleClass="add-entry">
+                    <Label Text="Full Name: " 
+                           VerticalOptions="Center" 
+                           WidthRequest="60"
+                           StyleClass="entry-label"/>
+                    <Entry Text="{Binding LongName, Mode=TwoWay}"
+                           Placeholder="Default Project"
+                           VerticalOptions="Center" 
+                           WidthRequest="200"
+                           StyleClass="entry-field"
+                           MaxLength="200"/>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame StyleClass="frame-entry">
+                <HorizontalStackLayout StyleClass="add-entry">
+                    <Label Text="Short Name: " 
+                           VerticalOptions="Center" 
+                           WidthRequest="60"
+                           StyleClass="entry-label"/>
+                    <Entry Text="{Binding ShortName, Mode=TwoWay}"
+                           Placeholder="Proj1"
+                           VerticalOptions="Center" 
+                           WidthRequest="200"
+                           StyleClass="entry-field"
+                           MaxLength="200"/>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame StyleClass="frame-entry">
+                <HorizontalStackLayout StyleClass="add-entry">
+                    <Label Text="Open: " 
+                           VerticalOptions="Center" 
+                           WidthRequest="60"
+                           StyleClass="entry-label"/>
+                    <DatePicker Date="{Binding Open, Mode=TwoWay}"
+                                VerticalOptions="Center" 
+                                WidthRequest="125"
+                                StyleClass="entry-field"/>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame StyleClass="frame-entry">
+                <HorizontalStackLayout StyleClass="add-entry">
+                    <Label Text="Close:" 
+                           VerticalOptions="Center" 
+                           WidthRequest="60"
+                           StyleClass="entry-label"/>
+                    <DatePicker Date="{Binding Close, Mode=TwoWay}"
+                                VerticalOptions="Center"
+                                WidthRequest="125"
+                                StyleClass="entry-field"/>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame BackgroundColor="Transparent">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Column="0" Grid.Row="0"
+                            Clicked="AddClicked"
+                            BackgroundColor="#006699"
+                            FontSize="24"
+                            Text="Confirm"/>
+                </Grid>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

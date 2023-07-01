@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Maui.Controls;
 using PracticePanther.Maui.ViewModels;
 
@@ -10,7 +9,7 @@ public partial class ClientDisplayPage : ContentPage {
 		BindingContext = vm;
 	}
 	private void AddClicked(object? sender, EventArgs eventArgs) {
-		Shell.Current.GoToAsync(nameof(ProjectBuilderPage), new Dictionary<string, object>{{"ProjectId", "-1"}});
+		((ClientDisplayViewModel)BindingContext).AddProject(Shell.Current);
 	}
 	private void EditClicked(object? sender, EventArgs eventArgs) {
 		((ClientDisplayViewModel)BindingContext).EditProject(Shell.Current);
@@ -20,5 +19,8 @@ public partial class ClientDisplayPage : ContentPage {
 	}
 	private void DisplayClicked(object? sender, EventArgs eventArgs) {
 		((ClientDisplayViewModel)BindingContext).DisplayProject(Shell.Current);
+	}
+	protected override void OnAppearing() {
+		((ClientDisplayViewModel)BindingContext).RefreshView();
 	}
 }

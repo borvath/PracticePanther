@@ -13,6 +13,7 @@ namespace PracticePanther.Maui.ViewModels;
 public class ClientDisplayViewModel : IQueryAttributable, INotifyPropertyChanged {
 	
 	public Client? DisplayedClient { get; private set; }
+	public List<Project>? Projects { get; set; }
 	public Project? SelectedProject { get; set; }
 
 	public void ApplyQueryAttributes(IDictionary<string, object> query) {
@@ -20,9 +21,17 @@ public class ClientDisplayViewModel : IQueryAttributable, INotifyPropertyChanged
 		DisplayedClient = ClientService.Current.Clients.FirstOrDefault(c => c.Id == clientId);
 		NotifyPropertyChanged(nameof(DisplayedClient));
 	}
+	public void AddProject(Shell s) {
+		if (DisplayedClient != null)
+			s.GoToAsync(nameof(ProjectBuilderPage), new Dictionary<string, object> {
+				{"ClientId", DisplayedClient.Id.ToString()}, {"ProjectId", "-1"}
+			});
+	}
 	public void EditProject(Shell s) {
-		if (SelectedProject != null) 
-			s.GoToAsync(nameof(ProjectBuilderPage), new Dictionary<string, object>{{"ProjectId", SelectedProject.Id}});
+		if (DisplayedClient != null && SelectedProject != null) 
+			s.GoToAsync(nameof(ProjectBuilderPage), new Dictionary<string, object> {
+				{"ClientId", DisplayedClient.Id.ToString()}, {"ProjectId", SelectedProject.Id.ToString()}
+			});
 	}
 	public void DeleteProject() {
 		if (DisplayedClient != null && SelectedProject != null)
@@ -32,11 +41,17 @@ public class ClientDisplayViewModel : IQueryAttributable, INotifyPropertyChanged
 	}
 	public void DisplayProject(Shell s) {
 		if (DisplayedClient != null && SelectedProject != null) {
-			s.GoToAsync(nameof(ProjectDisplayPage), new Dictionary<string, object>{{"ProjectId", SelectedProject.Id}, {"ClientId", DisplayedClient.Id}});
+			s.GoToAsync(nameof(ProjectDisplayPage), new Dictionary<string, object> {
+				{"ClientId", DisplayedClient.Id.ToString()}, {"ProjectId", SelectedProject.Id.ToString()}
+			});
 		}
 	}
-	private void RefreshView() {
+	public void RefreshView() {
 		NotifyPropertyChanged(nameof(DisplayedClient));
+		if (DisplayedClient != null) {
+			Projects = new List<Project>(DisplayedClient.ProjectList.Projects);
+		}
+		NotifyPropertyChanged(nameof(Projects));
 	}
 	public event PropertyChangedEventHandler? PropertyChanged;
 	protected virtual void NotifyPropertyChanged([CallerMemberName] string? propertyName = null) {

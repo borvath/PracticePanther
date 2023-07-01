@@ -29,16 +29,15 @@ public class TimeListViewModel : INotifyPropertyChanged {
 	}
 	public void EditTime(Shell s) {
 		if (SelectedTime != null)
-			s.GoToAsync(nameof(TimeBuilderPage), new Dictionary<string, object>{{"ProjectId", SelectedTime.ProjectId}, {"EmployeeId", SelectedTime.EmployeeId}});
+			s.GoToAsync(nameof(TimeBuilderPage), new Dictionary<string, object> {
+				{"ProjectId", SelectedTime.ProjectId.ToString()}, {"EmployeeId", SelectedTime.EmployeeId.ToString()}
+			});
 	}
 	public void DeleteTime() {
 		if (SelectedTime == null)
 			return;
 		TimeService.Current.Times.Remove(SelectedTime);
 		RefreshView();
-	}
-	public void DisplayTime(Shell s) {
-		throw new NotImplementedException();
 	}
 	public void RefreshView() {
 		NotifyPropertyChanged(nameof(Times));
