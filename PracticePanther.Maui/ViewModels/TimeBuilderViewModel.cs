@@ -24,7 +24,7 @@ public class TimeBuilderViewModel : INotifyPropertyChanged, IQueryAttributable {
 	
 	public void AddTime() {
 		Narrative ??= "Default Entry";
-		TimeService.Current.Times.Add(new Time(ProjectId, EmployeeId, Hours, Date, Narrative));
+	//	TimeService.Current.Times.Add(new Time(ProjectId, EmployeeId, Hours, Date, Narrative));
 	}
 	
 	public void ApplyQueryAttributes(IDictionary<string, object> query) {

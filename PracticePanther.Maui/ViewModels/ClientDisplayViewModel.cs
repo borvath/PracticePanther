@@ -16,6 +16,8 @@ public class ClientDisplayViewModel : IQueryAttributable, INotifyPropertyChanged
 	public List<Project>? Projects { get; set; }
 	public Project? SelectedProject { get; set; }
 
+	public bool Closable => AllProjectsClosed();
+
 	public void ApplyQueryAttributes(IDictionary<string, object> query) {
 		Int32.TryParse((query["ClientId"] as string), out int clientId);
 		DisplayedClient = ClientService.Current.Clients.FirstOrDefault(c => c.Id == clientId);
@@ -46,12 +48,30 @@ public class ClientDisplayViewModel : IQueryAttributable, INotifyPropertyChanged
 			});
 		}
 	}
+	public void CloseProject() {
+		if (SelectedProject != null) {
+			SelectedProject.IsActive = false;
+			SelectedProject.Close = DateTime.Now;
+			RefreshView();
+		}
+	}
+	public void CloseClient() {
+		if (DisplayedClient != null) {
+			DisplayedClient.IsActive = false;
+			DisplayedClient.Close = DateTime.Now;
+			RefreshView();
+		}
+	}
+	private bool AllProjectsClosed() {
+		return DisplayedClient != null && DisplayedClient.ProjectList.Projects.All(p => !p.IsActive);
+	}
 	public void RefreshView() {
 		NotifyPropertyChanged(nameof(DisplayedClient));
 		if (DisplayedClient != null) {
 			Projects = new List<Project>(DisplayedClient.ProjectList.Projects);
 		}
 		NotifyPropertyChanged(nameof(Projects));
+		NotifyPropertyChanged(nameof(Closable));
 	}
 	public event PropertyChangedEventHandler? PropertyChanged;
 	protected virtual void NotifyPropertyChanged([CallerMemberName] string? propertyName = null) {

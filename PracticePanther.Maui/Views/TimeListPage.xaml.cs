@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Maui.Controls;
 using PracticePanther.Maui.ViewModels;
 
@@ -13,14 +12,17 @@ public partial class TimeListPage : ContentPage {
 		var searchBar = (SearchBar)sender;
 		((TimeListViewModel)BindingContext).GetSearchResults(searchBar.Text);
 	}
-	private void AddClicked(object sender, EventArgs e) {
-		Shell.Current.GoToAsync(nameof(TimeBuilderPage), new Dictionary<string, object>{{"EmployeeId", "-1"}, {"ProjectId", "-1"}});
+	private void AddClicked(object? sender, EventArgs eventArgs) {
+		((ProjectDisplayViewModel)BindingContext).AddTime(Shell.Current);
 	}
-	private void EditClicked(object sender, EventArgs e) {
-		((TimeListViewModel)BindingContext).EditTime(Shell.Current);
+	private void EditClicked(object? sender, EventArgs eventArgs) {
+		((ProjectDisplayViewModel)BindingContext).EditTime(Shell.Current);
 	}
-	private void DeleteClicked(object sender, EventArgs e) {
-		((TimeListViewModel)BindingContext).DeleteTime();
+	private void DeleteClicked(object? sender, EventArgs eventArgs) {
+		((ProjectDisplayViewModel)BindingContext).DeleteTime();
+	}
+	private void DisplayClicked(object? sender, EventArgs eventArgs) {
+		((ProjectDisplayViewModel)BindingContext).DisplayTime(Shell.Current);
 	}
 	protected override void OnAppearing() {
 		((TimeListViewModel)BindingContext).RefreshView();

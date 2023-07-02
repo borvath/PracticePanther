@@ -20,6 +20,12 @@ public partial class ClientDisplayPage : ContentPage {
 	private void DisplayClicked(object? sender, EventArgs eventArgs) {
 		((ClientDisplayViewModel)BindingContext).DisplayProject(Shell.Current);
 	}
+	private void CloseProjectClicked(object sender, EventArgs eventArgs) {
+		((ClientDisplayViewModel)BindingContext).CloseProject();
+	}
+	private void CloseClientClicked(object sender, EventArgs eventArgs) {
+		((ClientDisplayViewModel)BindingContext).CloseClient();
+	}
 	protected override void OnAppearing() {
 		((ClientDisplayViewModel)BindingContext).RefreshView();
 	}
