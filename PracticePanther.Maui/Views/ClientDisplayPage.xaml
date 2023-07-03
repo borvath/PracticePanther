@@ -99,7 +99,7 @@
                 <Button Grid.Column="1" Text="Edit" BackgroundColor="#8B8000" Clicked="EditClicked"/>
                 <Button Grid.Column="2" Text="Close" BackgroundColor="#BB8000" Clicked="CloseProjectClicked"/>
                 <Button Grid.Column="3" Text="Delete" BackgroundColor="#8b0000" Clicked="DeleteClicked"/>
-                <Button Grid.Column="4" Text="Project Info" BackgroundColor="#008888" Clicked="DisplayClicked"/>
+                <Button Grid.Column="4" Text="Manage Project" BackgroundColor="#008888" Clicked="DisplayClicked"/>
             </Grid>
         </VerticalStackLayout>
         <Button HorizontalOptions="Fill" 

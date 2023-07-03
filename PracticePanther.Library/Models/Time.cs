@@ -7,9 +7,10 @@ public class Time {
 	public int ProjectId { get; set; }
 	public int EmployeeId { get; set; }
 	public double Hours { get; set; }
-	public DateTime Date { get; set; }
+	public DateTime? Date { get; set; }
 	public string? Narrative { get; set; }
-	public string AsShortString => ToShortString();
+	public string AsClientShortString => ToClientShortString();
+	public string AsEmployeeShortString => ToEmployeeShirtString();
 	public string AsString => ToString();
 
 	public Time() {
@@ -19,19 +20,19 @@ public class Time {
 		Date = DateTime.Today;
 		Narrative = "Default Entry";
 	}
-	public Time(int projectId, int empId, double hours, DateTime date, string narrative) {
-		ProjectId = projectId;
+	public Time(int empId, double hours, DateTime? date, string? narrative) {
 		EmployeeId = empId;
 		Hours = hours;
 		Date = date;
 		Narrative = narrative;
 	}
-	public string ToShortString() {
-		string dateString = $"{Date:MM/dd/yyyy}";
-		return $"Employee: {EmployeeId, -7}Date: {dateString,-15}Hours: {Hours}";
+	public string ToClientShortString() {
+		return $"EmployeeID: {EmployeeId, -7}Hours: {Hours, -10}Date: {Date:MM/dd/yyyy}";
+	}
+	public string ToEmployeeShirtString() {
+		return $"ClientID: {ClientId, -7}ProjectID: {ProjectId, -7}Hours: {Hours, -10}Date: {Date:MM/dd/yyyy}";
 	}
 	public override string ToString() {
-		string dateString = $"{Date:MM/dd/yyyy}";
-		return $"Project: {ProjectId,-13}Employee: {EmployeeId}\nDate: {dateString,-15}Hours: {Hours}\nEntry Notes: {Narrative}";
+		return $"ProjectID: {ProjectId,-7}EmployeeID: {EmployeeId}\nHours: {Hours, -7}Date: {Date:MM/dd/yyyy}\nEntry Notes: {Narrative}";
 	}
 }

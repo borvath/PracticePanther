@@ -29,11 +29,11 @@ public class ProjectDisplayViewModel : INotifyPropertyChanged, IQueryAttributabl
 		NotifyPropertyChanged(nameof(DisplayedProject));
 	}
 	public void AddTime(Shell s) {
-		if (SelectedTime != null)
+		if (DisplayedProject != null && ProjectClient != null)
 			s.GoToAsync(nameof(TimeBuilderPage),
 				new Dictionary<string, object> {
-					{ "ProjectId", SelectedTime.ProjectId.ToString() },
-					{ "EmployeeId", SelectedTime.EmployeeId.ToString() },
+					{ "ProjectId", DisplayedProject.Id.ToString() },
+					{ "ClientId", ProjectClient.Id.ToString() },
 					{ "TimeId", "-1" }
 				});
 	}
@@ -42,7 +42,7 @@ public class ProjectDisplayViewModel : INotifyPropertyChanged, IQueryAttributabl
 			s.GoToAsync(nameof(TimeBuilderPage),
 				new Dictionary<string, object> {
 					{ "ProjectId", SelectedTime.ProjectId.ToString() },
-					{ "EmployeeId", SelectedTime.EmployeeId.ToString() },
+					{ "ClientId", SelectedTime.ClientId.ToString() },
 					{ "TimeId", SelectedTime.Id.ToString() }
 				});
 		}
@@ -61,14 +61,14 @@ public class ProjectDisplayViewModel : INotifyPropertyChanged, IQueryAttributabl
 			s.GoToAsync(nameof(TimeDisplayPage),
 				new Dictionary<string, object> {
 					{ "ProjectId", SelectedTime.ProjectId.ToString() },
-					{ "EmployeeId", SelectedTime.EmployeeId.ToString() },
+					{ "ClientId", SelectedTime.ClientId.ToString() },
 					{ "TimeId", SelectedTime.Id.ToString() }
 				});
 		}
 	}
 	public void RefreshView() {
 		if (DisplayedProject != null) 
-			Times = DisplayedProject.TimeService.Times;
+			Times = new List<Time>(DisplayedProject.TimeService.Times);
 		NotifyPropertyChanged(nameof(Times));
 	}
 	public event PropertyChangedEventHandler? PropertyChanged;

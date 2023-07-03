@@ -55,7 +55,7 @@
                        VerticalOptions="Center"
                        HorizontalOptions="Start"
                        StyleClass="entry-label"/>
-                <Label Text="{Binding DisplayedProject.IsActive, StringFormat='Active Account: {0}'}" 
+                <Label Text="{Binding DisplayedProject.IsActive, StringFormat='Active Project: {0}'}" 
                        FontSize="22"
                        VerticalOptions="Center" 
                        StyleClass="entry-label"/>
@@ -65,11 +65,12 @@
             <VerticalStackLayout Margin="10, 0">
                 <Label Text="Time Entries: " FontSize="22" TextColor="#000000"/>
                 <ListView ItemsSource="{Binding Times}"
+                          SelectedItem="{Binding SelectedTime}"
                           BackgroundColor="Transparent"
                           Margin="10, 0, 10, 0">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextCell Text="{Binding AsShortString}" TextColor="#000000"/>
+                            <TextCell Text="{Binding AsClientShortString}" TextColor="#000000"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

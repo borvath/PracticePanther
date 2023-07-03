@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Maui.Controls;
 using PracticePanther.Maui.ViewModels;
 
@@ -21,9 +20,6 @@ public partial class ProjectDisplayPage : ContentPage {
 	private void DisplayClicked(object? sender, EventArgs eventArgs) {
 		((ProjectDisplayViewModel)BindingContext).DisplayTime(Shell.Current);
 	}
-	//private void CreateClicked(object sender, EventArgs eventArgs) {
-	//	((ProjectDisplayViewModel)BindingContext).CreateBill();
-	//}
 	protected override void OnAppearing() {
 		((ProjectDisplayViewModel)BindingContext).RefreshView();
 	}

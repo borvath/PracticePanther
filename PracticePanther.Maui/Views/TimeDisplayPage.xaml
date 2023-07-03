@@ -14,7 +14,7 @@
                          WidthRequest="600"
                          BackgroundColor="#a9a9a9"
                          HorizontalOptions="Center">
-        <Label FontSize="48" HorizontalTextAlignment="Center" TextColor="#151515">Project Info</Label>
+        <Label FontSize="48" HorizontalTextAlignment="Center" TextColor="#151515">Time Entry Info</Label>
         <Frame StyleClass="frame-entry">
             <VerticalStackLayout BackgroundColor="#a9a9a9" Margin="10, 0, 10, 0" Spacing="5">
                 <Label Text="{Binding DisplayedTime.ClientId, StringFormat='Client ID: {0}'}"
@@ -22,7 +22,12 @@
                        VerticalOptions="Center"
                        HorizontalOptions="Start"
                        StyleClass="entry-label"/>
-                <Label Text="{Binding DisplayedTime.Id, StringFormat='Project ID: {0}'}"
+                <Label Text="{Binding DisplayedTime.ProjectId, StringFormat='Project ID: {0}'}"
+                       FontSize="22"
+                       VerticalOptions="Center" 
+                       HorizontalOptions="Start"
+                       StyleClass="entry-label"/>
+                <Label Text="{Binding DisplayedTime.EmployeeId, StringFormat='Employee ID: {0}'}"
                        FontSize="22"
                        VerticalOptions="Center" 
                        HorizontalOptions="Start"
@@ -36,7 +41,7 @@
         </Frame>
         <Frame StyleClass="frame-entry">
             <VerticalStackLayout BackgroundColor="#a9a9a9" Margin="10, 0, 10, 0" Spacing="5">
-                <Label Text="{Binding DisplayedTime.Date, StringFormat='Date: {0}'}"
+                <Label Text="{Binding DisplayedTime.Date, StringFormat='Date: {0: MM/dd/yyyy}'}"
                        FontSize="22"
                        VerticalOptions="Center"
                        HorizontalOptions="Start"
@@ -46,7 +51,7 @@
                        VerticalOptions="Center" 
                        HorizontalOptions="Start"
                        StyleClass="entry-label"/>
-                <Label Text="{Binding DisplayedTime.Narrative, StringFormat='Entry Notes: {0:M/d/yyyy}'}" 
+                <Label Text="{Binding DisplayedTime.Narrative, StringFormat='Entry Notes: {0}'}" 
                        FontSize="22"
                        VerticalOptions="Center" 
                        HorizontalOptions="Start"

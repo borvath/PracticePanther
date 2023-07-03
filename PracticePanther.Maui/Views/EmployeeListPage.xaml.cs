@@ -22,6 +22,9 @@ public partial class EmployeeListPage : ContentPage {
 	private void DeleteClicked(object sender, EventArgs e) {
 		((EmployeeListViewModel)BindingContext).DeleteEmployee();
 	}
+	private void DisplayClicked(object sender, EventArgs e) {
+		((EmployeeListViewModel)BindingContext).DisplayEmployee(Shell.Current);
+	}
 	protected override void OnAppearing() {
 		((EmployeeListViewModel)BindingContext).RefreshView();
 	}

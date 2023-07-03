@@ -41,6 +41,11 @@ public class EmployeeListViewModel : INotifyPropertyChanged {
 		}
 		SelectedEmployee = null;
 	}
+	public void DisplayEmployee(Shell s) {
+		if (SelectedEmployee != null) {
+			s.GoToAsync(nameof(EmployeeDisplayPage), new Dictionary<string, object>{{"EmployeeId", SelectedEmployee.Id.ToString()}});
+		}
+	}
 	public void RefreshView() {
 		NotifyPropertyChanged(nameof(Employees));
 	}

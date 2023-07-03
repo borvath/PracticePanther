@@ -16,56 +16,49 @@
                              BackgroundColor="#a9a9a9">
             <Label FontSize="48" HorizontalTextAlignment="Center" TextColor="#151515">Add Time Entry</Label>
             <Frame StyleClass="frame-entry">
-                <HorizontalStackLayout StyleClass="add-entry" Spacing="20">
-                    <HorizontalStackLayout>
-                        <!-- Fix Picker Binding -->
-                        <Picker Title="Select a client"
-                                WidthRequest="150"
-                                StyleClass="entry-field">
-                        </Picker>
-                    </HorizontalStackLayout>
-                    <HorizontalStackLayout>
-                        <Label Text="Employee ID: "
-                               VerticalOptions="Center" 
-                               WidthRequest="90"
-                               StyleClass="entry-label"/>
-                        <Entry Text="{Binding EmployeeId, Mode=TwoWay}"
-                               Placeholder="0"
-                               VerticalOptions="Center" 
-                               WidthRequest="100"
-                               StyleClass="entry-field"/>
-                    </HorizontalStackLayout>
-                </HorizontalStackLayout>
-            </Frame>
-            <Frame StyleClass="frame-entry">
-                <HorizontalStackLayout StyleClass="add-entry" Spacing="20">
-                    <HorizontalStackLayout>
-                        <Label Text="Hours: " 
-                               VerticalOptions="Center" 
-                               WidthRequest="70"
-                               StyleClass="entry-label"/>
-                        <Entry Text="{Binding Hours, Mode=TwoWay}"
-                               Placeholder="20.0"
-                               Keyboard="Numeric"
-                               VerticalOptions="Center"
-                               WidthRequest="100"
-                               StyleClass="entry-field"/>
-                    </HorizontalStackLayout>
-                    <HorizontalStackLayout>
-                        <Label Text="Date: " 
-                               VerticalOptions="Center" 
-                               WidthRequest="70"
-                               StyleClass="entry-label"/>
-                        <DatePicker Date="{Binding Date}"
-                                    VerticalOptions="Center"
-                                    WidthRequest="120"
-                                    StyleClass="entry-field"/>
-                    </HorizontalStackLayout>
+                <HorizontalStackLayout StyleClass="add-entry">
+                    <Label Text="Employee:" 
+                           WidthRequest="70"
+                           VerticalOptions="Center" 
+                           StyleClass="entry-label"/>
+                    <Picker BackgroundColor="#696969"
+                            ItemsSource="{Binding Employees}"
+                            ItemDisplayBinding="{Binding AsString}"
+                            SelectedItem="{Binding SelectedEmployee}"
+                            WidthRequest="325"
+                            TextColor="#fffff"/>
+                            
                 </HorizontalStackLayout>
             </Frame>
             <Frame StyleClass="frame-entry">
                 <HorizontalStackLayout StyleClass="add-entry">
-                    <Label Text="Summary: "
+                    <Label Text="Hours:" 
+                           WidthRequest="70"
+                           VerticalOptions="Center" 
+                           StyleClass="entry-label"/>
+                    <Entry Text="{Binding Hours, Mode=TwoWay}"
+                           Placeholder="20.0"
+                           Keyboard="Numeric"
+                           VerticalOptions="Center"
+                           WidthRequest="100"
+                           StyleClass="entry-field"/>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame StyleClass="frame-entry">
+                <HorizontalStackLayout StyleClass="add-entry">
+                    <Label Text="Date:" 
+                           WidthRequest="70"
+                           VerticalOptions="Center" 
+                           StyleClass="entry-label"/>
+                    <DatePicker Date="{Binding Date}"
+                                VerticalOptions="Center"
+                                WidthRequest="120"
+                                StyleClass="entry-field"/>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame StyleClass="frame-entry">
+                <HorizontalStackLayout StyleClass="add-entry">
+                    <Label Text="Summary:"
                            VerticalOptions="Start"
                            WidthRequest="70"
                            StyleClass="entry-label"/>

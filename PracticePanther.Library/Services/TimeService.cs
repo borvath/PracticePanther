@@ -13,11 +13,10 @@ public class TimeService {
 		Times = new List<Time>();
 	}
 
-	public void AddTime(Time t, Project p, int employeeId) {
+	public void AddTime(Time t, Project p) {
 		t.Id = Times.Count == 0 ? 1 : Times[^1].Id + 1;
 		t.ClientId = p.ClientId;
 		t.ProjectId = p.Id;
-		t.EmployeeId = employeeId;
 		Times.Add(t);
 	}
 	public void Remove(Time t) {

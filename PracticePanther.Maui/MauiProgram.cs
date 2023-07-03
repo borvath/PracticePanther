@@ -31,11 +31,15 @@ public static class MauiProgram {
 		builder.Services.AddSingleton<EmployeeListViewModel>();
 		builder.Services.AddTransient<EmployeeBuilderPage>();
 		builder.Services.AddTransient<EmployeeBuilderViewModel>();
+		builder.Services.AddTransient<EmployeeDisplayPage>();
+		builder.Services.AddTransient<EmployeeDisplayViewModel>();
 
 		builder.Services.AddSingleton<TimeListPage>();
 		builder.Services.AddSingleton<TimeListViewModel>();
 		builder.Services.AddTransient<TimeBuilderPage>();
 		builder.Services.AddTransient<TimeBuilderViewModel>();
+		builder.Services.AddTransient<TimeDisplayPage>();
+		builder.Services.AddTransient<TimeDisplayViewModel>();
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
