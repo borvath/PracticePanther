@@ -7,6 +7,15 @@ namespace PracticePanther.Library.Services;
 
 public class ProjectService {
 	
+	private static object _lock = new object();
+	private static ProjectService? instance;
+	public static ProjectService Current {
+		get {
+			lock (_lock) {
+				return instance ??= new ProjectService();
+			}
+		} 
+	}
 	public List<Project> Projects { get; }
 	
 	public ProjectService() {

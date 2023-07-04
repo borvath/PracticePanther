@@ -37,9 +37,7 @@ public class EmployeeListViewModel : INotifyPropertyChanged {
 	}
 	public void DeleteEmployee() {
 		if (SelectedEmployee != null) {
-			foreach (Time t in TimeService.Current.Times.Where(t => t.EmployeeId == SelectedEmployee.Id)) {
-				TimeService.Current.Times.Remove(t);
-			}
+			TimeService.Current.Times.RemoveAll(t => t.EmployeeId == SelectedEmployee.Id);
 			EmployeeService.Current.Employees.Remove(SelectedEmployee);
 			RefreshView();
 		}

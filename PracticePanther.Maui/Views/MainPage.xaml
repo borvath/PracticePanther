@@ -4,8 +4,10 @@
              x:Class="PracticePanther.Maui.Views.MainPage"
              Title="">
     <ScrollView StyleClass="page">
-        <Grid RowSpacing="20">
+        <Grid RowSpacing="10">
             <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
@@ -17,26 +19,26 @@
                     Text="Client"
                     TextColor="#ffffff"
                     FontSize="Large"
-                    BackgroundColor="#6600bb"
+                    BackgroundColor="#7600bc"
                     Clicked="GoToClientList"/>
-            <Grid Grid.Row="1" ColumnSpacing="20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" 
-                        Text="Employee" 
-                        TextColor="#ffffff"
-                        FontSize="Large"
-                        BackgroundColor="#0044bb"
-                        Clicked="GoToEmployeeList"/>
-                <Button Grid.Column="1"
-                        Text="Time Entry"
-                        TextColor="#ffffff"
-                        FontSize="Large"
-                        BackgroundColor="#0099cc"
-                        Clicked="GoToTimeList"/>
-            </Grid>
+            <Button Grid.Row="1" 
+                    Text="Project"
+                    TextColor="#ffffff"
+                    FontSize="Large"
+                    BackgroundColor="#23a996"
+                    Clicked="GoToProjectList"/>
+            <Button Grid.Row="2" 
+                    Text="Employee" 
+                    TextColor="#ffffff"
+                    FontSize="Large"
+                    BackgroundColor="#0044bb"
+                    Clicked="GoToEmployeeList"/>
+            <Button Grid.Row="3"
+                    Text="Time Entry"
+                    TextColor="#ffffff"
+                    FontSize="Large"
+                    BackgroundColor="#0099cc"
+                    Clicked="GoToTimeList"/>
         </Grid>
     </ScrollView>
 </ContentPage>

@@ -10,61 +10,54 @@ using PracticePanther.Library.Services;
 namespace PracticePanther.Maui.ViewModels;
 
 public class ProjectBuilderViewModel : INotifyPropertyChanged, IQueryAttributable {
+	public List<Client> Clients { get; set; } = new List<Client>(ClientService.Current.Clients);
+	public Client? SelectedClient { get; set; }
 	public DateTime? Open { get; set; }
 	public DateTime? Close { get; set; }
 	public string? LongName { get; set; }
 	public string? ShortName { get; set; }
 	
-	private int clientId;
 	private int projectId;
 
 	public void AddOrUpdateProject() {
-		if (clientId > 0) {
+		if (SelectedClient != null) {
 			if (projectId == -1) {
-				foreach (Client c in ClientService.Current.Clients.Where(c => c.Id == clientId)) {
-					c.ProjectList.AddProject(new Project(
-						Open ?? DateTime.Today, Close ?? DateTime.Today.AddYears(1), LongName ?? "Default Project", ShortName ?? "N/A"), c.Id);
-					break;
-				}
+				ProjectService.Current.AddProject(
+					new Project(Open ?? DateTime.Today, Close ?? DateTime.Today.AddYears(1), LongName ?? "Default Project", ShortName ?? "N/A"),
+					SelectedClient.Id
+					);
 			}
 			else {
-				foreach (Client c in ClientService.Current.Clients.Where(c => c.Id == clientId)) {
-					foreach (Project p in c.ProjectList.Projects.Where(p => p.Id == projectId)) {
-						p.Open = Open;
-						p.Close = Close;
-						p.LongName = LongName ?? "Default Project";
-						p.ShortName = ShortName;
-						break;
-					}
+				foreach (Project p in ProjectService.Current.Projects.Where(p => p.ClientId == SelectedClient.Id && p.Id == projectId)) {
+					p.ClientId = SelectedClient.Id;
+					p.Open = Open;
+					p.Close = Close;
+					p.LongName = LongName ?? "Default Project";
+					p.ShortName = ShortName;
 					break;
 				}
 			}
 		}
 	}
-	
 	public void ApplyQueryAttributes(IDictionary<string, object> query) {
-		Int32.TryParse((query["ClientId"] as string), out clientId);
 		Int32.TryParse((query["ProjectId"] as string), out projectId);
-		if (clientId > 0) {
-			if (projectId == -1) {
-				Open = DateTime.Today;
-				Close = DateTime.Today.AddYears(1);
-				LongName = "Default Project";
-				ShortName = "N/A";
-			}
-			else {
-				foreach (Client c in ClientService.Current.Clients.Where(c => c.Id == clientId)) {
-					Project? p = c.ProjectList.GetProject(projectId);
-					if (p != null) {
-						Open = p.Open;
-						Close = p.Close;
-						LongName = p.LongName;
-						ShortName = p.ShortName;
-					}
-					break;
-				}
+		if (projectId == -1) {
+			Open = DateTime.Today; 
+			Close = DateTime.Today.AddYears(1);
+			LongName = "Default Project";
+			ShortName = "N/A";
+		}
+		else { 
+			Project? p = ProjectService.Current.GetProject(projectId);
+			if (p != null) {
+				SelectedClient = ClientService.Current.GetClient(p.ClientId);
+				Open = p.Open; 
+				Close = p.Close; 
+				LongName = p.LongName; 
+				ShortName = p.ShortName;
 			}
 		}
+		NotifyPropertyChanged(nameof(SelectedClient));
 		NotifyPropertyChanged(nameof(Open));
 		NotifyPropertyChanged(nameof(Close));
 		NotifyPropertyChanged(nameof(LongName));

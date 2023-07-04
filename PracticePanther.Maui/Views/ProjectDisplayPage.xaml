@@ -55,7 +55,7 @@
                        VerticalOptions="Center"
                        HorizontalOptions="Start"
                        StyleClass="entry-label"/>
-                <Label Text="{Binding DisplayedProject.IsActive, StringFormat='Active Project: {0}'}" 
+                <Label Text="{Binding DisplayedProject.IsActive, StringFormat='Active Project: {0}'}"
                        FontSize="22"
                        VerticalOptions="Center" 
                        StyleClass="entry-label"/>

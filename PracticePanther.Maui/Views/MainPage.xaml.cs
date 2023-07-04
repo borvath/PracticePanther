@@ -10,6 +10,9 @@ public partial class MainPage {
 	private void GoToClientList(object sender, EventArgs eventArgs) {
 		Shell.Current.GoToAsync(nameof(ClientListPage));
 	}
+	private void GoToProjectList(object sender, EventArgs eventArgs) {
+		Shell.Current.GoToAsync(nameof(ProjectListPage));
+	}
 	private void GoToEmployeeList(object sender, EventArgs eventArgs) {
 		Shell.Current.GoToAsync(nameof(EmployeeListPage));
 	}

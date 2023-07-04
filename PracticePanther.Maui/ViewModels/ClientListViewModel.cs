@@ -39,12 +39,8 @@ public class ClientListViewModel : INotifyPropertyChanged {
 	}
 	public void DeleteClient() {
 		if (SelectedClient != null) {
-			foreach (Time t in TimeService.Current.Times.Where(t => t.ClientId == SelectedClient.Id)) {
-				TimeService.Current.Times.Remove(t);
-			}
-			foreach (Project p in SelectedClient.ProjectList.Projects.Where(p => p.ClientId == SelectedClient.Id)) {
-				SelectedClient.ProjectList.Projects.Remove(p);
-			}
+			TimeService.Current.Times.RemoveAll(t => t.ClientId == SelectedClient.Id);
+			ProjectService.Current.Projects.RemoveAll(p => p.ClientId == SelectedClient.Id);
 			ClientService.Current.Clients.Remove(SelectedClient);
 			RefreshView();
 		}

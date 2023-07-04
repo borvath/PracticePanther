@@ -14,7 +14,21 @@
                              VerticalOptions="Center"
                              WidthRequest="450"
                              BackgroundColor="#a9a9a9">
-            <Label FontSize="48" HorizontalTextAlignment="Center" TextColor="#151515">Add Project</Label>
+            <Label FontSize="48" HorizontalTextAlignment="Center" TextColor="#151515">Project</Label>
+            <Frame StyleClass="frame-entry">
+                <HorizontalStackLayout StyleClass="add-entry">
+                    <Label Text="Client:" 
+                           WidthRequest="60"
+                           VerticalOptions="Center" 
+                           StyleClass="entry-label"/>
+                    <Picker BackgroundColor="#696969"
+                            ItemsSource="{Binding Clients}"
+                            ItemDisplayBinding="{Binding AsString}"
+                            SelectedItem="{Binding SelectedClient}"
+                            WidthRequest="300"
+                            TextColor="#fffff"/>
+                </HorizontalStackLayout>
+            </Frame>
             <Frame StyleClass="frame-entry">
                 <HorizontalStackLayout StyleClass="add-entry">
                     <Label Text="Full Name: " 

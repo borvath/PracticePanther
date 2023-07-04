@@ -80,34 +80,20 @@
                 </ListView>
             </VerticalStackLayout>
         </Frame>
-        <VerticalStackLayout>
-            <Label WidthRequest="550" 
-                   Text="Project Management" 
-                   FontSize="32" 
-                   HorizontalOptions="Center" 
-                   HorizontalTextAlignment="Center"
-                   TextColor="#000000"/>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Text="Add" BackgroundColor="#008000" Clicked="AddClicked"/>
-                <Button Grid.Column="1" Text="Edit" BackgroundColor="#8B8000" Clicked="EditClicked"/>
-                <Button Grid.Column="2" Text="Close" BackgroundColor="#BB8000" Clicked="CloseProjectClicked"/>
-                <Button Grid.Column="3" Text="Delete" BackgroundColor="#8b0000" Clicked="DeleteClicked"/>
-                <Button Grid.Column="4" Text="Manage Project" BackgroundColor="#008888" Clicked="DisplayClicked"/>
-            </Grid>
-        </VerticalStackLayout>
-        <Button HorizontalOptions="Fill" 
-                HeightRequest="50"
-                Text="Close Client"
-                TextColor="#ffffff"
-                BackgroundColor="#124268"
-                IsEnabled="{Binding Closable}"
-                Clicked="CloseClientClicked"/>
+        <HorizontalStackLayout>
+            <Button Text="Close Project" 
+                    TextColor="#ffffff"
+                    HorizontalOptions="Fill" 
+                    HeightRequest="50"
+                    BackgroundColor="#BB8000" 
+                    Clicked="CloseProjectClicked"/>
+            <Button Text="Close Client"
+                    TextColor="#ffffff"
+                    BackgroundColor="#124268"
+                    HorizontalOptions="Fill" 
+                    HeightRequest="50"
+                    IsEnabled="{Binding Closable}"
+                    Clicked="CloseClientClicked"/>
+        </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

@@ -14,7 +14,7 @@
                              VerticalOptions="Center"
                              WidthRequest="450"
                              BackgroundColor="#a9a9a9">
-            <Label FontSize="48" HorizontalTextAlignment="Center" TextColor="#151515">Add Time Entry</Label>
+            <Label FontSize="48" HorizontalTextAlignment="Center" TextColor="#151515">Time Entry</Label>
             <Frame StyleClass="frame-entry">
                 <HorizontalStackLayout StyleClass="add-entry">
                     <Label Text="Client:" 

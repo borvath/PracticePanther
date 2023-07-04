@@ -8,18 +8,6 @@ public partial class ClientDisplayPage : ContentPage {
 		InitializeComponent();
 		BindingContext = vm;
 	}
-	private void AddClicked(object? sender, EventArgs eventArgs) {
-		((ClientDisplayViewModel)BindingContext).AddProject(Shell.Current);
-	}
-	private void EditClicked(object? sender, EventArgs eventArgs) {
-		((ClientDisplayViewModel)BindingContext).EditProject(Shell.Current);
-	}
-	private void DeleteClicked(object? sender, EventArgs eventArgs) {
-		((ClientDisplayViewModel)BindingContext).DeleteProject();
-	}
-	private void DisplayClicked(object? sender, EventArgs eventArgs) {
-		((ClientDisplayViewModel)BindingContext).DisplayProject(Shell.Current);
-	}
 	private void CloseProjectClicked(object sender, EventArgs eventArgs) {
 		((ClientDisplayViewModel)BindingContext).CloseProject();
 	}

@@ -11,7 +11,6 @@ public class Client {
 	public DateTime? Close { get; set; }
 	public bool IsActive { get; set; }
 	public string Notes { get; set; }
-	public ProjectService ProjectList { get; set; } = new ProjectService();
 	public string AsString => ToString();
 
 	public Client() {
