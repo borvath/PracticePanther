@@ -7,6 +7,15 @@ namespace PracticePanther.Library.Services;
 
 public class TimeService {
 	
+	private static object _lock = new object();
+	private static TimeService? instance;
+	public static TimeService Current {
+		get {
+			lock (_lock) {
+				return instance ??= new TimeService();
+			}
+		}
+	}
 	public List<Time> Times { get; }
 
 	public TimeService() {
@@ -22,12 +31,11 @@ public class TimeService {
 	public void Remove(Time t) {
 		Times.Remove(t);
 	}
-	public Time? GetTime(int clientId, int projectId, int timeId) {
-		return Times.FirstOrDefault(t => t.ClientId == clientId && t.ProjectId == projectId && t.Id == timeId);
+	public Time? GetTime(int timeId) {
+		return Times.FirstOrDefault(t => t.Id == timeId);
 	}
 	public List<Time> Search(string query) {
-		return Int32.TryParse(query, out int id) ? 
-			       Times.Where(t => (t.ProjectId.ToString().StartsWith(id.ToString()))).ToList() : 
-			       Times.Where(t => (t.EmployeeId.ToString().StartsWith(id.ToString()))).ToList();
+		Int32.TryParse(query, out int id);
+		return Times.Where(t => (t.Id.ToString().StartsWith(id.ToString()))).ToList();
 	}
 }

@@ -21,8 +21,8 @@ public class Employee {
 		Rate = rate;
 	}
 	public override string ToString() {
-		string idString = "EmpID: {0, -7}";
-		string nameString = "Name: {1, -" + (Name.Length + 7) + "}";
+		string idString = "ID: {0, -5}";
+		string nameString = "Name: {1, -" + (Name.Length + 5) + "}";
 		string rateString = "Rate: {2}";
 		string ret = idString + nameString + rateString;
 		return String.Format(ret, Id, Name, Rate);

@@ -12,13 +12,8 @@ public class TimeDisplayViewModel : INotifyPropertyChanged, IQueryAttributable {
 	public Time? DisplayedTime { get; set; }
 	
 	public void ApplyQueryAttributes(IDictionary<string, object> query) {
-		Int32.TryParse((query["ClientId"] as string), out int clientId);
-		Int32.TryParse((query["ProjectId"] as string), out int projectId);
 		Int32.TryParse((query["TimeId"] as string), out int timeId);
-		DisplayedTime = ClientService.Current.GetClient(clientId)?
-									 .ProjectList.GetProject(projectId)?
-									 .TimeService.GetTime(clientId, projectId, timeId);
-		
+		DisplayedTime = TimeService.Current.GetTime(timeId);
 		NotifyPropertyChanged(nameof(DisplayedTime));
 	}
 	public void RefreshView() {

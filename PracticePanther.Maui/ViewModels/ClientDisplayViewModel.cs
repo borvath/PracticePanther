@@ -36,9 +36,13 @@ public class ClientDisplayViewModel : IQueryAttributable, INotifyPropertyChanged
 			});
 	}
 	public void DeleteProject() {
-		if (DisplayedClient != null && SelectedProject != null)
+		if (DisplayedClient != null && SelectedProject != null) {
+			foreach (Time t in TimeService.Current.Times.Where(t => t.ProjectId == SelectedProject.Id)) {
+				TimeService.Current.Times.Remove(t);
+			}
 			ClientService.Current.GetClient(DisplayedClient.Id)?.ProjectList.Projects.Remove(SelectedProject);
-		RefreshView();
+			RefreshView();
+		}
 		SelectedProject = null;
 	}
 	public void DisplayProject(Shell s) {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Microsoft.Maui.Controls;
 using PracticePanther.Library.Models;
@@ -38,6 +39,12 @@ public class ClientListViewModel : INotifyPropertyChanged {
 	}
 	public void DeleteClient() {
 		if (SelectedClient != null) {
+			foreach (Time t in TimeService.Current.Times.Where(t => t.ClientId == SelectedClient.Id)) {
+				TimeService.Current.Times.Remove(t);
+			}
+			foreach (Project p in SelectedClient.ProjectList.Projects.Where(p => p.ClientId == SelectedClient.Id)) {
+				SelectedClient.ProjectList.Projects.Remove(p);
+			}
 			ClientService.Current.Clients.Remove(SelectedClient);
 			RefreshView();
 		}

@@ -13,16 +13,16 @@ public partial class TimeListPage : ContentPage {
 		((TimeListViewModel)BindingContext).GetSearchResults(searchBar.Text);
 	}
 	private void AddClicked(object? sender, EventArgs eventArgs) {
-		((ProjectDisplayViewModel)BindingContext).AddTime(Shell.Current);
+		((TimeListViewModel)BindingContext).AddTime(Shell.Current);
 	}
 	private void EditClicked(object? sender, EventArgs eventArgs) {
-		((ProjectDisplayViewModel)BindingContext).EditTime(Shell.Current);
+		((TimeListViewModel)BindingContext).EditTime(Shell.Current);
 	}
 	private void DeleteClicked(object? sender, EventArgs eventArgs) {
-		((ProjectDisplayViewModel)BindingContext).DeleteTime();
+		((TimeListViewModel)BindingContext).DeleteTime();
 	}
 	private void DisplayClicked(object? sender, EventArgs eventArgs) {
-		((ProjectDisplayViewModel)BindingContext).DisplayTime(Shell.Current);
+		((TimeListViewModel)BindingContext).DisplayTime(Shell.Current);
 	}
 	protected override void OnAppearing() {
 		((TimeListViewModel)BindingContext).RefreshView();

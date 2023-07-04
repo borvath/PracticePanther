@@ -30,6 +30,6 @@ public class Client {
 		Notes = notes ?? "No notes";
 	}
 	public override string ToString() {
-		return $"Client ID: {Id, -7}Client Name: {Name}";
+		return $"ID: {Id, -5}Name: {Name}";
 	}
 }

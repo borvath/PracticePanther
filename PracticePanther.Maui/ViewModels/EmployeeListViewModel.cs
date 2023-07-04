@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Microsoft.Maui.Controls;
 using PracticePanther.Library.Models;
@@ -36,6 +37,9 @@ public class EmployeeListViewModel : INotifyPropertyChanged {
 	}
 	public void DeleteEmployee() {
 		if (SelectedEmployee != null) {
+			foreach (Time t in TimeService.Current.Times.Where(t => t.EmployeeId == SelectedEmployee.Id)) {
+				TimeService.Current.Times.Remove(t);
+			}
 			EmployeeService.Current.Employees.Remove(SelectedEmployee);
 			RefreshView();
 		}

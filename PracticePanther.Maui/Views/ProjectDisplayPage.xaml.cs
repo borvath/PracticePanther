@@ -8,18 +8,6 @@ public partial class ProjectDisplayPage : ContentPage {
 		InitializeComponent();
 		BindingContext = vm;
 	}
-	private void AddClicked(object? sender, EventArgs eventArgs) {
-		((ProjectDisplayViewModel)BindingContext).AddTime(Shell.Current);
-	}
-	private void EditClicked(object? sender, EventArgs eventArgs) {
-		((ProjectDisplayViewModel)BindingContext).EditTime(Shell.Current);
-	}
-	private void DeleteClicked(object? sender, EventArgs eventArgs) {
-		((ProjectDisplayViewModel)BindingContext).DeleteTime();
-	}
-	private void DisplayClicked(object? sender, EventArgs eventArgs) {
-		((ProjectDisplayViewModel)BindingContext).DisplayTime(Shell.Current);
-	}
 	protected override void OnAppearing() {
 		((ProjectDisplayViewModel)BindingContext).RefreshView();
 	}

@@ -37,7 +37,7 @@
         <Frame StyleClass="frame-entry">
             <VerticalStackLayout Margin="10, 0">
                 <Label Text="Time Entries: " FontSize="22" TextColor="#000000"/>
-                <ListView ItemsSource="{Binding Times}"
+                <ListView ItemsSource="{Binding EmployeeTimes}"
                           SelectedItem="{Binding SelectedTime}"
                           BackgroundColor="Transparent"
                           Margin="10, 0, 10, 0">

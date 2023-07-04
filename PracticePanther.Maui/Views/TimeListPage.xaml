@@ -32,7 +32,7 @@
                        Text="PracticePanther"/>
                 <SearchBar Grid.Column="2"
                            Text="{Binding Path=Query}"
-                           Placeholder="Project or Employee ID"
+                           Placeholder="Time ID"
                            HorizontalOptions="Fill"
                            VerticalOptions="Fill"
                            TextColor="#f2f2f2"

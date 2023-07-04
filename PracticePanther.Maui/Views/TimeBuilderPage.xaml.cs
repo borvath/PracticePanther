@@ -12,5 +12,7 @@ public partial class TimeBuilderPage : ContentPage {
 		((TimeBuilderViewModel)BindingContext).AddTime();
 		Shell.Current.GoToAsync("..");
 	}
+	private void ClientChanged(object sender, EventArgs eventArgs) {
+		((TimeBuilderViewModel)BindingContext).RefreshView();
+	}
 }
-

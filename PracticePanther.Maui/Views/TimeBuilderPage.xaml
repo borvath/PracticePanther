@@ -17,6 +17,35 @@
             <Label FontSize="48" HorizontalTextAlignment="Center" TextColor="#151515">Add Time Entry</Label>
             <Frame StyleClass="frame-entry">
                 <HorizontalStackLayout StyleClass="add-entry">
+                    <Label Text="Client:" 
+                           WidthRequest="70"
+                           VerticalOptions="Center" 
+                           StyleClass="entry-label"/>
+                    <Picker BackgroundColor="#696969"
+                            ItemsSource="{Binding Clients}"
+                            ItemDisplayBinding="{Binding AsString}"
+                            SelectedItem="{Binding SelectedClient}"
+                            SelectedIndexChanged="ClientChanged"
+                            WidthRequest="325"
+                            TextColor="#fffff"/>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame StyleClass="frame-entry">
+                <HorizontalStackLayout StyleClass="add-entry">
+                    <Label Text="Project:" 
+                           WidthRequest="70"
+                           VerticalOptions="Center" 
+                           StyleClass="entry-label"/>
+                    <Picker BackgroundColor="#696969"
+                            ItemsSource="{Binding Projects}"
+                            ItemDisplayBinding="{Binding AsShortString}"
+                            SelectedItem="{Binding SelectedProject}"
+                            WidthRequest="325"
+                            TextColor="#fffff"/>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame StyleClass="frame-entry">
+                <HorizontalStackLayout StyleClass="add-entry">
                     <Label Text="Employee:" 
                            WidthRequest="70"
                            VerticalOptions="Center" 
@@ -27,7 +56,6 @@
                             SelectedItem="{Binding SelectedEmployee}"
                             WidthRequest="325"
                             TextColor="#fffff"/>
-                            
                 </HorizontalStackLayout>
             </Frame>
             <Frame StyleClass="frame-entry">

@@ -11,7 +11,7 @@ namespace PracticePanther.Maui.ViewModels;
 
 public class EmployeeDisplayViewModel : INotifyPropertyChanged, IQueryAttributable {
 	public Employee? DisplayedEmployee { get; set; }
-	public List<Time>? Times { get; set; } = new List<Time>();
+	public List<Time>? EmployeeTimes { get; set; } = new List<Time>();
 	public Time? SelectedTime { get; set; }
 
 	private int employeeId;
@@ -20,30 +20,22 @@ public class EmployeeDisplayViewModel : INotifyPropertyChanged, IQueryAttributab
 		Int32.TryParse((query["EmployeeId"] as string), out employeeId);
 		DisplayedEmployee = EmployeeService.Current.GetEmployee(employeeId);
 		if (DisplayedEmployee != null) {
-			foreach (Client c in ClientService.Current.Clients) {
-				foreach (Project p in c.ProjectList.Projects) {
-					foreach (Time t in p.TimeService.Times.Where(t => t.EmployeeId == employeeId)) {
-						Times?.Add(t);
-					}
-				}
+			foreach (Time t in TimeService.Current.Times.Where(t => t.EmployeeId == employeeId)) {
+				EmployeeTimes?.Add(t);
 			}
 		}
 		NotifyPropertyChanged(nameof(DisplayedEmployee));
-		NotifyPropertyChanged(nameof(Times));
+		NotifyPropertyChanged(nameof(EmployeeTimes));
 	}
 	public void RefreshView() {
 		NotifyPropertyChanged(nameof(DisplayedEmployee));
 		if (DisplayedEmployee != null) {
-			Times = new List<Time>();
-			foreach (Client c in ClientService.Current.Clients) {
-				foreach (Project p in c.ProjectList.Projects) {
-					foreach (Time t in p.TimeService.Times.Where(t => t.EmployeeId == employeeId)) {
-						Times?.Add(t);
-					}
-				}
+			EmployeeTimes = new List<Time>();
+			foreach (Time t in TimeService.Current.Times.Where(t => t.EmployeeId == employeeId)) {
+				EmployeeTimes.Add(t);
 			}
 		}
-		NotifyPropertyChanged(nameof(Times));
+		NotifyPropertyChanged(nameof(EmployeeTimes));
 	}
 	public event PropertyChangedEventHandler? PropertyChanged;
 	protected virtual void NotifyPropertyChanged([CallerMemberName] string? propertyName = null) {
