@@ -74,7 +74,17 @@
                           Margin="10, 0, 10, 0">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextCell Text="{Binding AsShortString}" TextColor="#000000"/>
+                            <ViewCell>
+                                <Label TextColor="#000000">
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="{}ID: {0}    Name: {1}    Active: {2}">
+                                            <Binding Path="Id"/>
+                                            <Binding Path="LongName"/>
+                                            <Binding Path="IsActive"/>
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                            </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
