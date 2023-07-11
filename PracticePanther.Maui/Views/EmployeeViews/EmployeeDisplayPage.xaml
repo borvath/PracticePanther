@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:PracticePanther.Maui.ViewModels"
+             xmlns:employeeViewModels="clr-namespace:PracticePanther.Maui.ViewModels.EmployeeViewModels"
+             x:Class="PracticePanther.Maui.Views.EmployeeViews.EmployeeDisplayPage">
+    <ContentPage.BindingContext>
+        <employeeViewModels:EmployeeDisplayViewModel/>
+    </ContentPage.BindingContext>
+    
+    <VerticalStackLayout Margin="20, 0, 20, 0" 
+                         Spacing="10" 
+                         VerticalOptions="Center"
+                         WidthRequest="600"
+                         BackgroundColor="#a9a9a9"
+                         HorizontalOptions="Center">
+        <Label FontSize="48" HorizontalTextAlignment="Center" TextColor="#151515">Employee Info</Label>
+        <Frame StyleClass="frame-entry">
+            <VerticalStackLayout BackgroundColor="#a9a9a9" Margin="10, 0, 10, 0" Spacing="10">
+                <Label Text="{Binding DisplayedEmployee.Id, StringFormat='Employee ID: {0}'}"
+                       FontSize="22"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Start"
+                       StyleClass="entry-label"/>
+                <Label Text="{Binding DisplayedEmployee.Name, StringFormat='Name: {0}'}"
+                       FontSize="22"
+                       VerticalOptions="Center" 
+                       HorizontalOptions="Start"
+                       StyleClass="entry-label"/>
+                <Label Text="{Binding DisplayedEmployee.Rate, StringFormat='Rate: {0}'}"
+                       FontSize="22"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Start"
+                       StyleClass="entry-label"/>
+            </VerticalStackLayout>
+        </Frame>
+        <Frame StyleClass="frame-entry">
+            <VerticalStackLayout Margin="10, 0">
+                <Label Text="Time Entries: " FontSize="22" TextColor="#000000"/>
+                <ListView ItemsSource="{Binding EmployeeTimes}"
+                          SelectedItem="{Binding SelectedTime}"
+                          BackgroundColor="Transparent"
+                          Margin="10, 0, 10, 0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Text="{Binding AsEmployeeShortString}" TextColor="#000000"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </VerticalStackLayout>
+        </Frame>
+    </VerticalStackLayout>
+</ContentPage>

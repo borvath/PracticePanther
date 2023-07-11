@@ -2,8 +2,15 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls.Hosting;
 using Microsoft.Maui.Hosting;
-using PracticePanther.Maui.ViewModels;
+using PracticePanther.Maui.ViewModels.ClientViewModels;
+using PracticePanther.Maui.ViewModels.EmployeeViewModels;
+using PracticePanther.Maui.ViewModels.ProjectViewModels;
+using PracticePanther.Maui.ViewModels.TimeViewModels;
 using PracticePanther.Maui.Views;
+using PracticePanther.Maui.Views.ClientViews;
+using PracticePanther.Maui.Views.EmployeeViews;
+using PracticePanther.Maui.Views.ProjectViews;
+using PracticePanther.Maui.Views.TimeViews;
 
 namespace PracticePanther.Maui;
 public static class MauiProgram {

@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:PracticePanther.Maui.ViewModels"
+             xmlns:clientViewModels="clr-namespace:PracticePanther.Maui.ViewModels.ClientViewModels"
+             x:Class="PracticePanther.Maui.Views.ClientViews.ClientDisplayPage"
+             Title="">
+    
+    <ContentPage.BindingContext>
+        <clientViewModels:ClientDisplayViewModel/>
+    </ContentPage.BindingContext>
+    
+    <VerticalStackLayout Margin="20, 0, 20, 0" 
+                         Spacing="10" 
+                         VerticalOptions="Center"
+                         WidthRequest="600"
+                         BackgroundColor="#a9a9a9"
+                         HorizontalOptions="Center">
+        <Label FontSize="48" HorizontalTextAlignment="Center" TextColor="#151515">Client Info</Label>
+        <Frame StyleClass="frame-entry">
+            <VerticalStackLayout BackgroundColor="#a9a9a9" Margin="10, 0, 10, 0" Spacing="5">
+                <Label Text="{Binding DisplayedClient.Id, StringFormat='Client ID: {0}'}"
+                       FontSize="22"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Start"
+                       WidthRequest="125"
+                       StyleClass="entry-label"/>
+                <Label Text="{Binding DisplayedClient.Name, StringFormat='Name: {0}'}"
+                       FontSize="22"
+                       VerticalOptions="Center" 
+                       HorizontalOptions="Start"
+                       WidthRequest="200"
+                       StyleClass="entry-label"/>
+            </VerticalStackLayout>
+        </Frame>
+        <Frame StyleClass="frame-entry">
+            <VerticalStackLayout BackgroundColor="#a9a9a9" Margin="10, 0, 10, 0" Spacing="5" HorizontalOptions="Start">
+                <Label Text="{Binding DisplayedClient.Open, StringFormat='Open: {0:M/d/yyyy}'}" 
+                       FontSize="22"
+                       VerticalOptions="Center" 
+                       HorizontalOptions="Start"
+                       WidthRequest="200"
+                       StyleClass="entry-label"/>
+                <Label Text="{Binding DisplayedClient.Close, StringFormat='Close: {0:M/d/yyyy}'}" 
+                       FontSize="22"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Start"
+                       WidthRequest="200"
+                       StyleClass="entry-label"/>
+                <Label Text="{Binding DisplayedClient.IsActive, StringFormat='Active Account: {0}'}" 
+                       FontSize="22"
+                       VerticalOptions="Center" 
+                       WidthRequest="300"
+                       StyleClass="entry-label"/>
+            </VerticalStackLayout>
+        </Frame>
+        <Frame StyleClass="frame-entry">
+            <HorizontalStackLayout BackgroundColor="#a9a9a9" Margin="10, 0" Spacing="0" HorizontalOptions="Start">
+                <Label Text="{Binding DisplayedClient.Notes, StringFormat='Notes: {0}'}"
+                       FontSize="22"
+                       LineBreakMode="WordWrap"
+                       VerticalOptions="Center" 
+                       WidthRequest="500"
+                       HeightRequest="70"
+                       StyleClass="entry-label"/>
+            </HorizontalStackLayout>
+        </Frame>
+        <Frame StyleClass="frame-entry">
+            <VerticalStackLayout Margin="10, 0">
+                <Label Text="Projects: " FontSize="22" TextColor="#000000"/>
+                <ListView ItemsSource="{Binding Projects}"
+                          SelectedItem="{Binding SelectedProject}"
+                          BackgroundColor="Transparent"
+                          Margin="10, 0, 10, 0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label TextColor="#000000">
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="{}ID: {0}    Name: {1}    Active: {2}">
+                                            <Binding Path="Id"/>
+                                            <Binding Path="LongName"/>
+                                            <Binding Path="IsActive"/>
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </VerticalStackLayout>
+        </Frame>
+        <HorizontalStackLayout>
+            <Button Text="Close Project" 
+                    TextColor="#ffffff"
+                    HorizontalOptions="Fill" 
+                    HeightRequest="50"
+                    BackgroundColor="#BB8000" 
+                    Clicked="CloseProjectClicked"/>
+            <Button Text="Close Client"
+                    TextColor="#ffffff"
+                    BackgroundColor="#124268"
+                    HorizontalOptions="Fill" 
+                    HeightRequest="50"
+                    IsEnabled="{Binding Closable}"
+                    Clicked="CloseClientClicked"/>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

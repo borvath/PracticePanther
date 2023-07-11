@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:PracticePanther.Maui.ViewModels"
+             xmlns:timeViewModels="clr-namespace:PracticePanther.Maui.ViewModels.TimeViewModels"
+             x:Class="PracticePanther.Maui.Views.TimeViews.TimeDisplayPage">
+    <ContentPage.BindingContext>
+        <timeViewModels:TimeDisplayViewModel/>
+    </ContentPage.BindingContext>
+    
+    <VerticalStackLayout Margin="20, 0, 20, 0" 
+                         Spacing="10" 
+                         VerticalOptions="Center"
+                         WidthRequest="600"
+                         BackgroundColor="#a9a9a9"
+                         HorizontalOptions="Center">
+        <Label FontSize="48" HorizontalTextAlignment="Center" TextColor="#151515">Time Entry Info</Label>
+        <Frame StyleClass="frame-entry">
+            <VerticalStackLayout BackgroundColor="#a9a9a9" Margin="10, 0, 10, 0" Spacing="5">
+                <Label Text="{Binding DisplayedTime.ClientId, StringFormat='Client ID: {0}'}"
+                       FontSize="22"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Start"
+                       StyleClass="entry-label"/>
+                <Label Text="{Binding DisplayedTime.ProjectId, StringFormat='Project ID: {0}'}"
+                       FontSize="22"
+                       VerticalOptions="Center" 
+                       HorizontalOptions="Start"
+                       StyleClass="entry-label"/>
+                <Label Text="{Binding DisplayedTime.EmployeeId, StringFormat='Employee ID: {0}'}"
+                       FontSize="22"
+                       VerticalOptions="Center" 
+                       HorizontalOptions="Start"
+                       StyleClass="entry-label"/>
+                <Label Text="{Binding DisplayedTime.Id, StringFormat='Time ID: {0}'}"
+                       FontSize="22"
+                       VerticalOptions="Center" 
+                       HorizontalOptions="Start"
+                       StyleClass="entry-label"/>
+            </VerticalStackLayout>
+        </Frame>
+        <Frame StyleClass="frame-entry">
+            <VerticalStackLayout BackgroundColor="#a9a9a9" Margin="10, 0, 10, 0" Spacing="5">
+                <Label Text="{Binding DisplayedTime.Date, StringFormat='Date: {0: MM/dd/yyyy}'}"
+                       FontSize="22"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Start"
+                       StyleClass="entry-label"/>
+                <Label Text="{Binding DisplayedTime.Hours, StringFormat='Hours: {0}'}"
+                       FontSize="22"
+                       VerticalOptions="Center" 
+                       HorizontalOptions="Start"
+                       StyleClass="entry-label"/>
+                <Label Text="{Binding DisplayedTime.Narrative, StringFormat='Entry Notes: {0}'}" 
+                       FontSize="22"
+                       VerticalOptions="Center" 
+                       HorizontalOptions="Start"
+                       StyleClass="entry-label"/>
+            </VerticalStackLayout>
+        </Frame>
+    </VerticalStackLayout>
+</ContentPage>

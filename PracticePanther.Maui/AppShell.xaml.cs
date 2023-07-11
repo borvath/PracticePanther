@@ -1,5 +1,9 @@
 ﻿using Microsoft.Maui.Controls;
 using PracticePanther.Maui.Views;
+using PracticePanther.Maui.Views.ClientViews;
+using PracticePanther.Maui.Views.EmployeeViews;
+using PracticePanther.Maui.Views.ProjectViews;
+using PracticePanther.Maui.Views.TimeViews;
 namespace PracticePanther.Maui;
 public partial class AppShell : Shell {
 	public AppShell() {

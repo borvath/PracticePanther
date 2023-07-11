@@ -62,11 +62,95 @@
       <MauiXaml Update="Views\MainPage.xaml">
         <SubType>Designer</SubType>
       </MauiXaml>
+      <MauiXaml Update="Views\ClientViews\ClientDisplayPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Views\ClientViews\ClientListPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Views\ClientViews\ClientBuilderPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Views\EmployeeViews\EmployeeBuilderPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Views\EmployeeViews\EmployeeDisplayPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Views\EmployeeViews\EmployeeListPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Views\TimeViews\TimeBuilderPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Views\TimeViews\TimeDisplayPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Views\TimeViews\TimeListPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Views\ProjectViews\ProjectBuilderPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Views\ProjectViews\ProjectDisplayPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
+      <MauiXaml Update="Views\ProjectViews\ProjectListPage.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
     </ItemGroup>
 
     <ItemGroup>
       <Compile Update="Views\MainPage.xaml.cs">
         <DependentUpon>MainPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\ClientViews\ClientDisplayPage.xaml.cs">
+        <DependentUpon>ClientDisplayPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\ClientViews\ClientListPage.xaml.cs">
+        <DependentUpon>ClientListPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\ClientViews\ClientBuilderPage.xaml.cs">
+        <DependentUpon>ClientBuilderPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\EmployeeViews\EmployeeBuilderPage.xaml.cs">
+        <DependentUpon>EmployeeBuilderPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\EmployeeViews\EmployeeDisplayPage.xaml.cs">
+        <DependentUpon>EmployeeDisplayPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\EmployeeViews\EmployeeListPage.xaml.cs">
+        <DependentUpon>EmployeeListPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\TimeViews\TimeBuilderPage.xaml.cs">
+        <DependentUpon>TimeBuilderPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\TimeViews\TimeDisplayPage.xaml.cs">
+        <DependentUpon>TimeDisplayPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\TimeViews\TimeListPage.xaml.cs">
+        <DependentUpon>TimeListPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\ProjectViews\ProjectBuilderPage.xaml.cs">
+        <DependentUpon>ProjectBuilderPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\ProjectViews\ProjectDisplayPage.xaml.cs">
+        <DependentUpon>ProjectDisplayPage.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\ProjectViews\ProjectListPage.xaml.cs">
+        <DependentUpon>ProjectListPage.xaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>
