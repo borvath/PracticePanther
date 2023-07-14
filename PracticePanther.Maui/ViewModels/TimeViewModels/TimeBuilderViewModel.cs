@@ -67,8 +67,11 @@ public class TimeBuilderViewModel : INotifyPropertyChanged, IQueryAttributable {
 		NotifyPropertyChanged(nameof(Narrative));
 	}
 	public void RefreshView() {
-		if (SelectedClient != null)
+		if (SelectedClient != null) {
+			SelectedProject = null;
 			Projects = new List<Project>(ProjectService.Current.Projects.Where(p => p.ClientId == SelectedClient.Id));
+		}
+		NotifyPropertyChanged(nameof(SelectedProject));
 		NotifyPropertyChanged(nameof(Projects));
 	}
 	

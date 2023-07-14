@@ -2,7 +2,6 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewmodel="clr-namespace:PracticePanther.Maui.ViewModels"
              xmlns:timeViewModels="clr-namespace:PracticePanther.Maui.ViewModels.TimeViewModels"
              x:Class="PracticePanther.Maui.Views.TimeViews.TimeListPage">
     
@@ -51,7 +50,7 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Label Margin="10, 10"
+                                <Label Margin="10, 3"
                                        Padding="0"
                                        BackgroundColor="#eeeeee"
                                        FontSize="18"

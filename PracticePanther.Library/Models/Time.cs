@@ -33,6 +33,6 @@ public class Time {
 		return $"ClientID: {ClientId, -5}ProjectID: {ProjectId, -5}Hours: {Hours, -5}Date: {Date:MM/dd/yyyy}";
 	}
 	public override string ToString() {
-		return $"ClientID: {ClientId,-5}ProjectID: {ProjectId,-5}EmployeeID: {EmployeeId, -5}TimeID: {Id, -5}Hours: {Hours, -5}Date: {Date:MM/dd/yyyy}";
+		return $"TimeID: {Id, -5}ClientID: {ClientId,-5}ProjectID: {ProjectId,-5}EmployeeID: {EmployeeId, -5}Hours: {Hours, -5}Date: {Date:MM/dd/yyyy}";
 	}
 }
