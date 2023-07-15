@@ -28,3 +28,11 @@ ProjectId
 EmployeeId
 
 Your UX should also incorporate a way to perform CRUD on central lists of Employee and Time objects. This functionality can be on the main screen of the application or separated into different views.
+
+Expand the Time functionality of your application by implementing a simplified billing process. The requirements are:
+The application must support the creation of a bill that includes time entries for at least one project (the choice to produce bills for multiple projects at once is up to your discretion).
+You must use a Bill model class to support this functionality, but the only requirements for that bill model is that it includes:
+A TotalAmount property that shows the amount of the bill as calculated by multiplying the rate of the employee on a time entry by the number of hours on that time entry and then summing all such time entries on the project(s).
+A DueDate property that shows the date the bill is due
+You must have the ability to show all bills for a project when showing the details of a project.
+You must have the ability to show all bills for all projects on a client when showing the details of a client.
