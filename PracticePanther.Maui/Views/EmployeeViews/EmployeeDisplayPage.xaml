@@ -43,7 +43,18 @@
                           Margin="10, 0, 10, 0">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextCell Text="{Binding AsEmployeeShortString}" TextColor="#000000"/>
+                            <ViewCell>
+                                <Label TextColor="#000000">
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="{}Client ID: {0}   Project Id: {1}   Hours: {2}   Date: {3:MM/dd/yyyy}">
+                                            <Binding Path="ClientId"/>
+                                            <Binding Path="ProjectId"/>
+                                            <Binding Path="Hours"/>
+                                            <Binding Path="Date"/>
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                            </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

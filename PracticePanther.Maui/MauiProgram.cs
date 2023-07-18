@@ -2,11 +2,13 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls.Hosting;
 using Microsoft.Maui.Hosting;
+using PracticePanther.Maui.ViewModels.BillViewModels;
 using PracticePanther.Maui.ViewModels.ClientViewModels;
 using PracticePanther.Maui.ViewModels.EmployeeViewModels;
 using PracticePanther.Maui.ViewModels.ProjectViewModels;
 using PracticePanther.Maui.ViewModels.TimeViewModels;
 using PracticePanther.Maui.Views;
+using PracticePanther.Maui.Views.BillViews;
 using PracticePanther.Maui.Views.ClientViews;
 using PracticePanther.Maui.Views.EmployeeViews;
 using PracticePanther.Maui.Views.ProjectViews;
@@ -49,6 +51,9 @@ public static class MauiProgram {
 		builder.Services.AddTransient<TimeBuilderViewModel>();
 		builder.Services.AddTransient<TimeDisplayPage>();
 		builder.Services.AddTransient<TimeDisplayViewModel>();
+		
+		builder.Services.AddTransient<BillBuilderPage>();
+		builder.Services.AddTransient<BillBuilderViewModel>();
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif

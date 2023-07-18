@@ -9,8 +9,6 @@ public class Time {
 	public double Hours { get; set; }
 	public DateTime? Date { get; set; }
 	public string? Narrative { get; set; }
-	public string AsClientShortString => ToClientShortString();
-	public string AsEmployeeShortString => ToEmployeeShortString();
 	public string AsString => ToString();
 
 	public Time() {
@@ -25,12 +23,6 @@ public class Time {
 		Hours = hours;
 		Date = date;
 		Narrative = narrative;
-	}
-	public string ToClientShortString() {
-		return $"EmployeeID: {EmployeeId, -5}Hours: {Hours, -5}Date: {Date:MM/dd/yyyy}";
-	}
-	public string ToEmployeeShortString() {
-		return $"ClientID: {ClientId, -5}ProjectID: {ProjectId, -5}Hours: {Hours, -5}Date: {Date:MM/dd/yyyy}";
 	}
 	public override string ToString() {
 		return $"TimeID: {Id, -5}ClientID: {ClientId,-5}ProjectID: {ProjectId,-5}EmployeeID: {EmployeeId, -5}Hours: {Hours, -5}Date: {Date:MM/dd/yyyy}";

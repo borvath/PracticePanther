@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:clientViewModels="clr-namespace:PracticePanther.Maui.ViewModels.BillViewModels"
+             x:Class="PracticePanther.Maui.Views.BillViews.BillBuilderPage">
+    <ContentPage.BindingContext>
+        <clientViewModels:BillBuilderViewModel/>
+    </ContentPage.BindingContext>
+    <ScrollView StyleClass="page">
+        <VerticalStackLayout Margin="20, 0, 20, 0" 
+                             Spacing="0" 
+                             VerticalOptions="Center"
+                             WidthRequest="450"
+                             BackgroundColor="#a9a9a9">
+            <Label FontSize="48" HorizontalTextAlignment="Center" Text="Bill" TextColor="#151515"/>
+            <Frame StyleClass="frame-entry">
+                <HorizontalStackLayout StyleClass="add-entry">
+                    <Label Text="Due Date: " 
+                           VerticalOptions="Center"
+                           WidthRequest="100"
+                           StyleClass="entry-label"/>
+                    <DatePicker Date="{Binding DueDate}"
+                                VerticalOptions="Center" 
+                                WidthRequest="200"
+                                StyleClass="entry-field"/>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame BackgroundColor="Transparent">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Button Grid.Column="0" Grid.Row="0"
+                            Clicked="AddClicked"
+                            BackgroundColor="#006699"
+                            FontSize="24"
+                            Text="Confirm"/>
+                </Grid>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

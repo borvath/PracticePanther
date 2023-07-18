@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using Microsoft.Maui.Controls;
 using PracticePanther.Library.Models;
 using PracticePanther.Library.Services;
+using PracticePanther.Maui.Views.BillViews;
 namespace PracticePanther.Maui.ViewModels.ProjectViewModels; 
 
 public class ProjectDisplayViewModel : INotifyPropertyChanged, IQueryAttributable{
@@ -21,6 +22,11 @@ public class ProjectDisplayViewModel : INotifyPropertyChanged, IQueryAttributabl
 			Times = TimeService.Current.Times.Where(t => t.ProjectId == projectId).ToList();
 		}
 		NotifyPropertyChanged(nameof(DisplayedProject));
+	}
+	public void CreateBill(Shell s) {
+		if (DisplayedProject != null) {
+			s.GoToAsync(nameof(BillBuilderPage), new Dictionary<string, object>{{"ProjectId", DisplayedProject.Id.ToString()}});
+		}
 	}
 	public void RefreshView() {
 		if ( DisplayedProject != null) 

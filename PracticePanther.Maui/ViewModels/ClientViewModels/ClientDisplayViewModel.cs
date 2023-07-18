@@ -7,12 +7,14 @@ using System.Runtime.CompilerServices;
 using Microsoft.Maui.Controls;
 using PracticePanther.Library.Models;
 using PracticePanther.Library.Services;
+using PracticePanther.Maui.Views.ProjectViews;
 namespace PracticePanther.Maui.ViewModels.ClientViewModels; 
 
 public class ClientDisplayViewModel : IQueryAttributable, INotifyPropertyChanged {
 	
 	public Client? DisplayedClient { get; private set; }
 	public ObservableCollection<Project>? Projects { get; set; }
+	public ObservableCollection<Bill>? Bills { get; set; }
 	public Project? SelectedProject { get; set; }
 	public bool Closable => AllProjectsClosed();
 
@@ -21,9 +23,18 @@ public class ClientDisplayViewModel : IQueryAttributable, INotifyPropertyChanged
 		DisplayedClient = ClientService.Current.Clients.FirstOrDefault(c => c.Id == clientId);
 		if (DisplayedClient != null) {
 			Projects = new ObservableCollection<Project>(ProjectService.Current.Projects.Where(p => p.ClientId == DisplayedClient.Id));
+			Bills = new ObservableCollection<Bill>();
+			foreach (Bill b in from b in BillService.Current.Bills from p in Projects where b.ProjectId == p.Id select b) {
+				Bills.Add(b);
+			}
 		}
 		NotifyPropertyChanged(nameof(DisplayedClient));
 		NotifyPropertyChanged(nameof(Projects));
+		NotifyPropertyChanged(nameof(Bills));
+	}
+	public void DisplayProject(Shell s) {
+		if (SelectedProject != null)
+			s.GoToAsync(nameof(ProjectDisplayPage), new Dictionary<string, object>{{"ProjectId", SelectedProject.Id.ToString()}});
 	}
 	public void CloseProject() {
 		if (SelectedProject != null) {

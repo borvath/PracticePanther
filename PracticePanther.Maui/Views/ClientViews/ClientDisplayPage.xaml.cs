@@ -7,6 +7,9 @@ public partial class ClientDisplayPage : ContentPage {
 		InitializeComponent();
 		BindingContext = vm;
 	}
+	private void DisplayProjectClicked(object sender, EventArgs eventArgs) {
+		((ClientDisplayViewModel)BindingContext).DisplayProject(Shell.Current);
+	}
 	private void CloseProjectClicked(object sender, EventArgs eventArgs) {
 		((ClientDisplayViewModel)BindingContext).CloseProject();
 	}

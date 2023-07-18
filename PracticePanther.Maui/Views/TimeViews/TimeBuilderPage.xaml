@@ -38,7 +38,7 @@
                            StyleClass="entry-label"/>
                     <Picker BackgroundColor="#696969"
                             ItemsSource="{Binding Projects}"
-                            ItemDisplayBinding="{Binding AsShortString}"
+                            ItemDisplayBinding="{Binding AsString}"
                             SelectedItem="{Binding SelectedProject}"
                             WidthRequest="325"
                             TextColor="#fffff"/>

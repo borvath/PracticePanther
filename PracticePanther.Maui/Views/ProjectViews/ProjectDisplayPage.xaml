@@ -70,11 +70,29 @@
                           Margin="10, 0, 10, 0">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextCell Text="{Binding AsClientShortString}" TextColor="#000000"/>
+                            <ViewCell>
+                                <Label TextColor="#000000">
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="{}Employee ID: {0}   Hours: {1}   Date: {2:MM/dd/yyyy}">
+                                            <Binding Path="EmployeeId"/>
+                                            <Binding Path="Hours"/>
+                                            <Binding Path="Date"/>
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                            </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </VerticalStackLayout>
         </Frame>
+        <HorizontalStackLayout>
+            <Button Text="Generate Bill" 
+                    TextColor="#ffffff"
+                    HorizontalOptions="Fill" 
+                    HeightRequest="50"
+                    BackgroundColor="#008888"
+                    Clicked="CreateBillClicked"/>
+        </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

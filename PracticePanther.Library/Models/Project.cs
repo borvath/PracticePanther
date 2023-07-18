@@ -33,7 +33,6 @@ public class Project : INotifyPropertyChanged {
 		set { _shortName = value; NotifyPropertyChanged(); }
 	}
 	public string AsString => ToString();
-	public string AsShortString => ToShortString();
 
 	public Project() {
 		Id = 0;
@@ -50,19 +49,11 @@ public class Project : INotifyPropertyChanged {
 		_longName = longName;
 		ShortName = shortName;
 	}
-	public string ToShortString() {
-		string projIdString = "ID: {0, -5}";
-		string longNameString = "Name: {1, -" + (LongName.Length + 5) + "}";
-		string isActiveString = "Active: {2}";
-		string ret = projIdString + longNameString + isActiveString;
-		return String.Format(ret, Id, LongName, IsActive);
-	}
 	public override string ToString() {
 		string projIdString = "Project ID: {0, -5}";
-		string clientIdString = "Client ID: {1, -5}";
 		string longNameString = "Project Name: {2, -" + (LongName.Length + 5) + "}";
 		string isActiveString = "Active: {3}";
-		string ret = projIdString + clientIdString + longNameString + isActiveString;
+		string ret = projIdString + longNameString + isActiveString;
 		return String.Format(ret, Id, ClientId, LongName, IsActive);
 	}
 	public event PropertyChangedEventHandler? PropertyChanged;

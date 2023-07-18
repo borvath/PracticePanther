@@ -94,6 +94,12 @@
             </VerticalStackLayout>
         </Frame>
         <HorizontalStackLayout>
+            <Button Text="Display Project" 
+                    TextColor="#ffffff"
+                    HorizontalOptions="Fill" 
+                    HeightRequest="50"
+                    BackgroundColor="#008888"
+                    Clicked="DisplayProjectClicked"/>
             <Button Text="Close Project" 
                     TextColor="#ffffff"
                     HorizontalOptions="Fill" 
