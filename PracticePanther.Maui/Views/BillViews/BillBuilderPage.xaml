@@ -16,14 +16,42 @@
             <Label FontSize="48" HorizontalTextAlignment="Center" Text="Bill" TextColor="#151515"/>
             <Frame StyleClass="frame-entry">
                 <HorizontalStackLayout StyleClass="add-entry">
+                    <Label Text="Times: " 
+                           VerticalOptions="Start"
+                           WidthRequest="40"
+                           Margin="0, 10, 0, 0"
+                           StyleClass="entry-label"/>
+                    <CollectionView ItemsSource="{Binding Times}"
+                                    SelectionMode="Multiple"
+                                    SelectedItems="{Binding SelectedTimes}"
+                                    WidthRequest="330">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+	                            <Label TextColor="#000000" Padding="0" Margin="0">
+	                                <Label.Text>
+		                                <MultiBinding StringFormat="{}   ID: {0}   Emp: {1}   Date: {2:MM/dd/yyyy}">
+			                                <Binding Path="Id"/>
+			                                <Binding Path="EmpName"/>
+			                                <Binding Path="Date"/>
+		                                </MultiBinding>
+	                                </Label.Text>
+	                            </Label>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </HorizontalStackLayout>
+            </Frame>
+            <Frame StyleClass="frame-entry">
+                <HorizontalStackLayout StyleClass="add-entry">
                     <Label Text="Due Date: " 
                            VerticalOptions="Center"
-                           WidthRequest="100"
+                           WidthRequest="70"
                            StyleClass="entry-label"/>
                     <DatePicker Date="{Binding DueDate}"
                                 VerticalOptions="Center" 
-                                WidthRequest="200"
-                                StyleClass="entry-field"/>
+                                WidthRequest="150"
+                                StyleClass="entry-field"
+                                MinimumDate="{Binding MinDate}"/>
                 </HorizontalStackLayout>
             </Frame>
             <Frame BackgroundColor="Transparent">

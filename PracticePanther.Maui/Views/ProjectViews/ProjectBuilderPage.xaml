@@ -35,7 +35,7 @@
                            VerticalOptions="Center" 
                            WidthRequest="60"
                            StyleClass="entry-label"/>
-                    <Entry Text="{Binding LongName, Mode=TwoWay}"
+                    <Entry Text="{Binding Name, Mode=TwoWay}"
                            Placeholder="Default Project"
                            VerticalOptions="Center" 
                            WidthRequest="200"

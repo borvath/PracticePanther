@@ -9,7 +9,7 @@ public partial class BillBuilderPage : ContentPage {
 		BindingContext = vm;
 	}
 	private void AddClicked(object sender, EventArgs eventArgs) {
-		((BillBuilderViewModel)BindingContext).AddOrUpdateBill();
+		((BillBuilderViewModel)BindingContext).AddBill();
 		Shell.Current.GoToAsync("..");
 	}
 }

@@ -31,7 +31,7 @@
         </Frame>
         <Frame StyleClass="frame-entry">
             <VerticalStackLayout BackgroundColor="#a9a9a9" Margin="10, 0, 10, 0" Spacing="5">
-                <Label Text="{Binding DisplayedProject.LongName, StringFormat='Project Name: {0}'}"
+                <Label Text="{Binding DisplayedProject.Name, StringFormat='Project Name: {0}'}"
                        FontSize="22"
                        VerticalOptions="Center"
                        HorizontalOptions="Start"

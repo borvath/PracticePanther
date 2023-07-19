@@ -9,8 +9,9 @@ using PracticePanther.Library.Services;
 namespace PracticePanther.Maui.ViewModels.ClientViewModels; 
 
 public class ClientBuilderViewModel : IQueryAttributable, INotifyPropertyChanged {
-	public string? Name { get; set; }
-	public DateTime? Open { get; set; }
+	
+	public string Name { get; set; } = "John Doe";
+	public DateTime Open { get; set; }
 	public DateTime? Close { get; set; }
 	public string? Notes { get; set; }
 
@@ -18,15 +19,14 @@ public class ClientBuilderViewModel : IQueryAttributable, INotifyPropertyChanged
 	
 	public void AddOrUpdateClient() {
 		if (clientId == -1) {
-			ClientService.Current.Add(new Client(Name ?? "John Doe", Open ?? DateTime.Today,
-									Close ?? DateTime.Today.AddYears(1), Notes ?? "No notes"));
+			ClientService.Current.Add(new Client(Name, Open, Close, Notes));
 		}
 		else {
 			foreach (Client c in ClientService.Current.Clients.Where(c => c.Id == clientId)) {
-				c.Name = Name ?? "No Name";
+				c.Name = Name;
 				c.Open = Open;
 				c.Close = Close;
-				c.Notes = Notes ?? "No Notes";
+				c.Notes = Notes;
 				break;
 			}
 		}
@@ -45,8 +45,6 @@ public class ClientBuilderViewModel : IQueryAttributable, INotifyPropertyChanged
 		else {
 			Name = "John Doe";
 			Open = DateTime.Today;
-			Close = DateTime.Today.AddYears(1);
-			Notes = "No notes";
 		}
 		NotifyPropertyChanged(nameof(Name));
 		NotifyPropertyChanged(nameof(Open));

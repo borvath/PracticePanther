@@ -4,57 +4,30 @@ using System.Runtime.CompilerServices;
 namespace PracticePanther.Library.Models;
 
 public class Project : INotifyPropertyChanged {
-	private DateTime? _open;
+	private DateTime _open;
 	private DateTime? _close;
-	private bool _isActive;
-	private string _longName;
+	private bool _isActive = true;
+	private string _name;
 	private string? _shortName;
-	
+
 	public int Id { get; set; }
 	public int ClientId { get; set; }
-	public DateTime? Open {
-		get => _open;
-		set { _open = value; NotifyPropertyChanged(); }
-	}
-	public DateTime? Close {
-		get => _close;
-		set { _close = value; NotifyPropertyChanged(); }
-	}
-	public bool IsActive {
-		get => _isActive;
-		set { _isActive = value; NotifyPropertyChanged(); }
-	}
-	public string LongName {
-		get => _longName;
-		set { _longName = value; NotifyPropertyChanged(); }
-	}
-	public string? ShortName { 
-		get => _shortName;
-		set { _shortName = value; NotifyPropertyChanged(); }
-	}
+	public DateTime Open { get => _open; set { _open = value; NotifyPropertyChanged(); } }
+	public DateTime? Close { get => _close; set { _close = value; NotifyPropertyChanged(); } }
+	public bool IsActive { get => _isActive; set { _isActive = value; NotifyPropertyChanged(); } }
+	public string Name { get => _name; set { _name = value; NotifyPropertyChanged(); } }
+	public string? ShortName { get => _shortName; set { _shortName = value; NotifyPropertyChanged(); } }
 	public string AsString => ToString();
-
-	public Project() {
-		Id = 0;
-		Open = DateTime.Today;
-		Close = DateTime.Today.AddYears(1);
-		IsActive = true;
-		_longName = "Default Project";
-		ShortName = "Project";
-	}
-	public Project(DateTime? open, DateTime? close, string longName, string? shortName) {
-		Open = open;
-		Close = close;
-		IsActive = true;
-		_longName = longName;
-		ShortName = shortName;
+	
+	public Project(DateTime open, DateTime? close, string name, string? shortName) {
+		_open = open;
+		_close = close;
+		_name = name;
+		_shortName = shortName;
 	}
 	public override string ToString() {
-		string projIdString = "Project ID: {0, -5}";
-		string longNameString = "Project Name: {2, -" + (LongName.Length + 5) + "}";
-		string isActiveString = "Active: {3}";
-		string ret = projIdString + longNameString + isActiveString;
-		return String.Format(ret, Id, ClientId, LongName, IsActive);
+		string ret = "ID: {0, -5}" + "Name: {2, -" + (Name.Length + 5) + "}" + "Active: {3}";
+		return String.Format(ret, Id, ClientId, Name, IsActive);
 	}
 	public event PropertyChangedEventHandler? PropertyChanged;
 	protected virtual void NotifyPropertyChanged([CallerMemberName] string? propertyName = null) {

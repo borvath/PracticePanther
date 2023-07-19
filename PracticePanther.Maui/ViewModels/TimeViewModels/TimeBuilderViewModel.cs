@@ -9,6 +9,7 @@ using PracticePanther.Library.Services;
 namespace PracticePanther.Maui.ViewModels.TimeViewModels;
 
 public class TimeBuilderViewModel : INotifyPropertyChanged, IQueryAttributable {
+	
 	public List<Client> Clients { get; set; } = new List<Client>(ClientService.Current.Clients);
 	public Client? SelectedClient { get; set; }
 	public List<Project>? Projects { get; set; } = new List<Project>();
@@ -17,7 +18,7 @@ public class TimeBuilderViewModel : INotifyPropertyChanged, IQueryAttributable {
 	public Employee? SelectedEmployee { get; set; }
 	
 	public double Hours { get; set; }
-	public DateTime? Date { get; set; }
+	public DateTime Date { get; set; }
 	public string? Narrative { get; set; }
 	
 	private int timeId;
@@ -25,7 +26,7 @@ public class TimeBuilderViewModel : INotifyPropertyChanged, IQueryAttributable {
 	public void AddTime() {
 		if (SelectedClient != null && SelectedProject != null && SelectedEmployee != null) {
 			if (timeId == -1) {
-				TimeService.Current.AddTime(new Time(SelectedEmployee.Id, Hours, Date ?? DateTime.Today, Narrative ?? "Default Entry Notes"), SelectedProject);
+				TimeService.Current.AddTime(new Time(SelectedEmployee.Id, Hours, Date, Narrative), SelectedProject);
 			}
 			else {
 				foreach (Time t in TimeService.Current.Times.Where(t => t.Id == timeId)) {
@@ -45,7 +46,6 @@ public class TimeBuilderViewModel : INotifyPropertyChanged, IQueryAttributable {
 		if (timeId == -1) {
 			Hours = 0;
 			Date = DateTime.Today;
-			Narrative = "Default Entry Notes";
 		}
 		else {
 			foreach (Time t in TimeService.Current.Times.Where(t => t.Id == timeId)) {
@@ -54,8 +54,8 @@ public class TimeBuilderViewModel : INotifyPropertyChanged, IQueryAttributable {
 				SelectedProject = Projects?.Find(p => p.Id == t.ProjectId);
 				SelectedEmployee = Employees.Find(e => e.Id == t.EmployeeId);
 				Hours = t.Hours;
-				Date = t.Date ?? DateTime.Today;
-				Narrative = t.Narrative ?? "Default Entry Notes";
+				Date = t.Date;
+				Narrative = t.Narrative;
 			}
 		}
 		NotifyPropertyChanged(nameof(SelectedClient));

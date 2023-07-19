@@ -18,7 +18,7 @@ public class TimeService {
 	}
 	public List<Time> Times { get; }
 
-	public TimeService() {
+	private TimeService() {
 		Times = new List<Time>();
 	}
 
@@ -31,8 +31,16 @@ public class TimeService {
 	public void Remove(Time t) {
 		Times.Remove(t);
 	}
-	public Time? GetTime(int timeId) {
-		return Times.FirstOrDefault(t => t.Id == timeId);
+	public Time? GetTime(int id) {
+		return Times.FirstOrDefault(t => t.Id == id);
+	}
+	public double BillTime(int id) {
+		Time? t = GetTime(id);
+		if (t != null) {
+			t.HasBeenBilled = true;
+			return t.Hours * EmployeeService.Current.GetEmployee(t.EmployeeId)?.Rate ?? 0;
+		}
+		return 0;
 	}
 	public List<Time> Search(string query) {
 		Int32.TryParse(query, out int id);

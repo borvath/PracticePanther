@@ -6,14 +6,16 @@ using System.Runtime.CompilerServices;
 using Microsoft.Maui.Controls;
 using PracticePanther.Library.Models;
 using PracticePanther.Library.Services;
+
 namespace PracticePanther.Maui.ViewModels.ProjectViewModels;
 
 public class ProjectBuilderViewModel : INotifyPropertyChanged, IQueryAttributable {
+	
 	public List<Client> Clients { get; set; } = new List<Client>(ClientService.Current.Clients);
 	public Client? SelectedClient { get; set; }
-	public DateTime? Open { get; set; }
+	public DateTime Open { get; set; }
 	public DateTime? Close { get; set; }
-	public string? LongName { get; set; }
+	public string Name { get; set; } = "Default Project";
 	public string? ShortName { get; set; }
 	
 	private int projectId;
@@ -21,17 +23,14 @@ public class ProjectBuilderViewModel : INotifyPropertyChanged, IQueryAttributabl
 	public void AddOrUpdateProject() {
 		if (SelectedClient != null) {
 			if (projectId == -1) {
-				ProjectService.Current.AddProject(
-					new Project(Open ?? DateTime.Today, Close ?? DateTime.Today.AddYears(1), LongName ?? "Default Project", ShortName ?? "N/A"),
-					SelectedClient.Id
-					);
+				ProjectService.Current.AddProject(new Project(Open, Close, Name, ShortName), SelectedClient.Id);
 			}
 			else {
 				foreach (Project p in ProjectService.Current.Projects.Where(p => p.ClientId == SelectedClient.Id && p.Id == projectId)) {
 					p.ClientId = SelectedClient.Id;
 					p.Open = Open;
 					p.Close = Close;
-					p.LongName = LongName ?? "Default Project";
+					p.Name = Name;
 					p.ShortName = ShortName;
 					break;
 				}
@@ -41,10 +40,8 @@ public class ProjectBuilderViewModel : INotifyPropertyChanged, IQueryAttributabl
 	public void ApplyQueryAttributes(IDictionary<string, object> query) {
 		Int32.TryParse((query["ProjectId"] as string), out projectId);
 		if (projectId == -1) {
-			Open = DateTime.Today; 
-			Close = DateTime.Today.AddYears(1);
-			LongName = "Default Project";
-			ShortName = "N/A";
+			Open = DateTime.Today;
+			Name = "Default Project";
 		}
 		else { 
 			Project? p = ProjectService.Current.GetProject(projectId);
@@ -52,14 +49,14 @@ public class ProjectBuilderViewModel : INotifyPropertyChanged, IQueryAttributabl
 				SelectedClient = ClientService.Current.GetClient(p.ClientId);
 				Open = p.Open; 
 				Close = p.Close; 
-				LongName = p.LongName; 
+				Name = p.Name; 
 				ShortName = p.ShortName;
 			}
 		}
 		NotifyPropertyChanged(nameof(SelectedClient));
 		NotifyPropertyChanged(nameof(Open));
 		NotifyPropertyChanged(nameof(Close));
-		NotifyPropertyChanged(nameof(LongName));
+		NotifyPropertyChanged(nameof(Name));
 		NotifyPropertyChanged(nameof(ShortName));
 	}
 	

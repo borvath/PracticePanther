@@ -16,28 +16,18 @@ public class BillService {
 		}
 	}
 	public List<Bill> Bills { get; }
-	
-	public BillService() {
+
+	private BillService() {
 		Bills = new List<Bill>();
 	}
-	public void AddBill(Bill b) {
-		b.Id = Bills.Count == 0 ? 1 : Bills[^1].Id + 1;
-		Bills.Add(b);
+	public void AddBill(List<Time> t, DateTime dueDate) {
+		Bills.Add(new Bill(t, dueDate) { Id = Bills.Count == 0 ? 1 : Bills[^1].Id + 1 });
 	}
 	public void Remove(Bill b) {
 		Bills.Remove(b);
 	}
 	public Bill? GetBill(int billId) {
 		return Bills.FirstOrDefault(b => b.Id == billId);
-	}
-	public void CreateBill(Time t, DateTime dueDate) {
-		Bills.Add(new Bill(t, dueDate));
-	}
-	public void CreateBill(Project p, DateTime dueDate) {
-		List<Time> times = TimeService.Current.Times.Where(t => t.ProjectId == p.Id).ToList();
-		double total = (from t in times let emp = EmployeeService.Current.GetEmployee(t.EmployeeId) 
-		                select (emp != null) ? t.Hours * emp.Rate : 0.0).Sum();
-		Bills.Add(new Bill(p.Id, total, dueDate));
 	}
 	public double ClientTotal(int clientId) {
 		return (from b in Bills where ProjectService.Current.GetProject(b.ProjectId)?.ClientId == clientId 

@@ -17,8 +17,8 @@ public class ProjectService {
 		} 
 	}
 	public List<Project> Projects { get; }
-	
-	public ProjectService() {
+
+	private ProjectService() {
 		Projects = new List<Project>();
 	}
 	
@@ -33,6 +33,6 @@ public class ProjectService {
 	public List<Project> Search(string query) {
 		return Int32.TryParse(query, out int projectId) ? 
 			       Projects.Where(p => (p.Id.ToString().StartsWith(projectId.ToString()))).ToList() : 
-			       Projects.Where(p => (p.LongName.Contains(query, StringComparison.OrdinalIgnoreCase))).ToList();
+			       Projects.Where(p => (p.Name.Contains(query, StringComparison.OrdinalIgnoreCase))).ToList();
 	}
 }
