@@ -19,39 +19,28 @@
 		<Label FontSize="48" HorizontalTextAlignment="Center" TextColor="#151515">Client Info</Label>
 		<Frame StyleClass="frame-entry">
 			<VerticalStackLayout BackgroundColor="#a9a9a9" Margin="10, 0, 10, 0" Spacing="5">
-				<Label Text="{Binding DisplayedClient.Id, StringFormat='Client ID: {0}'}"
-				       FontSize="22"
-				       VerticalOptions="Center"
-				       HorizontalOptions="Start"
-				       WidthRequest="125"
-				       StyleClass="entry-label" />
 				<Label Text="{Binding DisplayedClient.Name, StringFormat='Name: {0}'}"
 				       FontSize="22"
-				       VerticalOptions="Center"
-				       HorizontalOptions="Start"
-				       WidthRequest="200"
+				       StyleClass="entry-label" />
+				<Label Text="{Binding DisplayedClient.Id, StringFormat='Client ID: {0}'}"
+				       FontSize="22"
 				       StyleClass="entry-label" />
 			</VerticalStackLayout>
 		</Frame>
 		<Frame StyleClass="frame-entry">
 			<VerticalStackLayout BackgroundColor="#a9a9a9" Margin="10, 0, 10, 0" Spacing="5" HorizontalOptions="Start">
-				<Label Text="{Binding DisplayedClient.Open, StringFormat='Open: {0:M/d/yyyy}'}"
-				       FontSize="22"
-				       VerticalOptions="Center"
-				       HorizontalOptions="Start"
-				       WidthRequest="200"
-				       StyleClass="entry-label" />
-				<Label Text="{Binding DisplayedClient.Close, StringFormat='Close: {0:M/d/yyyy}'}"
-				       FontSize="22"
-				       VerticalOptions="Center"
-				       HorizontalOptions="Start"
-				       WidthRequest="200"
-				       StyleClass="entry-label" />
+				<Label FontSize="22"
+				       StyleClass="entry-label">
+					<Label.Text>
+						<MultiBinding StringFormat="Dates: {0:MM/dd/yyyy} - {1:MM/dd/yyyy}">
+							<Binding Path="DisplayedClient.Open"/>
+							<Binding Path="DisplayedClient.Close"/>
+						</MultiBinding>
+					</Label.Text>
+				</Label>
 				<Label Text="{Binding DisplayedClient.IsActive, StringFormat='Active Account: {0}'}"
 				       FontSize="22"
-				       VerticalOptions="Center"
-				       WidthRequest="300"
-				       StyleClass="entry-label" />
+				       StyleClass="entry-label"/>
 			</VerticalStackLayout>
 		</Frame>
 		<Frame StyleClass="frame-entry">
@@ -61,7 +50,6 @@
 					<Label Text="{Binding DisplayedClient.Notes}"
 					       FontSize="22"
 					       LineBreakMode="WordWrap"
-					       VerticalOptions="Center"
 					       WidthRequest="500"
 					       StyleClass="entry-label" />
 				</ScrollView>
@@ -80,13 +68,38 @@
 							<ViewCell>
 								<Label TextColor="#000000">
 									<Label.Text>
-										<MultiBinding StringFormat="{}ID: {0}    Name: {1}    Active: {2}">
-											<Binding Path="Id"/>
+										<MultiBinding StringFormat="{}Name: {0}    Active: {1}">
 											<Binding Path="Name"/>
 											<Binding Path="IsActive"/>
 										</MultiBinding>
 									</Label.Text>
 								</Label>
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+			</VerticalStackLayout>
+		</Frame>
+		<Frame StyleClass="frame-entry">
+			<VerticalStackLayout Margin="10, 0">
+				<Label Text="Bills: " FontSize="22" TextColor="#000000"/>
+				<ListView ItemsSource="{Binding Bills}"
+				          SelectionMode="None"
+				          BackgroundColor="Transparent"
+				          Margin="10, 0, 10, 0">
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="1*"/>
+										<ColumnDefinition Width="1*"/>
+										<ColumnDefinition Width="1*"/>
+										<ColumnDefinition Width="1*"/>
+									</Grid.ColumnDefinitions>
+									<Label Grid.Column="0" TextColor="#000000" Text="{Binding TotalAmount, StringFormat='Total: {0:C}'}"/>
+									<Label Grid.Column="1" TextColor="#000000" Text="{Binding DueDate, StringFormat='Date: {0:MM/dd/yyyy}'}"/>
+								</Grid>
 							</ViewCell>
 						</DataTemplate>
 					</ListView.ItemTemplate>

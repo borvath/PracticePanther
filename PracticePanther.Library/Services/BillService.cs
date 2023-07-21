@@ -20,8 +20,8 @@ public class BillService {
 	private BillService() {
 		Bills = new List<Bill>();
 	}
-	public void AddBill(List<Time> t, DateTime dueDate) {
-		Bills.Add(new Bill(t, dueDate) { Id = Bills.Count == 0 ? 1 : Bills[^1].Id + 1 });
+	public void AddBill(List<Time> times, DateTime dueDate) {
+		Bills.Add(new Bill(times, dueDate));
 	}
 	public void Remove(Bill b) {
 		Bills.Remove(b);

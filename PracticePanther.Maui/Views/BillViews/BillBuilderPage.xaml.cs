@@ -12,5 +12,8 @@ public partial class BillBuilderPage : ContentPage {
 		((BillBuilderViewModel)BindingContext).AddBill();
 		Shell.Current.GoToAsync("..");
 	}
+	private void OnSelectionChanged(object? sender, SelectionChangedEventArgs e) {
+		((BillBuilderViewModel)BindingContext).SelectionChanged(e);
+	}
 }
 

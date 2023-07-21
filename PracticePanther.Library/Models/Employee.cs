@@ -1,19 +1,17 @@
-﻿using System;
-namespace PracticePanther.Library.Models;
+﻿namespace PracticePanther.Library.Models;
 
 public class Employee {
 
 	public int Id { get; set; }
 	public string Name { get; set; }
 	public double Rate { get; set; } = 0;
-	public string AsString => ToString();
+	public string AsString => ToString(); // IntelliSense says this is unused, that is untrue - used in TimeBuilder, do not delete
 	
 	public Employee(string name, double rate) {
 		Name = name;
 		Rate = rate;
 	}
 	public override string ToString() {
-		string ret = "ID: {0, -5}" + "Name: {1, -" + (Name.Length + 5) + "}" + "Rate: {2}";
-		return String.Format(ret, Id, Name, Rate);
+		return $"{Id}.   {Name}   {Rate:C}/hour";
 	}
 }

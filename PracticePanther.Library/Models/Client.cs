@@ -10,7 +10,7 @@ public class Client {
 	public DateTime? Close { get; set; }
 	public bool IsActive { get; set; } = true;
 	public string? Notes { get; set; }
-	public string AsString => ToString();
+	public string AsString => ToString(); // IntelliSense says this is unused, that is untrue - used in TimeBuilder, do not delete
 	
 	public Client(string name, DateTime open, DateTime? close, string? notes) {
 		Name = name;
@@ -19,6 +19,6 @@ public class Client {
 		Notes = notes;
 	}
 	public override string ToString() {
-		return $"ID: {Id, -5}Name: {Name}";
+		return $"{Id}.   {Name}";
 	}
 }

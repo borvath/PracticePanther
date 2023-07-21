@@ -18,8 +18,9 @@
             <Frame StyleClass="frame-entry">
                 <HorizontalStackLayout StyleClass="add-entry">
                     <Label Text="Name: " 
+                           FontSize="24"
                            VerticalOptions="Center" 
-                           WidthRequest="60"
+                           WidthRequest="95"
                            StyleClass="entry-label"/>
                     <Entry Placeholder="John Doe"
                            Text="{Binding Name, Mode=TwoWay}"
@@ -32,14 +33,15 @@
             <Frame StyleClass="frame-entry">
                 <HorizontalStackLayout StyleClass="add-entry">
                     <Label Text="Rate: " 
+                           FontSize="24"
                            VerticalOptions="Center" 
-                           WidthRequest="60"
+                           WidthRequest="95"
                            StyleClass="entry-label"/>
                     <Entry Placeholder="0.0"
                            Text="{Binding Rate, Mode=TwoWay}"
                            Keyboard="Numeric"
                            VerticalOptions="Center"
-                           WidthRequest="125"
+                           WidthRequest="200"
                            StyleClass="entry-field"/>
                 </HorizontalStackLayout>
             </Frame>

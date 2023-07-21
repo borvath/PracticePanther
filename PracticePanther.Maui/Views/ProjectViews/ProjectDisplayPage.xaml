@@ -15,77 +15,72 @@
                          BackgroundColor="#a9a9a9"
                          HorizontalOptions="Center">
         <Label FontSize="48" HorizontalTextAlignment="Center" TextColor="#151515">Project Info</Label>
-        <Frame StyleClass="frame-entry">
-            <VerticalStackLayout BackgroundColor="#a9a9a9" Margin="10, 0, 10, 0" Spacing="5">
-                <Label Text="{Binding DisplayedProject.ClientId, StringFormat='Client ID: {0}'}"
-                       FontSize="22"
-                       VerticalOptions="Center"
-                       HorizontalOptions="Start"
-                       StyleClass="entry-label"/>
-                <Label Text="{Binding DisplayedProject.Id, StringFormat='Project ID: {0}'}"
-                       FontSize="22"
-                       VerticalOptions="Center" 
-                       HorizontalOptions="Start"
-                       StyleClass="entry-label"/>
-            </VerticalStackLayout>
-        </Frame>
-        <Frame StyleClass="frame-entry">
-            <VerticalStackLayout BackgroundColor="#a9a9a9" Margin="10, 0, 10, 0" Spacing="5">
-                <Label Text="{Binding DisplayedProject.Name, StringFormat='Project Name: {0}'}"
-                       FontSize="22"
-                       VerticalOptions="Center"
-                       HorizontalOptions="Start"
-                       StyleClass="entry-label"/>
-                <Label Text="{Binding DisplayedProject.ShortName, StringFormat='Short Name: {0}'}"
-                       FontSize="22"
-                       VerticalOptions="Center" 
-                       HorizontalOptions="Start"
-                       StyleClass="entry-label"/>
-            </VerticalStackLayout>
-        </Frame>
-        <Frame StyleClass="frame-entry">
-            <VerticalStackLayout BackgroundColor="#a9a9a9" Margin="10, 0, 10, 0" Spacing="5" HorizontalOptions="Start">
-                <Label Text="{Binding DisplayedProject.Open, StringFormat='Open: {0:M/d/yyyy}'}" 
-                       FontSize="22"
-                       VerticalOptions="Center" 
-                       HorizontalOptions="Start"
-                       StyleClass="entry-label"/>
-                <Label Text="{Binding DisplayedProject.Close, StringFormat='Close: {0:M/d/yyyy}'}" 
-                       FontSize="22"
-                       VerticalOptions="Center"
-                       HorizontalOptions="Start"
-                       StyleClass="entry-label"/>
-                <Label Text="{Binding DisplayedProject.IsActive, StringFormat='Active Project: {0}'}"
-                       FontSize="22"
-                       VerticalOptions="Center" 
-                       StyleClass="entry-label"/>
-            </VerticalStackLayout>
-        </Frame>
-        <Frame StyleClass="frame-entry">
+	    <Frame StyleClass="frame-entry">
+		    <Label TextColor="#000000" StyleClass="entry-label" FontSize="22" Margin="10, 0, 0, 0">
+			    <Label.Text>
+				    <MultiBinding StringFormat="{}Project Name: {0}&#x0a;Client ID: {1}     Project Id: {2}&#x0a;Short Name: {3}&#x0a;Dates: {4:MM/dd/yyyy} - {5:MM/dd/yyyy}&#x0a;Active: {6}">
+					    <Binding Path="DisplayedProject.Name"/>
+					    <Binding Path="DisplayedProject.ClientId"/>
+					    <Binding Path="DisplayedProject.Id"/>
+					    <Binding Path="DisplayedProject.ShortName"/>
+					    <Binding Path="DisplayedProject.Open"/>
+					    <Binding Path="DisplayedProject.Close"/>
+					    <Binding Path="DisplayedProject.IsActive"/>
+				    </MultiBinding>
+			    </Label.Text>
+		    </Label>
+	    </Frame>
+	    <Frame StyleClass="frame-entry">
             <VerticalStackLayout Margin="10, 0">
                 <Label Text="Time Entries: " FontSize="22" TextColor="#000000"/>
                 <ListView ItemsSource="{Binding Times}"
-                          SelectedItem="{Binding SelectedTime}"
+                          SelectionMode="None"
                           BackgroundColor="Transparent"
                           Margin="10, 0, 10, 0">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <ViewCell>
-                                <Label TextColor="#000000">
-                                    <Label.Text>
-                                        <MultiBinding StringFormat="{}Employee ID: {0}   Hours: {1}   Date: {2:MM/dd/yyyy}">
-                                            <Binding Path="EmployeeId"/>
-                                            <Binding Path="Hours"/>
-                                            <Binding Path="Date"/>
-                                        </MultiBinding>
-                                    </Label.Text>
-                                </Label>
-                            </ViewCell>
+	                        <ViewCell>
+		                        <Grid>
+			                        <Grid.ColumnDefinitions>
+				                        <ColumnDefinition Width="1*"/>
+				                        <ColumnDefinition Width="1*"/>
+				                        <ColumnDefinition Width="1*"/>
+			                        </Grid.ColumnDefinitions>
+			                        <Label Grid.Column="0" TextColor="#000000" Text="{Binding EmployeeName, StringFormat='Emp: {0}'}"/>
+			                        <Label Grid.Column="1" TextColor="#000000" Text="{Binding Hours, StringFormat='Hours: {0:F2}'}"/>
+			                        <Label Grid.Column="2" TextColor="#000000" Text="{Binding Date, StringFormat='Date: {0:M/d/yy}'}"/>
+		                        </Grid>
+	                        </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </VerticalStackLayout>
         </Frame>
+	    <Frame StyleClass="frame-entry">
+		    <VerticalStackLayout Margin="10, 0">
+			    <Label Text="Bills: " FontSize="22" TextColor="#000000"/>
+			    <ListView ItemsSource="{Binding Bills}"
+			              SelectionMode="None"
+			              BackgroundColor="Transparent"
+			              Margin="10, 0, 10, 0">
+				    <ListView.ItemTemplate>
+					    <DataTemplate>
+						    <ViewCell>
+							    <Grid>
+								    <Grid.ColumnDefinitions>
+									    <ColumnDefinition Width="1*"/>
+									    <ColumnDefinition Width="1*"/>
+									    <ColumnDefinition Width="1*"/>
+								    </Grid.ColumnDefinitions>
+								    <Label Grid.Column="0" TextColor="#000000" Text="{Binding TotalAmount, StringFormat='Total: {0:C}'}"/>
+								    <Label Grid.Column="1" TextColor="#000000" Text="{Binding DueDate, StringFormat='Date: {0:M/d/yy}'}"/>
+							    </Grid>
+						    </ViewCell>
+					    </DataTemplate>
+				    </ListView.ItemTemplate>
+			    </ListView>
+		    </VerticalStackLayout>
+	    </Frame>
         <HorizontalStackLayout>
             <Button Text="Generate Bill" 
                     TextColor="#ffffff"

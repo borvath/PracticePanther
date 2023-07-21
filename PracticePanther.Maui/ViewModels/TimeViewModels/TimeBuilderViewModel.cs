@@ -50,21 +50,21 @@ public class TimeBuilderViewModel : INotifyPropertyChanged, IQueryAttributable {
 		else {
 			foreach (Time t in TimeService.Current.Times.Where(t => t.Id == timeId)) {
 				SelectedClient = Clients.Find(c => c.Id == t.ClientId);
+				NotifyPropertyChanged(nameof(SelectedClient));
 				Projects = ProjectService.Current.Projects.Where(p => p.ClientId == SelectedClient?.Id).ToList();
+				NotifyPropertyChanged(nameof(Projects));
 				SelectedProject = Projects?.Find(p => p.Id == t.ProjectId);
+				NotifyPropertyChanged(nameof(SelectedProject));
 				SelectedEmployee = Employees.Find(e => e.Id == t.EmployeeId);
+				NotifyPropertyChanged(nameof(SelectedEmployee));
 				Hours = t.Hours;
 				Date = t.Date;
 				Narrative = t.Narrative;
+				NotifyPropertyChanged(nameof(Narrative));
 			}
 		}
-		NotifyPropertyChanged(nameof(SelectedClient));
-		NotifyPropertyChanged(nameof(Projects));
-		NotifyPropertyChanged(nameof(SelectedProject));
-		NotifyPropertyChanged(nameof(SelectedEmployee));
 		NotifyPropertyChanged(nameof(Hours));
 		NotifyPropertyChanged(nameof(Date));
-		NotifyPropertyChanged(nameof(Narrative));
 	}
 	public void RefreshView() {
 		if (SelectedClient != null) {

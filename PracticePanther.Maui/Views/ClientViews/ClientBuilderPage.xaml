@@ -25,7 +25,7 @@
                     <Entry Text="{Binding Name, Mode=TwoWay}"
                            Placeholder="John Doe"
                            VerticalOptions="Center" 
-                           WidthRequest="200"
+                           WidthRequest="275"
                            StyleClass="entry-field"
                            MaxLength="200"/>
                 </HorizontalStackLayout>
@@ -63,7 +63,7 @@
                     <Editor Text="{Binding Notes, Mode=TwoWay}"
                             Placeholder="Enter notes here"
                             VerticalOptions="Center" 
-                            WidthRequest="250" 
+                            WidthRequest="275" 
                             HeightRequest="250"
                             StyleClass="entry-field"/>
                 </HorizontalStackLayout>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using PracticePanther.Library.Services;
 namespace PracticePanther.Library.Models;
 
 public class Project : INotifyPropertyChanged {
@@ -12,12 +13,13 @@ public class Project : INotifyPropertyChanged {
 
 	public int Id { get; set; }
 	public int ClientId { get; set; }
+	public string? ClientName => ClientService.Current.GetClient(ClientId)?.Name;
 	public DateTime Open { get => _open; set { _open = value; NotifyPropertyChanged(); } }
 	public DateTime? Close { get => _close; set { _close = value; NotifyPropertyChanged(); } }
 	public bool IsActive { get => _isActive; set { _isActive = value; NotifyPropertyChanged(); } }
 	public string Name { get => _name; set { _name = value; NotifyPropertyChanged(); } }
 	public string? ShortName { get => _shortName; set { _shortName = value; NotifyPropertyChanged(); } }
-	public string AsString => ToString();
+	public string AsString => ToString(); // IntelliSense says this is unused, that is untrue - used in TimeBuilder, do not delete
 	
 	public Project(DateTime open, DateTime? close, string name, string? shortName) {
 		_open = open;
@@ -26,8 +28,7 @@ public class Project : INotifyPropertyChanged {
 		_shortName = shortName;
 	}
 	public override string ToString() {
-		string ret = "ID: {0, -5}" + "Name: {2, -" + (Name.Length + 5) + "}" + "Active: {3}";
-		return String.Format(ret, Id, ClientId, Name, IsActive);
+		return $"Project: {ShortName ?? Name}   Active: {IsActive}";
 	}
 	public event PropertyChangedEventHandler? PropertyChanged;
 	protected virtual void NotifyPropertyChanged([CallerMemberName] string? propertyName = null) {

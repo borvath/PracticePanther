@@ -11,6 +11,7 @@ public class Bill {
 	public DateTime DueDate { get; set; }
 	
 	public Bill(List<Time> times, DateTime dueDate) {
+		Id = BillService.Current.Bills.Count == 0 ? 1 : BillService.Current.Bills[^1].Id + 1;
 		ProjectId = times[0].ProjectId;
 		DueDate = dueDate;
 		foreach (Time t in times)

@@ -24,14 +24,15 @@
                     <CollectionView ItemsSource="{Binding Times}"
                                     SelectionMode="Multiple"
                                     SelectedItems="{Binding SelectedTimes}"
-                                    WidthRequest="330">
+                                    SelectionChanged="OnSelectionChanged"
+                                    WidthRequest="350">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
 	                            <Label TextColor="#000000" Padding="0" Margin="0">
 	                                <Label.Text>
-		                                <MultiBinding StringFormat="{}   ID: {0}   Emp: {1}   Date: {2:MM/dd/yyyy}">
-			                                <Binding Path="Id"/>
-			                                <Binding Path="EmpName"/>
+		                                <MultiBinding StringFormat="{}{0}   {1:F2} hours   {2:M/d/yy}">
+			                                <Binding Path="EmployeeName"/>
+			                                <Binding Path="Hours"/>
 			                                <Binding Path="Date"/>
 		                                </MultiBinding>
 	                                </Label.Text>

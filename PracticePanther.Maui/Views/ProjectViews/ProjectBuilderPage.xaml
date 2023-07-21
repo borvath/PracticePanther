@@ -25,7 +25,7 @@
                             ItemsSource="{Binding Clients}"
                             ItemDisplayBinding="{Binding AsString}"
                             SelectedItem="{Binding SelectedClient}"
-                            WidthRequest="300"
+                            WidthRequest="250"
                             TextColor="#fffff"/>
                 </HorizontalStackLayout>
             </Frame>
@@ -38,7 +38,7 @@
                     <Entry Text="{Binding Name, Mode=TwoWay}"
                            Placeholder="Default Project"
                            VerticalOptions="Center" 
-                           WidthRequest="200"
+                           WidthRequest="250"
                            StyleClass="entry-field"
                            MaxLength="200"/>
                 </HorizontalStackLayout>
@@ -50,9 +50,9 @@
                            WidthRequest="60"
                            StyleClass="entry-label"/>
                     <Entry Text="{Binding ShortName, Mode=TwoWay}"
-                           Placeholder="Proj1"
+                           Placeholder="Def Proj"
                            VerticalOptions="Center" 
-                           WidthRequest="200"
+                           WidthRequest="175"
                            StyleClass="entry-field"
                            MaxLength="200"/>
                 </HorizontalStackLayout>
