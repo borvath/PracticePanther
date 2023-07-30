@@ -11,9 +11,7 @@ public class TimeService {
 	private static TimeService? instance;
 	public static TimeService Current {
 		get {
-			lock (_lock) {
-				return instance ??= new TimeService();
-			}
+			lock (_lock) { return instance ??= new TimeService(); }
 		}
 	}
 	public List<Time> Times { get; }

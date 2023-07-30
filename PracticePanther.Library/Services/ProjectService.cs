@@ -11,9 +11,7 @@ public class ProjectService {
 	private static ProjectService? instance;
 	public static ProjectService Current {
 		get {
-			lock (_lock) {
-				return instance ??= new ProjectService();
-			}
+			lock (_lock) { return instance ??= new ProjectService(); }
 		} 
 	}
 	public List<Project> Projects { get; }

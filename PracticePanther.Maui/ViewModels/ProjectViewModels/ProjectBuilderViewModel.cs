@@ -11,7 +11,7 @@ namespace PracticePanther.Maui.ViewModels.ProjectViewModels;
 
 public class ProjectBuilderViewModel : INotifyPropertyChanged, IQueryAttributable {
 	
-	public List<Client> Clients { get; set; } = new List<Client>(ClientService.Current.Clients);
+	public List<Client> Clients { get; set; } = new List<Client>(ClientService.GetClients());
 	public Client? SelectedClient { get; set; }
 	public DateTime Open { get; set; }
 	public DateTime? Close { get; set; }
@@ -46,7 +46,7 @@ public class ProjectBuilderViewModel : INotifyPropertyChanged, IQueryAttributabl
 		else { 
 			Project? p = ProjectService.Current.GetProject(projectId);
 			if (p != null) {
-				SelectedClient = ClientService.Current.GetClient(p.ClientId);
+				SelectedClient = ClientService.GetClient(p.ClientId);
 				Open = p.Open; 
 				Close = p.Close; 
 				Name = p.Name; 

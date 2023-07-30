@@ -5,7 +5,7 @@ public class Time {
 	
 	public int Id { get; set; }
 	public int ClientId { get; set; }
-	public string? ClientName => ClientService.Current.GetClient(ClientId)?.Name;
+	public string? ClientName => ClientService.GetClient(ClientId)?.Name;
 	public int ProjectId { get; set; }
 	public string? ProjectName => ProjectService.Current.GetProject(ProjectId)?.Name;
 	public int EmployeeId { get; set; }

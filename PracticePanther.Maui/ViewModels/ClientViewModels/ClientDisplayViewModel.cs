@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Microsoft.Maui.Controls;
+using PracticePanther.Library.DTOs;
 using PracticePanther.Library.Models;
 using PracticePanther.Library.Services;
 using PracticePanther.Maui.Views.ProjectViews;
@@ -20,7 +21,7 @@ public class ClientDisplayViewModel : IQueryAttributable, INotifyPropertyChanged
 
 	public void ApplyQueryAttributes(IDictionary<string, object> query) {
 		Int32.TryParse((query["ClientId"] as string), out int clientId);
-		DisplayedClient = ClientService.Current.Clients.FirstOrDefault(c => c.Id == clientId);
+		DisplayedClient = ClientService.GetClient(clientId);
 		if (DisplayedClient != null) {
 			Projects = new ObservableCollection<Project>(ProjectService.Current.Projects.Where(p => p.ClientId == DisplayedClient.Id));
 			Bills = new ObservableCollection<Bill>();
@@ -48,6 +49,9 @@ public class ClientDisplayViewModel : IQueryAttributable, INotifyPropertyChanged
 		if (DisplayedClient != null) {
 			DisplayedClient.IsActive = false;
 			DisplayedClient.Close = DateTime.Now;
+			ClientService.AddOrUpdate(new ClientDTO(DisplayedClient.Id, DisplayedClient.Name, 
+				DisplayedClient.Open, DisplayedClient.Close, DisplayedClient.Notes, DisplayedClient.IsActive)
+			);
 		}
 		NotifyPropertyChanged(nameof(DisplayedClient));
 	}

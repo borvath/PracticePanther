@@ -10,9 +10,7 @@ public class BillService {
 	private static BillService? instance;
 	public static BillService Current {
 		get {
-			lock (_lock) {
-				return instance ??= new BillService();
-			}
+			lock (_lock) { return instance ??= new BillService(); }
 		}
 	}
 	public List<Bill> Bills { get; }

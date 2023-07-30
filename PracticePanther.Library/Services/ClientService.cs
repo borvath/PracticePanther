@@ -1,36 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
+using PracticePanther.Library.DTOs;
 using PracticePanther.Library.Models;
+using PracticePanther.Library.Utilities;
 
 namespace PracticePanther.Library.Services;
 
-public class ClientService {
-	private static object _lock = new object();
-	private static ClientService? instance;
-	public static ClientService Current {
-		get {
-			lock (_lock) {
-				return instance ??= new ClientService();
-			}
-		}
+public static class ClientService {
+	public static void AddOrUpdate(ClientDTO c) {
+		new WebRequestHandler().Post("/Client", c).Wait();
 	}
-	public List<Client> Clients { get; }
-
-	private ClientService() {
-		Clients = new List<Client>();
+	public static void Delete(int id) {
+		new WebRequestHandler().Delete($"/Client/Delete/{id}").Wait();
 	}
-	
-	public void Add(Client c) {
-		c.Id = Clients.Count == 0 ? 1 : Clients[^1].Id + 1;
-		Clients.Add(c);
+	public static Client? GetClient(int id) {
+		string? response = new WebRequestHandler().Get($"/Client/{id}").Result;
+		return (response != null) ? JsonConvert.DeserializeObject<ClientDTO>(response)?.ConvertToClient() : null;
 	}
-	public Client? GetClient(int id) {
-		return Clients.FirstOrDefault(c => c.Id == id);
-	}
-	public List<Client> Search(string query) {
-		return Int32.TryParse(query, out int clientId) ? 
-			       Clients.Where(c => (c.Id.ToString().StartsWith(clientId.ToString()))).ToList() : 
-			       Clients.Where(c => (c.Name.Contains(query, StringComparison.OrdinalIgnoreCase))).ToList();
+	public static List<Client> GetClients(string? query = null) {
+		string? response = query == null ? new WebRequestHandler().Get("/Client").Result : new WebRequestHandler().Get($"/Client/{query}").Result;
+		return response != null ? JsonConvert.DeserializeObject<List<Client>>(response) ?? new List<Client>() : new List<Client>();
 	}
 }

@@ -10,7 +10,7 @@ namespace PracticePanther.Maui.ViewModels.TimeViewModels;
 
 public class TimeBuilderViewModel : INotifyPropertyChanged, IQueryAttributable {
 	
-	public List<Client> Clients { get; set; } = new List<Client>(ClientService.Current.Clients);
+	public List<Client> Clients { get; set; } = new List<Client>(ClientService.GetClients());
 	public Client? SelectedClient { get; set; }
 	public List<Project>? Projects { get; set; } = new List<Project>();
 	public Project? SelectedProject { get; set; }

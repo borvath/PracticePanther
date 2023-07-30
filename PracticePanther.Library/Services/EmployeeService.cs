@@ -10,10 +10,8 @@ public class EmployeeService {
 	private static object _lock = new object();
 	private static EmployeeService? instance;
 	public static EmployeeService Current {
-		get {
-			lock (_lock) {
-				return instance ??= new EmployeeService();
-			}
+		get { 
+			lock (_lock) { return instance ??= new EmployeeService(); }
 		}
 	}
 	public List<Employee> Employees { get; }

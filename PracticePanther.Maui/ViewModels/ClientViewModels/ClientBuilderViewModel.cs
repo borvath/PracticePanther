@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using Microsoft.Maui.Controls;
+using PracticePanther.Library.DTOs;
 using PracticePanther.Library.Models;
 using PracticePanther.Library.Services;
+
 namespace PracticePanther.Maui.ViewModels.ClientViewModels; 
 
 public class ClientBuilderViewModel : IQueryAttributable, INotifyPropertyChanged {
@@ -19,22 +20,23 @@ public class ClientBuilderViewModel : IQueryAttributable, INotifyPropertyChanged
 	
 	public void AddOrUpdateClient() {
 		if (clientId == -1) {
-			ClientService.Current.Add(new Client(Name, Open, Close, Notes));
+			ClientService.AddOrUpdate(new ClientDTO(clientId, Name, Open, Close, Notes, true));
 		}
 		else {
-			foreach (Client c in ClientService.Current.Clients.Where(c => c.Id == clientId)) {
+			Client? c = ClientService.GetClient(clientId);
+			if (c != null) {
 				c.Name = Name;
 				c.Open = Open;
 				c.Close = Close;
 				c.Notes = Notes;
-				break;
+				ClientService.AddOrUpdate(new ClientDTO(c.Id, c.Name, c.Open, c.Close, c.Notes, c.IsActive));
 			}
 		}
 	}
 	public void ApplyQueryAttributes(IDictionary<string, object> query) {
 		Int32.TryParse((query["ClientId"] as string), out clientId);
 		if (clientId > 0) {
-			Client? c = ClientService.Current.GetClient(clientId);
+			Client? c = ClientService.GetClient(clientId);
 			if (c != null) {
 				Name = c.Name;
 				Open = c.Open;
@@ -44,7 +46,7 @@ public class ClientBuilderViewModel : IQueryAttributable, INotifyPropertyChanged
 		}
 		else {
 			Name = "John Doe";
-			Open = DateTime.Today;
+			Open = DateTime.Now;
 		}
 		NotifyPropertyChanged(nameof(Name));
 		NotifyPropertyChanged(nameof(Open));
