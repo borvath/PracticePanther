@@ -15,7 +15,9 @@ public partial class ClientListPage : ContentPage {
 		((ClientListViewModel)BindingContext).GetSearchResults(searchBar.Text);
 	}
 	private void AddClicked(object sender, EventArgs e) {
-		Shell.Current.GoToAsync(nameof(ClientBuilderPage), new Dictionary<string, object>{{"ClientId", "-1"}});
+		Shell.Current.GoToAsync(nameof(ClientBuilderPage), new Dictionary<string, object> {
+			{"ClientId", "-1"}
+		});
 	}
 	private void EditClicked(object sender, EventArgs e) {
 		((ClientListViewModel)BindingContext).EditClient(Shell.Current);

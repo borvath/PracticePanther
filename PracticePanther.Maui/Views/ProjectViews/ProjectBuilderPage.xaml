@@ -23,8 +23,8 @@
                            StyleClass="entry-label"/>
                     <Picker BackgroundColor="#696969"
                             ItemsSource="{Binding Clients}"
-                            ItemDisplayBinding="{Binding AsString}"
                             SelectedItem="{Binding SelectedClient}"
+                            ItemDisplayBinding="{Binding AsString}"
                             WidthRequest="250"
                             TextColor="#fffff"/>
                 </HorizontalStackLayout>

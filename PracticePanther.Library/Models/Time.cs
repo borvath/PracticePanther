@@ -7,7 +7,7 @@ public class Time {
 	public int ClientId { get; set; }
 	public string? ClientName => ClientService.GetClient(ClientId)?.Name;
 	public int ProjectId { get; set; }
-	public string? ProjectName => ProjectService.Current.GetProject(ProjectId)?.Name;
+	public string? ProjectName => ProjectService.GetProject(ProjectId)?.Name;
 	public int EmployeeId { get; set; }
 	public string? EmployeeName => EmployeeService.Current.GetEmployee(EmployeeId)?.Name;
 	public double Hours { get; set; }

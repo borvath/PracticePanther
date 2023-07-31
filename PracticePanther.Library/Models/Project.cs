@@ -21,11 +21,14 @@ public class Project : INotifyPropertyChanged {
 	public string? ShortName { get => _shortName; set { _shortName = value; NotifyPropertyChanged(); } }
 	public string AsString => $"Project: {ShortName ?? Name}   Active: {IsActive}";
 	
-	public Project(DateTime open, DateTime? close, string name, string? shortName) {
+	public Project(int id, int c_id, string name, string? shortName, DateTime open, DateTime? close, bool active) {
+		Id = id;
+		ClientId = c_id;
 		_open = open;
 		_close = close;
 		_name = name;
 		_shortName = shortName;
+		_isActive = active;
 	}
 	public event PropertyChangedEventHandler? PropertyChanged;
 	protected virtual void NotifyPropertyChanged([CallerMemberName] string? propertyName = null) {

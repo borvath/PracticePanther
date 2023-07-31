@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Maui.Controls;
 using PracticePanther.Maui.ViewModels.ProjectViewModels;
+
 namespace PracticePanther.Maui.Views.ProjectViews; 
+
 public partial class ProjectListPage : ContentPage {
 	public ProjectListPage(ProjectListViewModel vm) {
 		InitializeComponent();
@@ -12,7 +15,9 @@ public partial class ProjectListPage : ContentPage {
 		((ProjectListViewModel)BindingContext).GetSearchResults(searchBar.Text);
 	}
 	private void AddClicked(object? sender, EventArgs eventArgs) {
-		((ProjectListViewModel)BindingContext).AddProject(Shell.Current);
+		Shell.Current.GoToAsync(nameof(ProjectBuilderPage), new Dictionary<string, object> {
+			{"ProjectId", "-1"}
+		});
 	}
 	private void EditClicked(object? sender, EventArgs eventArgs) {
 		((ProjectListViewModel)BindingContext).EditProject(Shell.Current);

@@ -12,7 +12,7 @@ public class MSSQLContext {
 	public SqlConnection? Connection { get; }
 
 	private MSSQLContext() {
-		const string conn = $"server='{Server}';database='{DatabaseName}';Trusted_Connection=True;";
+		const string conn = $"server='{Server}';database='{DatabaseName}';Trusted_Connection=True;TrustServerCertificate=true;";
 		Connection = new SqlConnection(conn);
 		Connection.Open();
 	}

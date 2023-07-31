@@ -23,7 +23,7 @@ public class ClientDisplayViewModel : IQueryAttributable, INotifyPropertyChanged
 		Int32.TryParse((query["ClientId"] as string), out int clientId);
 		DisplayedClient = ClientService.GetClient(clientId);
 		if (DisplayedClient != null) {
-			Projects = new ObservableCollection<Project>(ProjectService.Current.Projects.Where(p => p.ClientId == DisplayedClient.Id));
+			Projects = new ObservableCollection<Project>(ProjectService.GetProjects().Where(p => p.ClientId == DisplayedClient.Id));
 			Bills = new ObservableCollection<Bill>();
 			foreach (Bill b in from b in BillService.Current.Bills from p in Projects where b.ProjectId == p.Id select b) {
 				Bills.Add(b);
@@ -35,7 +35,9 @@ public class ClientDisplayViewModel : IQueryAttributable, INotifyPropertyChanged
 	}
 	public void DisplayProject(Shell s) {
 		if (SelectedProject != null)
-			s.GoToAsync(nameof(ProjectDisplayPage), new Dictionary<string, object>{{"ProjectId", SelectedProject.Id.ToString()}});
+			s.GoToAsync(nameof(ProjectDisplayPage), new Dictionary<string, object> {
+				{"ProjectId", SelectedProject.Id.ToString()}
+			});
 	}
 	public void CloseProject() {
 		if (SelectedProject != null) {
@@ -56,7 +58,7 @@ public class ClientDisplayViewModel : IQueryAttributable, INotifyPropertyChanged
 		NotifyPropertyChanged(nameof(DisplayedClient));
 	}
 	private bool AllProjectsClosed() {
-		return ProjectService.Current.Projects.Where(p => p.ClientId == DisplayedClient?.Id && p.IsActive).ToList().Count == 0;
+		return ProjectService.GetProjects().Where(p => p.ClientId == DisplayedClient?.Id && p.IsActive).ToList().Count == 0;
 	}
 	public void RefreshView() {
 		NotifyPropertyChanged(nameof(DisplayedClient));

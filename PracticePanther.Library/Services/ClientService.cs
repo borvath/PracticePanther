@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using PracticePanther.Library.DTOs;
 using PracticePanther.Library.Models;
@@ -19,6 +20,7 @@ public static class ClientService {
 	}
 	public static List<Client> GetClients(string? query = null) {
 		string? response = query == null ? new WebRequestHandler().Get("/Client").Result : new WebRequestHandler().Get($"/Client/{query}").Result;
-		return response != null ? JsonConvert.DeserializeObject<List<Client>>(response) ?? new List<Client>() : new List<Client>();
+		List<ClientDTO> dtoList = response != null ? JsonConvert.DeserializeObject<List<ClientDTO>>(response) ?? new List<ClientDTO>() : new List<ClientDTO>();
+		return dtoList.Select(c => c.ConvertToClient()).ToList();
 	}
 }

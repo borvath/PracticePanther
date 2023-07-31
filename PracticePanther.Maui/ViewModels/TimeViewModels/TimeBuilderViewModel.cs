@@ -12,7 +12,7 @@ public class TimeBuilderViewModel : INotifyPropertyChanged, IQueryAttributable {
 	
 	public List<Client> Clients { get; set; } = new List<Client>(ClientService.GetClients());
 	public Client? SelectedClient { get; set; }
-	public List<Project>? Projects { get; set; } = new List<Project>();
+	public List<Project> Projects { get; set; } = new List<Project>();
 	public Project? SelectedProject { get; set; }
 	public List<Employee> Employees { get; set; } = new List<Employee>(EmployeeService.Current.Employees);
 	public Employee? SelectedEmployee { get; set; }
@@ -51,9 +51,9 @@ public class TimeBuilderViewModel : INotifyPropertyChanged, IQueryAttributable {
 			foreach (Time t in TimeService.Current.Times.Where(t => t.Id == timeId)) {
 				SelectedClient = Clients.Find(c => c.Id == t.ClientId);
 				NotifyPropertyChanged(nameof(SelectedClient));
-				Projects = ProjectService.Current.Projects.Where(p => p.ClientId == SelectedClient?.Id).ToList();
+				Projects = new List<Project>(ProjectService.GetProjects().Where(p => p.ClientId == SelectedClient?.Id));
 				NotifyPropertyChanged(nameof(Projects));
-				SelectedProject = Projects?.Find(p => p.Id == t.ProjectId);
+				SelectedProject = Projects.Find(p => p.Id == t.ProjectId);
 				NotifyPropertyChanged(nameof(SelectedProject));
 				SelectedEmployee = Employees.Find(e => e.Id == t.EmployeeId);
 				NotifyPropertyChanged(nameof(SelectedEmployee));
@@ -69,7 +69,7 @@ public class TimeBuilderViewModel : INotifyPropertyChanged, IQueryAttributable {
 	public void RefreshView() {
 		if (SelectedClient != null) {
 			SelectedProject = null;
-			Projects = new List<Project>(ProjectService.Current.Projects.Where(p => p.ClientId == SelectedClient.Id));
+			Projects = new List<Project>(ProjectService.GetProjects().Where(p => p.ClientId == SelectedClient.Id));
 		}
 		NotifyPropertyChanged(nameof(SelectedProject));
 		NotifyPropertyChanged(nameof(Projects));

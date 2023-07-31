@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Microsoft.Maui.Controls;
+using PracticePanther.Library.DTOs;
 using PracticePanther.Library.Models;
 using PracticePanther.Library.Services;
 
@@ -23,41 +24,37 @@ public class ProjectBuilderViewModel : INotifyPropertyChanged, IQueryAttributabl
 	public void AddOrUpdateProject() {
 		if (SelectedClient != null) {
 			if (projectId == -1) {
-				ProjectService.Current.AddProject(new Project(Open, Close, Name, ShortName), SelectedClient.Id);
+				ProjectService.AddOrUpdate(new ProjectDTO(projectId, SelectedClient.Id, Name, ShortName, Open, Close, true));
 			}
 			else {
-				foreach (Project p in ProjectService.Current.Projects.Where(p => p.ClientId == SelectedClient.Id && p.Id == projectId)) {
-					p.ClientId = SelectedClient.Id;
-					p.Open = Open;
-					p.Close = Close;
-					p.Name = Name;
-					p.ShortName = ShortName;
-					break;
-				}
+				Project? p = ProjectService.GetProject(projectId);
+				if (p != null)
+					ProjectService.AddOrUpdate(new ProjectDTO(p.Id, SelectedClient.Id, Name, ShortName, Open, Close, p.IsActive));
 			}
 		}
 	}
 	public void ApplyQueryAttributes(IDictionary<string, object> query) {
 		Int32.TryParse((query["ProjectId"] as string), out projectId);
 		if (projectId == -1) {
-			Open = DateTime.Today;
 			Name = "Default Project";
+			Open = DateTime.Today;
 		}
 		else { 
-			Project? p = ProjectService.Current.GetProject(projectId);
+			Project? p = ProjectService.GetProject(projectId);
 			if (p != null) {
-				SelectedClient = ClientService.GetClient(p.ClientId);
-				Open = p.Open; 
-				Close = p.Close; 
+				SelectedClient = Clients.FirstOrDefault(c => c.Id == p.ClientId);
+				NotifyPropertyChanged(nameof(Clients));
+				NotifyPropertyChanged(nameof(SelectedClient));
 				Name = p.Name; 
 				ShortName = p.ShortName;
+				NotifyPropertyChanged(nameof(ShortName));
+				Open = p.Open; 
+				Close = p.Close;
+				NotifyPropertyChanged(nameof(Close));
 			}
 		}
-		NotifyPropertyChanged(nameof(SelectedClient));
 		NotifyPropertyChanged(nameof(Open));
-		NotifyPropertyChanged(nameof(Close));
 		NotifyPropertyChanged(nameof(Name));
-		NotifyPropertyChanged(nameof(ShortName));
 	}
 	
 	public event PropertyChangedEventHandler? PropertyChanged;

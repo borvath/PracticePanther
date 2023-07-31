@@ -1,36 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
+using PracticePanther.Library.DTOs;
 using PracticePanther.Library.Models;
+using PracticePanther.Library.Utilities;
 
 namespace PracticePanther.Library.Services;
 
-public class ProjectService {
-	
-	private static object _lock = new object();
-	private static ProjectService? instance;
-	public static ProjectService Current {
-		get {
-			lock (_lock) { return instance ??= new ProjectService(); }
-		} 
+public static class ProjectService {
+	public static void AddOrUpdate(ProjectDTO p) {
+		new WebRequestHandler().Post("/Project", p).Wait();
 	}
-	public List<Project> Projects { get; }
-
-	private ProjectService() {
-		Projects = new List<Project>();
+	public static void Delete(int id) {
+		new WebRequestHandler().Delete($"/Project/Delete/{id}").Wait();
 	}
-	
-	public void AddProject(Project p, int clientId) {
-		p.Id = Projects.Count == 0 ? 1 : Projects[^1].Id + 1;
-		p.ClientId = clientId;
-		Projects.Add(p);
+	public static Project? GetProject(int id) {
+		string? response = new WebRequestHandler().Get($"/Project/{id}").Result;
+		return (response != null) ? JsonConvert.DeserializeObject<ProjectDTO>(response)?.ConvertToProject() : null;
 	}
-	public Project? GetProject(int id) {
-		return Projects.FirstOrDefault(p => p.Id == id);
-	}
-	public List<Project> Search(string query) {
-		return Int32.TryParse(query, out int projectId) ? 
-			       Projects.Where(p => (p.Id.ToString().StartsWith(projectId.ToString()))).ToList() : 
-			       Projects.Where(p => (p.Name.Contains(query, StringComparison.OrdinalIgnoreCase))).ToList();
+	public static List<Project> GetProjects(string? query = null) {
+		string? response = (query == null) ? new WebRequestHandler().Get("/Project").Result : new WebRequestHandler().Get($"/Project/{query}").Result;
+		List<ProjectDTO> dtoList = (response != null) ? JsonConvert.DeserializeObject<List<ProjectDTO>>(response) ?? new List<ProjectDTO>() : new List<ProjectDTO>();
+		return dtoList.Select(p => p.ConvertToProject()).ToList();
 	}
 }

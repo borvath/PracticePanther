@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -20,33 +19,32 @@ public class ClientListViewModel : INotifyPropertyChanged {
 	}
 	public ObservableCollection<Client> Clients { get; set; } = new ObservableCollection<Client>();
 	public Client? SelectedClient { get; set; }
-
-	public void GetClients() {
-		Clients = new ObservableCollection<Client>(ClientService.GetClients(Query));
-	}
+	
 	public void GetSearchResults(string query) {
 		Query = query;
 		RefreshView();
 	}
 	public void EditClient(Shell s) {
 		if (SelectedClient != null)
-			s.GoToAsync(nameof(ClientBuilderPage), new Dictionary<string, object>{{"ClientId", SelectedClient.Id.ToString()}});
-	}
-	public void DisplayClient(Shell s) {
-		if (SelectedClient != null)
-			s.GoToAsync(nameof(ClientDisplayPage), new Dictionary<string, object>{{"ClientId", SelectedClient.Id.ToString()}});
+			s.GoToAsync(nameof(ClientBuilderPage), new Dictionary<string, object> {
+				{"ClientId", SelectedClient.Id.ToString()}
+			});
 	}
 	public void DeleteClient() {
 		if (SelectedClient != null) {
-			TimeService.Current.Times.RemoveAll(t => t.ClientId == SelectedClient.Id);
-			ProjectService.Current.Projects.RemoveAll(p => p.ClientId == SelectedClient.Id);
 			ClientService.Delete(SelectedClient.Id);
 			RefreshView();
 		}
 		SelectedClient = null;
 	}
+	public void DisplayClient(Shell s) {
+		if (SelectedClient != null)
+			s.GoToAsync(nameof(ClientDisplayPage), new Dictionary<string, object> {
+				{"ClientId", SelectedClient.Id.ToString()}
+			});
+	}
 	public void RefreshView() {
-		GetClients();
+		Clients = new ObservableCollection<Client>(ClientService.GetClients(Query));
 		NotifyPropertyChanged(nameof(Clients));
 	}
 	public event PropertyChangedEventHandler? PropertyChanged;

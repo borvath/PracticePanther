@@ -24,18 +24,17 @@ public class ClientBuilderViewModel : IQueryAttributable, INotifyPropertyChanged
 		}
 		else {
 			Client? c = ClientService.GetClient(clientId);
-			if (c != null) {
-				c.Name = Name;
-				c.Open = Open;
-				c.Close = Close;
-				c.Notes = Notes;
-				ClientService.AddOrUpdate(new ClientDTO(c.Id, c.Name, c.Open, c.Close, c.Notes, c.IsActive));
-			}
+			if (c != null)
+				ClientService.AddOrUpdate(new ClientDTO(c.Id, Name, Open, Close, Notes, c.IsActive));
 		}
 	}
 	public void ApplyQueryAttributes(IDictionary<string, object> query) {
 		Int32.TryParse((query["ClientId"] as string), out clientId);
-		if (clientId > 0) {
+		if (clientId == -1) {
+			Name = "John Doe";
+			Open = DateTime.Now;
+		}
+		else {
 			Client? c = ClientService.GetClient(clientId);
 			if (c != null) {
 				Name = c.Name;
@@ -43,10 +42,6 @@ public class ClientBuilderViewModel : IQueryAttributable, INotifyPropertyChanged
 				Close = c.Close;
 				Notes = c.Notes;
 			}
-		}
-		else {
-			Name = "John Doe";
-			Open = DateTime.Now;
 		}
 		NotifyPropertyChanged(nameof(Name));
 		NotifyPropertyChanged(nameof(Open));
