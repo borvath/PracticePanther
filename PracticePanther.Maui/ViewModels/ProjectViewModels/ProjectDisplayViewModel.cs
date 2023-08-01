@@ -19,7 +19,7 @@ public class ProjectDisplayViewModel : INotifyPropertyChanged, IQueryAttributabl
 		Int32.TryParse((query["ProjectId"] as string), out int projectId);
 		DisplayedProject = ProjectService.GetProject(projectId);
 		if (DisplayedProject != null) {
-			Times = new List<Time>(TimeService.Current.Times.Where(t => t.ProjectId == projectId));
+			Times = new List<Time>(TimeService.GetTimes().Where(t => t.ProjectId == projectId));
 			Bills = new List<Bill>(BillService.Current.Bills.Where(b => b.ProjectId == projectId));
 		}
 		NotifyPropertyChanged(nameof(DisplayedProject));

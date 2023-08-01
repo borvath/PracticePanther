@@ -86,7 +86,7 @@
             </Frame>
             <Frame StyleClass="frame-entry">
                 <HorizontalStackLayout StyleClass="add-entry">
-                    <Label Text="Summary:"
+                    <Label Text="Narrative:"
                            VerticalOptions="Start"
                            WidthRequest="70"
                            StyleClass="entry-label"/>

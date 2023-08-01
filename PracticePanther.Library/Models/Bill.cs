@@ -15,7 +15,7 @@ public class Bill {
 		ProjectId = times[0].ProjectId;
 		DueDate = dueDate;
 		foreach (Time t in times)
-			TotalAmount += TimeService.Current.BillTime(t.Id);
+			TotalAmount += TimeService.BillTime(t.Id);
 	}
 	public Bill(int id, int pid, decimal totalAmount, DateTime dueDate) {
 		Id = id;

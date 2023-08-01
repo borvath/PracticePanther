@@ -24,7 +24,7 @@ public class BillBuilderViewModel : IQueryAttributable, INotifyPropertyChanged{
 	}
 	public void ApplyQueryAttributes(IDictionary<string, object> query) {
 		Int32.TryParse((query["ProjectId"] as string), out projectId);
-		Times = TimeService.Current.Times.Where(t => t.ProjectId == projectId && !t.HasBeenBilled).ToList();
+		Times = TimeService.GetTimes().Where(t => t.ProjectId == projectId && !t.HasBeenBilled).ToList();
 		SelectedTimes = new List<object>();
 		DueDate = MinDate;
 		NotifyPropertyChanged(nameof(Times));

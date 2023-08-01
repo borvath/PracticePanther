@@ -9,19 +9,19 @@ public class TimeDTO {
 	public int EmployeeId { get; }
 	public decimal Hours { get; }
 	public DateTime Date { get; }
-	public string? Summary { get; }
-	public bool Billed { get; }
+	public string? Narrative { get; }
+	public bool HasBeenBilled { get; }
 
-	public TimeDTO(int id, int p_id, int e_id, decimal hours, DateTime date, string? summary, bool billed) {
+	public TimeDTO(int id, int projectId, int employeeId, decimal hours, DateTime date, string? narrative, bool hasBeenBilled) {
 		Id = id;
-		ProjectId = p_id;
-		EmployeeId = e_id;
+		ProjectId = projectId;
+		EmployeeId = employeeId;
 		Hours = hours;
 		Date = date;
-		Summary = summary;
-		Billed = billed;
+		Narrative = narrative;
+		HasBeenBilled = hasBeenBilled;
 	}
 	public Time ConvertToTime() {
-		return new Time(Id, ProjectId, EmployeeId, Hours, Date, Summary, Billed);
+		return new Time(Id, ProjectId, EmployeeId, Hours, Date, Narrative, HasBeenBilled);
 	}
 }

@@ -6,16 +6,15 @@ namespace PracticePanther.Library.Models;
 public class Time {
 	
 	public int Id { get; set; }
-	public int ClientId { get; set; }
-	public string? ClientName => ClientService.GetClient(ClientId)?.Name;
 	public int ProjectId { get; set; }
-	public string? ProjectName => ProjectService.GetProject(ProjectId)?.Name;
 	public int EmployeeId { get; set; }
-	public string? EmployeeName => EmployeeService.GetEmployee(EmployeeId)?.Name;
 	public decimal Hours { get; set; }
 	public DateTime Date { get; set; }
 	public string? Narrative { get; set; }
 	public bool HasBeenBilled { get; set; }
+	public string? ClientName => ClientService.GetClient(ProjectService.GetProject(ProjectId)?.ClientId ?? 0)?.Name;
+	public string? ProjectName => ProjectService.GetProject(ProjectId)?.Name;
+	public string? EmployeeName => EmployeeService.GetEmployee(EmployeeId)?.Name;
 
 	public Time(int empId, decimal hours, DateTime date, string? narrative) {
 		EmployeeId = empId;

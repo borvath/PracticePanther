@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Microsoft.Maui.Controls;
 using PracticePanther.Library.Models;
 using PracticePanther.Library.Services;
-using PracticePanther.Maui.Views;
 using PracticePanther.Maui.Views.TimeViews;
 namespace PracticePanther.Maui.ViewModels.TimeViewModels; 
 
@@ -19,31 +17,29 @@ public class TimeListViewModel : INotifyPropertyChanged {
 			NotifyPropertyChanged(nameof(Times));
 		}
 	}
-	public ObservableCollection<Time> Times =>
-		String.IsNullOrWhiteSpace(Query) ? 
-			new ObservableCollection<Time>(TimeService.Current.Times) : 
-			new ObservableCollection<Time>(TimeService.Current.Search(Query));
+	public ObservableCollection<Time> Times { get; set; } = new ObservableCollection<Time>();
 	public Time? SelectedTime { get; set; }
 	
-	
-	public void AddTime(Shell s) {
-		s.GoToAsync(nameof(TimeBuilderPage), new Dictionary<string, object> {{"TimeId", "-1"}});
-	}
 	public void EditTime(Shell s) {
 		if (SelectedTime != null) {
-			s.GoToAsync(nameof(TimeBuilderPage), new Dictionary<string, object> {{"TimeId", SelectedTime.Id.ToString()}});
+			s.GoToAsync(nameof(TimeBuilderPage), new Dictionary<string, object> {
+				{"TimeId", SelectedTime.Id.ToString()}
+			});
+			RefreshView();
 		}
 	}
 	public void DeleteTime() {
 		if (SelectedTime != null) {
-			TimeService.Current.Remove(SelectedTime);
+			TimeService.Delete(SelectedTime.Id);
 			RefreshView();
 		}
-		SelectedTime = null;
 	}
 	public void DisplayTime(Shell s) {
 		if (SelectedTime != null) {
-			s.GoToAsync(nameof(TimeDisplayPage), new Dictionary<string, object> { {"TimeId", SelectedTime.Id.ToString()}});
+			s.GoToAsync(nameof(TimeDisplayPage), new Dictionary<string, object> {
+				{"TimeId", SelectedTime.Id.ToString()}
+			});
+			SelectedTime = null;
 		}
 	}
 	public void GetSearchResults(string query) {
@@ -51,7 +47,9 @@ public class TimeListViewModel : INotifyPropertyChanged {
 		RefreshView();
 	}
 	public void RefreshView() {
+		Times = new ObservableCollection<Time>(TimeService.GetTimes(Query));
 		NotifyPropertyChanged(nameof(Times));
+		SelectedTime = null;
 	}
 	
 	public event PropertyChangedEventHandler? PropertyChanged;

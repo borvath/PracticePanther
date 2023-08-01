@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Microsoft.Maui.Controls;
+using PracticePanther.Library.DTOs;
 using PracticePanther.Library.Models;
 using PracticePanther.Library.Services;
 namespace PracticePanther.Maui.ViewModels.TimeViewModels;
@@ -26,17 +27,12 @@ public class TimeBuilderViewModel : INotifyPropertyChanged, IQueryAttributable {
 	public void AddTime() {
 		if (SelectedClient != null && SelectedProject != null && SelectedEmployee != null) {
 			if (timeId == -1) {
-				TimeService.Current.AddTime(new Time(SelectedEmployee.Id, Hours, Date, Narrative), SelectedProject);
+				TimeService.AddOrUpdate(new TimeDTO(timeId, SelectedProject.Id, SelectedEmployee.Id, Hours, Date, Narrative, false));
 			}
 			else {
-				foreach (Time t in TimeService.Current.Times.Where(t => t.Id == timeId)) {
-					t.ClientId = SelectedClient.Id;
-					t.ProjectId = SelectedProject.Id;
-					t.EmployeeId = SelectedEmployee.Id;
-					t.Hours = Hours;
-					t.Date = Date;
-					t.Narrative = Narrative;
-				}
+				Time? t = TimeService.GetTime(timeId);
+				if (t != null)
+					TimeService.AddOrUpdate(new TimeDTO(t.Id, SelectedProject.Id, SelectedEmployee.Id, Hours, Date, Narrative, t.HasBeenBilled));
 			}
 		}
 	}
@@ -48,8 +44,8 @@ public class TimeBuilderViewModel : INotifyPropertyChanged, IQueryAttributable {
 			Date = DateTime.Today;
 		}
 		else {
-			foreach (Time t in TimeService.Current.Times.Where(t => t.Id == timeId)) {
-				SelectedClient = Clients.Find(c => c.Id == t.ClientId);
+			foreach (Time t in TimeService.GetTimes().Where(t => t.Id == timeId)) {
+				SelectedClient = Clients.Find(c => c.Id == ProjectService.GetProject(t.ProjectId)?.ClientId);
 				NotifyPropertyChanged(nameof(SelectedClient));
 				Projects = new List<Project>(ProjectService.GetProjects().Where(p => p.ClientId == SelectedClient?.Id));
 				NotifyPropertyChanged(nameof(Projects));

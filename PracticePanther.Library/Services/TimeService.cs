@@ -1,47 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
+using PracticePanther.Library.DTOs;
 using PracticePanther.Library.Models;
+using PracticePanther.Library.Utilities;
 
 namespace PracticePanther.Library.Services;
 
-public class TimeService {
-	
-	private static object _lock = new object();
-	private static TimeService? instance;
-	public static TimeService Current {
-		get {
-			lock (_lock) { return instance ??= new TimeService(); }
-		}
+public static class TimeService {
+	public static void AddOrUpdate(TimeDTO t) {
+		new WebRequestHandler().Post("/Time", t).Wait();
 	}
-	public List<Time> Times { get; }
-
-	private TimeService() {
-		Times = new List<Time>();
+	public static void Delete(int id) {
+		new WebRequestHandler().Delete($"/Time/Delete/{id}").Wait();
 	}
-
-	public void AddTime(Time t, Project p) {
-		t.Id = Times.Count == 0 ? 1 : Times[^1].Id + 1;
-		t.ClientId = p.ClientId;
-		t.ProjectId = p.Id;
-		Times.Add(t);
+	public static Time? GetTime(int id) {
+		string? response = new WebRequestHandler().Get($"/Time/{id}").Result;
+		return (response != null) ? JsonConvert.DeserializeObject<TimeDTO>(response)?.ConvertToTime() : null;
 	}
-	public void Remove(Time t) {
-		Times.Remove(t);
+	public static List<Time> GetTimes(string? query = null) {
+		string? response = query == null ? new WebRequestHandler().Get("/Time").Result : new WebRequestHandler().Get($"/Time/{query}").Result;
+		List<TimeDTO> dtoList = response != null ? JsonConvert.DeserializeObject<List<TimeDTO>>(response) ?? new List<TimeDTO>() : new List<TimeDTO>();
+		return dtoList.Select(t => t.ConvertToTime()).ToList();
 	}
-	public Time? GetTime(int id) {
-		return Times.FirstOrDefault(t => t.Id == id);
-	}
-	public decimal BillTime(int id) {
+	public static decimal BillTime(int id) {
 		Time? t = GetTime(id);
 		if (t != null) {
 			t.HasBeenBilled = true;
-			return (decimal)t.Hours * EmployeeService.GetEmployee(t.EmployeeId)?.Rate ?? 0;
+			return t.Hours * EmployeeService.GetEmployee(t.EmployeeId)?.Rate ?? 0;
 		}
 		return 0;
-	}
-	public List<Time> Search(string query) {
-		Int32.TryParse(query, out int id);
-		return Times.Where(t => (t.Id.ToString().StartsWith(id.ToString()))).ToList();
 	}
 }

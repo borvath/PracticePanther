@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Maui.Controls;
 using PracticePanther.Maui.ViewModels.TimeViewModels;
+
 namespace PracticePanther.Maui.Views.TimeViews; 
+
 public partial class TimeListPage : ContentPage {
 	public TimeListPage(TimeListViewModel vm) {
 		InitializeComponent();
@@ -12,7 +15,9 @@ public partial class TimeListPage : ContentPage {
 		((TimeListViewModel)BindingContext).GetSearchResults(searchBar.Text);
 	}
 	private void AddClicked(object? sender, EventArgs eventArgs) {
-		((TimeListViewModel)BindingContext).AddTime(Shell.Current);
+		Shell.Current.GoToAsync(nameof(TimeBuilderPage), new Dictionary<string, object> {
+				{"TimeId", "-1"}
+		});
 	}
 	private void EditClicked(object? sender, EventArgs eventArgs) {
 		((TimeListViewModel)BindingContext).EditTime(Shell.Current);

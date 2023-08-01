@@ -16,7 +16,7 @@ public class EmployeeDisplayViewModel : INotifyPropertyChanged, IQueryAttributab
 	public void ApplyQueryAttributes(IDictionary<string, object> query) {
 		Int32.TryParse((query["EmployeeId"] as string), out int employeeId);
 		DisplayedEmployee = EmployeeService.GetEmployee(employeeId);
-		foreach (Time t in TimeService.Current.Times.Where(t => t.EmployeeId == employeeId))
+		foreach (Time t in TimeService.GetTimes().Where(t => t.EmployeeId == employeeId))
 				EmployeeTimes?.Add(t);
 		NotifyPropertyChanged(nameof(DisplayedEmployee));
 		NotifyPropertyChanged(nameof(EmployeeTimes));

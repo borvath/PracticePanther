@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using Microsoft.Maui.Controls;
 using PracticePanther.Library.Models;
 using PracticePanther.Library.Services;
+
 namespace PracticePanther.Maui.ViewModels.TimeViewModels; 
 
 public class TimeDisplayViewModel : INotifyPropertyChanged, IQueryAttributable {
@@ -12,10 +13,7 @@ public class TimeDisplayViewModel : INotifyPropertyChanged, IQueryAttributable {
 	
 	public void ApplyQueryAttributes(IDictionary<string, object> query) {
 		Int32.TryParse((query["TimeId"] as string), out int timeId);
-		DisplayedTime = TimeService.Current.GetTime(timeId);
-		NotifyPropertyChanged(nameof(DisplayedTime));
-	}
-	public void RefreshView() {
+		DisplayedTime = TimeService.GetTime(timeId);
 		NotifyPropertyChanged(nameof(DisplayedTime));
 	}
 	public event PropertyChangedEventHandler? PropertyChanged;

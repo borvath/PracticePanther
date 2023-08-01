@@ -18,7 +18,7 @@
             <Label FontSize="22"
                    StyleClass="entry-label">
                 <Label.Text>
-                    <MultiBinding StringFormat="ID: {0}&#x0a;Client: {1}     Project ID: {2}&#x0a;Employee: {3}&#x0a;Hours: {5:F2}     Date: {4: MM/dd/yyyy}&#x0a;Entry Notes: {6}">
+                    <MultiBinding StringFormat="ID: {0}&#x0a;Client: {1}&#x0a;Project: {2}&#x0a;Employee: {3}&#x0a;Hours: {5:F2}     Date: {4: MM/dd/yyyy}&#x0a;Entry Notes: {6}">
 	                    <Binding Path="DisplayedTime.Id"/>
 	                    <Binding Path="DisplayedTime.ClientName"/>
 	                    <Binding Path="DisplayedTime.ProjectName"/>
