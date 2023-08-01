@@ -44,13 +44,14 @@ public class TimeBuilderViewModel : INotifyPropertyChanged, IQueryAttributable {
 			Date = DateTime.Today;
 		}
 		else {
-			foreach (Time t in TimeService.GetTimes().Where(t => t.Id == timeId)) {
-				SelectedClient = Clients.Find(c => c.Id == ProjectService.GetProject(t.ProjectId)?.ClientId);
-				NotifyPropertyChanged(nameof(SelectedClient));
+			Time? t = TimeService.GetTime(timeId);
+			if (t != null) {
 				Projects = new List<Project>(ProjectService.GetProjects().Where(p => p.ClientId == SelectedClient?.Id));
 				NotifyPropertyChanged(nameof(Projects));
 				SelectedProject = Projects.Find(p => p.Id == t.ProjectId);
 				NotifyPropertyChanged(nameof(SelectedProject));
+				SelectedClient = Clients.Find(c => c.Id == SelectedProject?.ClientId);
+				NotifyPropertyChanged(nameof(SelectedClient));
 				SelectedEmployee = Employees.Find(e => e.Id == t.EmployeeId);
 				NotifyPropertyChanged(nameof(SelectedEmployee));
 				Hours = t.Hours;

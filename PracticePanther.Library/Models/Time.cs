@@ -15,13 +15,7 @@ public class Time {
 	public string? ClientName => ClientService.GetClient(ProjectService.GetProject(ProjectId)?.ClientId ?? 0)?.Name;
 	public string? ProjectName => ProjectService.GetProject(ProjectId)?.Name;
 	public string? EmployeeName => EmployeeService.GetEmployee(EmployeeId)?.Name;
-
-	public Time(int empId, decimal hours, DateTime date, string? narrative) {
-		EmployeeId = empId;
-		Hours = hours;
-		Date = date;
-		Narrative = narrative;
-	}
+	
 	public Time(int id, int pid, int empid, decimal hours, DateTime date, string? narrative, bool billed) {
 		Id = id;
 		ProjectId = pid;

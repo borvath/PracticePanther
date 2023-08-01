@@ -1,40 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
+using PracticePanther.Library.DTOs;
 using PracticePanther.Library.Models;
+using PracticePanther.Library.Utilities;
 
 namespace PracticePanther.Library.Services; 
 
-public class BillService {
-	private static object _lock = new object();
-	private static BillService? instance;
-	public static BillService Current {
-		get {
-			lock (_lock) { return instance ??= new BillService(); }
-		}
+public static class BillService {
+	
+	public static void AddOrUpdate(BillDTO b) {
+		new WebRequestHandler().Post("/Bill", b).Wait();
 	}
-	public List<Bill> Bills { get; }
-
-	private BillService() {
-		Bills = new List<Bill>();
+	public static void Delete(int id) {
+		new WebRequestHandler().Delete($"/Time/Delete/{id}").Wait();
 	}
-	public void AddBill(List<Time> times, DateTime dueDate) {
-		Bills.Add(new Bill(times, dueDate));
+	public static Bill? GetBill(int id) {
+		string? response = new WebRequestHandler().Get($"/Bill/{id}").Result;
+		return (response != null) ? JsonConvert.DeserializeObject<BillDTO>(response)?.ConvertToBill() : null;
 	}
-	public void Remove(Bill b) {
-		Bills.Remove(b);
-	}
-	public Bill? GetBill(int billId) {
-		return Bills.FirstOrDefault(b => b.Id == billId);
-	}
-	public decimal ClientTotal(int clientId) {
-		return (from b in Bills 
-		        where ProjectService.GetProject(b.ProjectId)?.ClientId == clientId 
-		        select TimeService.GetTimes().Where(t => t.ProjectId == b.ProjectId).ToList() into times 
-		        select (
-			               from t in times 
-			               let emp = EmployeeService.GetEmployee(t.EmployeeId) 
-			               select (emp != null) ? t.Hours * emp.Rate : 0).Sum()
-		        ).Sum();
+	public static List<Bill> GetBills(int projectId) {
+		string? response = new WebRequestHandler().Get($"/Bill/Project/{projectId}").Result;
+		List<BillDTO> dtoList = response != null ? JsonConvert.DeserializeObject<List<BillDTO>>(response) ?? new List<BillDTO>() : new List<BillDTO>();
+		return dtoList.Select(b => b.ConvertToBill()).ToList();
 	}
 }

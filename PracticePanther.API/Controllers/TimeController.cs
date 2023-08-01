@@ -58,7 +58,7 @@ public class TimeController : ControllerBase{
 	public TimeDTO? GetById(int id) {
 		const string query = "SELECT id, project_id, employee_id, hours, due_date, summary, billed " +
 		                     "FROM practicepanther.time "                                          +
-		                     "WHERE id=@p_id";
+		                     "WHERE id = @p_id";
 		var cmd = new SqlCommand(query, MSSQLContext.Current().Connection);
 		cmd.Parameters.AddWithValue("p_id", id);
 		SqlDataReader? reader = cmd.ExecuteReader();
@@ -71,6 +71,23 @@ public class TimeController : ControllerBase{
 		}
 		reader.Close();
 		return null;
+	}
+	[HttpGet("/Time/proj/{id:int}")]
+	public List<TimeDTO>? GetByProject(int id) {
+		const string query = "SELECT id, project_id, employee_id, hours, due_date, summary, billed " +
+		                     "FROM practicepanther.time "                                            +
+		                     "WHERE project_id = @p_id ";
+		var cmd = new SqlCommand(query, MSSQLContext.Current().Connection);
+		cmd.Parameters.AddWithValue("p_id", id);
+		SqlDataReader? reader = cmd.ExecuteReader();
+		var times = new List<TimeDTO>();
+		while (reader.Read()) {
+			times.Add(new TimeDTO(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), 
+				reader.GetDecimal(3), reader.GetDateTime(4), reader.IsDBNull(5) ? null : reader.GetString(5),
+				reader.GetBoolean(6)));
+		}
+		reader.Close();
+		return times;
 	}
 	[HttpDelete("Delete/{id:int}")]
 	public int Delete(int id) {

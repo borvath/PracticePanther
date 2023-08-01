@@ -7,10 +7,6 @@ public class Employee {
 	public decimal Rate { get; set; }
 	public string AsString => $"{Id}.   {Name}   {Rate:C}/hour"; // IntelliSense says this is unused, that is untrue - used in TimeBuilder, do not delete
 	
-	public Employee(string name, decimal rate) {
-		Name = name;
-		Rate = rate;
-	}
 	public Employee(int id, string name, decimal rate) {
 		Id = id;
 		Name = name;

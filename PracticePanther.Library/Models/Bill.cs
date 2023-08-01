@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using PracticePanther.Library.Services;
 
 namespace PracticePanther.Library.Models; 
 
@@ -10,16 +8,9 @@ public class Bill {
 	public decimal TotalAmount { get; set; }
 	public DateTime DueDate { get; set; }
 	
-	public Bill(List<Time> times, DateTime dueDate) {
-		Id = BillService.Current.Bills.Count == 0 ? 1 : BillService.Current.Bills[^1].Id + 1;
-		ProjectId = times[0].ProjectId;
-		DueDate = dueDate;
-		foreach (Time t in times)
-			TotalAmount += TimeService.BillTime(t.Id);
-	}
-	public Bill(int id, int pid, decimal totalAmount, DateTime dueDate) {
+	public Bill(int id, int projectId, decimal totalAmount, DateTime dueDate) {
 		Id = id;
-		ProjectId = pid;
+		ProjectId = projectId;
 		TotalAmount = totalAmount;
 		DueDate = dueDate;
 	}

@@ -23,12 +23,9 @@ public static class TimeService {
 		List<TimeDTO> dtoList = response != null ? JsonConvert.DeserializeObject<List<TimeDTO>>(response) ?? new List<TimeDTO>() : new List<TimeDTO>();
 		return dtoList.Select(t => t.ConvertToTime()).ToList();
 	}
-	public static decimal BillTime(int id) {
-		Time? t = GetTime(id);
-		if (t != null) {
-			t.HasBeenBilled = true;
-			return t.Hours * EmployeeService.GetEmployee(t.EmployeeId)?.Rate ?? 0;
-		}
-		return 0;
+	public static List<Time> GetTimes(int projectId) {
+		string? response = new WebRequestHandler().Get($"/Time/proj/{projectId}").Result;
+		List<TimeDTO> dtoList = response != null ? JsonConvert.DeserializeObject<List<TimeDTO>>(response) ?? new List<TimeDTO>() : new List<TimeDTO>();
+		return dtoList.Select(t => t.ConvertToTime()).ToList();
 	}
 }

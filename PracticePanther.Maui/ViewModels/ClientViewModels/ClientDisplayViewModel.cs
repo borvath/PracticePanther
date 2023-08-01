@@ -25,9 +25,9 @@ public class ClientDisplayViewModel : IQueryAttributable, INotifyPropertyChanged
 		if (DisplayedClient != null) {
 			Projects = new ObservableCollection<Project>(ProjectService.GetProjects().Where(p => p.ClientId == DisplayedClient.Id));
 			Bills = new ObservableCollection<Bill>();
-			foreach (Bill b in from b in BillService.Current.Bills from p in Projects where b.ProjectId == p.Id select b) {
-				Bills.Add(b);
-			}
+			foreach (Project p in Projects)
+				foreach (Bill b in BillService.GetBills(p.Id))
+					Bills.Add(b);
 		}
 		NotifyPropertyChanged(nameof(DisplayedClient));
 		NotifyPropertyChanged(nameof(Projects));

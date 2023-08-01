@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Microsoft.Maui.Controls;
+using PracticePanther.Library.DTOs;
 using PracticePanther.Library.Models;
 using PracticePanther.Library.Services;
 
@@ -19,8 +20,16 @@ public class BillBuilderViewModel : IQueryAttributable, INotifyPropertyChanged{
 	private int projectId;
 	
 	public void AddBill() {
-		if (SelectedTimes?.Count > 0)
-			BillService.Current.AddBill(SelectedTimes.Cast<Time>().ToList(), DueDate);
+		if (SelectedTimes is { Count: > 0 }) {
+			decimal totalAmount = 0;
+			foreach (Time t in SelectedTimes) {
+				Employee? e = EmployeeService.GetEmployee(t.EmployeeId);
+				if (e != null) 
+					totalAmount += t.Hours * e.Rate;
+				TimeService.AddOrUpdate(new TimeDTO(t.Id, t.ProjectId, t.EmployeeId, t.Hours, t.Date, t.Narrative, true));
+			}
+			BillService.AddOrUpdate(new BillDTO(-1, projectId, totalAmount, DueDate));
+		}
 	}
 	public void ApplyQueryAttributes(IDictionary<string, object> query) {
 		Int32.TryParse((query["ProjectId"] as string), out projectId);
