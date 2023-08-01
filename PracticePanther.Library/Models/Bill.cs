@@ -7,7 +7,7 @@ namespace PracticePanther.Library.Models;
 public class Bill {
 	public int Id { get; set; }
 	public int ProjectId { get; set; }
-	public double TotalAmount { get; set; }
+	public decimal TotalAmount { get; set; }
 	public DateTime DueDate { get; set; }
 	
 	public Bill(List<Time> times, DateTime dueDate) {
@@ -16,5 +16,11 @@ public class Bill {
 		DueDate = dueDate;
 		foreach (Time t in times)
 			TotalAmount += TimeService.Current.BillTime(t.Id);
+	}
+	public Bill(int id, int pid, decimal totalAmount, DateTime dueDate) {
+		Id = id;
+		ProjectId = pid;
+		TotalAmount = totalAmount;
+		DueDate = dueDate;
 	}
 }

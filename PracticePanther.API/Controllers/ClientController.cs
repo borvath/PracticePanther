@@ -25,10 +25,10 @@ public class ClientController : ControllerBase {
 		else {
 			const string query = "SELECT id, name, open_date, close_date, notes, active " +
 			                     "FROM practicepanther.client "                           +
-			                     "WHERE name LIKE @param_name "                           +
+			                     "WHERE name LIKE @p_name "                           +
 			                     "ORDER BY id";
 			cmd = new SqlCommand(query, MSSQLContext.Current().Connection);
-			cmd.Parameters.AddWithValue("param_name", $"%{name}%");
+			cmd.Parameters.AddWithValue("p_name", $"%{name}%");
 		}
 		var clients = new List<ClientDTO?>();
 		SqlDataReader? reader = cmd.ExecuteReader();
@@ -45,9 +45,9 @@ public class ClientController : ControllerBase {
 	public ClientDTO? GetById(int id) {
 		const string query = "SELECT name, open_date, close_date, notes, active " +
 		                     "FROM practicepanther.client "                       +
-		                     "WHERE id=@param_id";
+		                     "WHERE id=@p_id";
 		var cmd = new SqlCommand(query, MSSQLContext.Current().Connection);
-		cmd.Parameters.AddWithValue("param_id", id);
+		cmd.Parameters.AddWithValue("p_id", id);
 		SqlDataReader? reader = cmd.ExecuteReader();
 		while (reader.Read()) {
 			var c =  new ClientDTO(
@@ -62,9 +62,9 @@ public class ClientController : ControllerBase {
 	[HttpDelete("Delete/{id:int}")]
 	public int Delete(int id) {
 		const string query = "DELETE FROM practicepanther.client " +
-		                     "WHERE id=@param_id";
+		                     "WHERE id=@p_id";
 		var cmd = new SqlCommand(query, MSSQLContext.Current().Connection);
-		cmd.Parameters.AddWithValue("param_id", id);
+		cmd.Parameters.AddWithValue("p_id", id);
 		return cmd.ExecuteNonQuery();
 	}
 	[HttpPost]

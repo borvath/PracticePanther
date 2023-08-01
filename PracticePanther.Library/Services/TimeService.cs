@@ -32,11 +32,11 @@ public class TimeService {
 	public Time? GetTime(int id) {
 		return Times.FirstOrDefault(t => t.Id == id);
 	}
-	public double BillTime(int id) {
+	public decimal BillTime(int id) {
 		Time? t = GetTime(id);
 		if (t != null) {
 			t.HasBeenBilled = true;
-			return t.Hours * EmployeeService.Current.GetEmployee(t.EmployeeId)?.Rate ?? 0;
+			return (decimal)t.Hours * EmployeeService.GetEmployee(t.EmployeeId)?.Rate ?? 0;
 		}
 		return 0;
 	}

@@ -17,7 +17,7 @@ public class ProjectListViewModel : INotifyPropertyChanged {
 			NotifyPropertyChanged(nameof(Projects));
 		}
 	}
-	public ObservableCollection<Project> Projects { get; set; }= new ObservableCollection<Project>();
+	public ObservableCollection<Project> Projects { get; set; } = new ObservableCollection<Project>();
 	public Project? SelectedProject { get; set; }
 	
 	public void GetSearchResults(string query) {

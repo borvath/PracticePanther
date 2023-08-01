@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Microsoft.Maui.Controls;
 using PracticePanther.Library.Models;
 using PracticePanther.Library.Services;
-using PracticePanther.Maui.Views;
 using PracticePanther.Maui.Views.EmployeeViews;
 namespace PracticePanther.Maui.ViewModels.EmployeeViewModels; 
 
@@ -19,10 +17,7 @@ public class EmployeeListViewModel : INotifyPropertyChanged {
 			NotifyPropertyChanged(nameof(Employees));
 		}
 	}
-	public ObservableCollection<Employee> Employees =>
-		String.IsNullOrWhiteSpace(Query) ? 
-			new ObservableCollection<Employee>(EmployeeService.Current.Employees) : 
-			new ObservableCollection<Employee>(EmployeeService.Current.Search(Query));
+	public ObservableCollection<Employee> Employees { get; set; } = new ObservableCollection<Employee>();
 	public Employee? SelectedEmployee { get; set; }
 	
 	public void GetSearchResults(string query) {
@@ -31,23 +26,29 @@ public class EmployeeListViewModel : INotifyPropertyChanged {
 	}
 	public void EditEmployee(Shell s) {
 		if (SelectedEmployee != null) {
-			s.GoToAsync(nameof(EmployeeBuilderPage), new Dictionary<string, object>{{"EmployeeId", SelectedEmployee.Id.ToString()}});
+			s.GoToAsync(nameof(EmployeeBuilderPage), new Dictionary<string, object> {
+				{"EmployeeId", SelectedEmployee.Id.ToString()}
+			});
+			SelectedEmployee = null;
 		}
 	}
 	public void DeleteEmployee() {
 		if (SelectedEmployee != null) {
-			TimeService.Current.Times.RemoveAll(t => t.EmployeeId == SelectedEmployee.Id);
-			EmployeeService.Current.Employees.Remove(SelectedEmployee);
+			EmployeeService.Delete(SelectedEmployee.Id);
 			RefreshView();
 		}
-		SelectedEmployee = null;
 	}
 	public void DisplayEmployee(Shell s) {
 		if (SelectedEmployee != null) {
-			s.GoToAsync(nameof(EmployeeDisplayPage), new Dictionary<string, object>{{"EmployeeId", SelectedEmployee.Id.ToString()}});
+			s.GoToAsync(nameof(EmployeeDisplayPage), new Dictionary<string, object> {
+				{"EmployeeId", SelectedEmployee.Id.ToString()}
+			});
+			SelectedEmployee = null;
 		}
 	}
 	public void RefreshView() {
+		SelectedEmployee = null;
+		Employees = new ObservableCollection<Employee>(EmployeeService.GetEmployees(Query));
 		NotifyPropertyChanged(nameof(Employees));
 	}
 	public event PropertyChangedEventHandler? PropertyChanged;

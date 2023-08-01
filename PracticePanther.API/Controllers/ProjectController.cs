@@ -25,10 +25,10 @@ public class ProjectController : ControllerBase {
 		else {
 			const string query = "SELECT id, client_id, name, short_name, open_date, close_date, active " +
 			                     "FROM practicepanther.project "                                          +
-			                     "WHERE name LIKE @param_name "                                           +
+			                     "WHERE name LIKE @p_name "                                           +
 			                     "ORDER BY id";
 			cmd = new SqlCommand(query, MSSQLContext.Current().Connection);
-			cmd.Parameters.AddWithValue("param_name", $"%{name}%");
+			cmd.Parameters.AddWithValue("p_name", $"%{name}%");
 		}
 		var projects = new List<ProjectDTO?>();
 		SqlDataReader? reader = cmd.ExecuteReader();
@@ -45,9 +45,9 @@ public class ProjectController : ControllerBase {
 	public ProjectDTO? GetById(int id) {
 		const string query = "SELECT id, client_id, name, short_name, open_date, close_date, active " +
 		                     "FROM practicepanther.project "                                          +
-		                     "WHERE id=@param_id";
+		                     "WHERE id=@p_id";
 		var cmd = new SqlCommand(query, MSSQLContext.Current().Connection);
-		cmd.Parameters.AddWithValue("param_id", id);
+		cmd.Parameters.AddWithValue("p_id", id);
 		SqlDataReader? reader = cmd.ExecuteReader();
 		while (reader.Read()) {
 			var p =  new ProjectDTO(reader.GetInt32(0), reader.GetInt32(1), reader.GetString(2), 
@@ -62,9 +62,9 @@ public class ProjectController : ControllerBase {
 	[HttpDelete("Delete/{id:int}")]
 	public int Delete(int id) {
 		const string query = "DELETE FROM practicepanther.project " +
-		                     "WHERE id=@param_id";
+		                     "WHERE id=@p_id";
 		var cmd = new SqlCommand(query, MSSQLContext.Current().Connection);
-		cmd.Parameters.AddWithValue("param_id", id);
+		cmd.Parameters.AddWithValue("p_id", id);
 		return cmd.ExecuteNonQuery();
 	}
 	[HttpPost]

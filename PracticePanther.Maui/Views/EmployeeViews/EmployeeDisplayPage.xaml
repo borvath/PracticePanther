@@ -38,7 +38,7 @@
             <VerticalStackLayout Margin="10, 0">
                 <Label Text="Time Entries: " FontSize="22" TextColor="#000000"/>
                 <ListView ItemsSource="{Binding EmployeeTimes}"
-                          SelectedItem="{Binding SelectedTime}"
+                          SelectionMode="None"
                           BackgroundColor="Transparent"
                           Margin="10, 0, 10, 0">
                     <ListView.ItemTemplate>

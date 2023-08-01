@@ -14,10 +14,10 @@ public class TimeBuilderViewModel : INotifyPropertyChanged, IQueryAttributable {
 	public Client? SelectedClient { get; set; }
 	public List<Project> Projects { get; set; } = new List<Project>();
 	public Project? SelectedProject { get; set; }
-	public List<Employee> Employees { get; set; } = new List<Employee>(EmployeeService.Current.Employees);
+	public List<Employee> Employees { get; set; } = new List<Employee>(EmployeeService.GetEmployees());
 	public Employee? SelectedEmployee { get; set; }
 	
-	public double Hours { get; set; }
+	public decimal Hours { get; set; }
 	public DateTime Date { get; set; }
 	public string? Narrative { get; set; }
 	

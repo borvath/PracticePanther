@@ -7,18 +7,33 @@ namespace PracticePanther.Library.Models;
 public class Project : INotifyPropertyChanged {
 	private DateTime _open;
 	private DateTime? _close;
-	private bool _isActive = true;
+	private bool _isActive;
 	private string _name;
 	private string? _shortName;
 
 	public int Id { get; set; }
 	public int ClientId { get; set; }
 	public string? ClientName => ClientService.GetClient(ClientId)?.Name;
-	public DateTime Open { get => _open; set { _open = value; NotifyPropertyChanged(); } }
-	public DateTime? Close { get => _close; set { _close = value; NotifyPropertyChanged(); } }
-	public bool IsActive { get => _isActive; set { _isActive = value; NotifyPropertyChanged(); } }
-	public string Name { get => _name; set { _name = value; NotifyPropertyChanged(); } }
-	public string? ShortName { get => _shortName; set { _shortName = value; NotifyPropertyChanged(); } }
+	public DateTime Open { 
+		get => _open; 
+		set { _open = value; NotifyPropertyChanged(); } 
+	}
+	public DateTime? Close {
+		get => _close;
+		set { _close = value; NotifyPropertyChanged(); }
+	}
+	public bool IsActive {
+		get => _isActive;
+		set { _isActive = value; NotifyPropertyChanged(); }
+	}
+	public string Name {
+		get => _name;
+		set { _name = value; NotifyPropertyChanged(); }
+	}
+	public string? ShortName {
+		get => _shortName;
+		set { _shortName = value; NotifyPropertyChanged(); }
+	}
 	public string AsString => $"Project: {ShortName ?? Name}   Active: {IsActive}";
 	
 	public Project(int id, int c_id, string name, string? shortName, DateTime open, DateTime? close, bool active) {

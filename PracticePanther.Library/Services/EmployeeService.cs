@@ -1,34 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
+using PracticePanther.Library.DTOs;
 using PracticePanther.Library.Models;
+using PracticePanther.Library.Utilities;
 
 namespace PracticePanther.Library.Services; 
 
-public class EmployeeService {
-	
-	private static object _lock = new object();
-	private static EmployeeService? instance;
-	public static EmployeeService Current {
-		get { 
-			lock (_lock) { return instance ??= new EmployeeService(); }
-		}
+public static class EmployeeService {
+	public static void AddOrUpdate(EmployeeDTO e) {
+		new WebRequestHandler().Post("/Employee", e).Wait();
 	}
-	public List<Employee> Employees { get; }
-
-	private EmployeeService() {
-		Employees = new List<Employee>();
+	public static void Delete(int id) {
+		new WebRequestHandler().Delete($"/Employee/Delete/{id}").Wait();
 	}
-	public void Add(Employee e) {
-		e.Id = Employees.Count == 0 ? 1 : Employees[^1].Id + 1;
-		Employees.Add(e);
+	public static Employee? GetEmployee(int id) {
+		string? response = new WebRequestHandler().Get($"/Employee/{id}").Result;
+		return (response != null) ? JsonConvert.DeserializeObject<EmployeeDTO>(response)?.ConvertToEmployee() : null;
 	}
-	public Employee? GetEmployee(int id) {
-		return Employees.FirstOrDefault(e => e.Id == id);
-	}
-	public List<Employee> Search(string query) {
-		return Int32.TryParse(query, out int employeeId) ? 
-			       Employees.Where(e => (e.Id.ToString().StartsWith(employeeId.ToString()))).ToList() : 
-			       Employees.Where(e => (e.Name.Contains(query, StringComparison.OrdinalIgnoreCase))).ToList();
+	public static List<Employee> GetEmployees(string? query = null) {
+		string? response = query == null ? new WebRequestHandler().Get("/Employee").Result : new WebRequestHandler().Get($"/Employee/{query}").Result;
+		List<EmployeeDTO> dtoList = response != null ? JsonConvert.DeserializeObject<List<EmployeeDTO>>(response) ?? new List<EmployeeDTO>() : new List<EmployeeDTO>();
+		return dtoList.Select(e => e.ConvertToEmployee()).ToList();
 	}
 }
