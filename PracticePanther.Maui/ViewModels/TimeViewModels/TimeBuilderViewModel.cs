@@ -27,12 +27,12 @@ public class TimeBuilderViewModel : INotifyPropertyChanged, IQueryAttributable {
 	public void AddTime() {
 		if (SelectedClient != null && SelectedProject != null && SelectedEmployee != null) {
 			if (timeId == -1) {
-				TimeService.AddOrUpdate(new TimeDTO(timeId, SelectedProject.Id, SelectedEmployee.Id, Hours, Date, Narrative, false));
+				TimeService.AddOrUpdate(new TimeDTO(timeId, SelectedProject.Id, SelectedEmployee.Id, null, Hours, Date, Narrative));
 			}
 			else {
 				Time? t = TimeService.GetTime(timeId);
 				if (t != null)
-					TimeService.AddOrUpdate(new TimeDTO(t.Id, SelectedProject.Id, SelectedEmployee.Id, Hours, Date, Narrative, t.HasBeenBilled));
+					TimeService.AddOrUpdate(new TimeDTO(t.Id, SelectedProject.Id, SelectedEmployee.Id, t.BillId, Hours, Date, Narrative));
 			}
 		}
 	}

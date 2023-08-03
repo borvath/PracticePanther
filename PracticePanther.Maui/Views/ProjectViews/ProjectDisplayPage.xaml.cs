@@ -10,6 +10,12 @@ public partial class ProjectDisplayPage : ContentPage {
 	private void CreateBillClicked(object sender, EventArgs eventArgs) {
 		((ProjectDisplayViewModel)BindingContext).CreateBill(Shell.Current);
 	}
+	private void EditBillClicked(object sender, EventArgs eventArgs) {
+		((ProjectDisplayViewModel)BindingContext).EditBill(Shell.Current);
+	}
+	private void DeleteBillClicked(object sender, EventArgs eventArgs) {
+		((ProjectDisplayViewModel)BindingContext).DeleteBill();
+	}
 	protected override void OnAppearing() {
 		((ProjectDisplayViewModel)BindingContext).RefreshView();
 	}

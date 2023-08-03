@@ -16,22 +16,34 @@
                          HorizontalOptions="Center">
         <Label FontSize="48" HorizontalTextAlignment="Center" TextColor="#151515">Employee Info</Label>
         <Frame StyleClass="frame-entry">
-            <VerticalStackLayout BackgroundColor="#a9a9a9" Margin="10, 0, 10, 0" Spacing="10">
-	            <Label Text="{Binding DisplayedEmployee.Name, StringFormat='Name: {0}'}"
-	                   FontSize="22"
-	                   VerticalOptions="Center" 
-	                   HorizontalOptions="Start"
-	                   StyleClass="entry-label"/>
-	            <Label Text="{Binding DisplayedEmployee.Id, StringFormat='ID: {0}'}"
-	                   FontSize="22"
-	                   VerticalOptions="Center"
-	                   HorizontalOptions="Start"
-	                   StyleClass="entry-label"/>
-                <Label Text="{Binding DisplayedEmployee.Rate, StringFormat='Rate: {0}'}"
-                       FontSize="22"
-                       VerticalOptions="Center"
-                       HorizontalOptions="Start"
-                       StyleClass="entry-label"/>
+            <VerticalStackLayout BackgroundColor="#a9a9a9" Margin="10, 0, 10, 0" Spacing="3">
+	            <HorizontalStackLayout Padding="0" Margin="0">
+		            <Label Text="Name: "
+		                   FontSize="22"
+		                   StyleClass="entry-label"/>
+		            <Label Text="{Binding DisplayedEmployee.Name}"
+		                   Margin="5, 5, 10, 0"
+		                   FontSize="18"
+		                   StyleClass="entry-label" />
+	            </HorizontalStackLayout>
+	            <HorizontalStackLayout Padding="0" Margin="0">
+		            <Label Text="Client ID: "
+		                   FontSize="22"
+		                   StyleClass="entry-label"/>
+		            <Label Text="{Binding DisplayedEmployee.Id}"
+		                   Margin="5, 5, 10, 0"
+		                   FontSize="18"
+		                   StyleClass="entry-label" />
+	            </HorizontalStackLayout>
+	            <HorizontalStackLayout Padding="0" Margin="0">
+		            <Label Text="Dates: "
+		                   FontSize="22"
+		                   StyleClass="entry-label"/>
+		            <Label Text="{Binding DisplayedEmployee.Rate}"
+		                   Margin="5, 5, 10, 0"
+		                   FontSize="18"
+		                   StyleClass="entry-label" />
+	            </HorizontalStackLayout>
             </VerticalStackLayout>
         </Frame>
         <Frame StyleClass="frame-entry">
@@ -44,16 +56,24 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Label TextColor="#000000">
-                                    <Label.Text>
-                                        <MultiBinding StringFormat="{}Client ID: {0}   Project Id: {1}   Hours: {2}   Date: {3:MM/dd/yyyy}">
-                                            <Binding Path="ClientId"/>
-                                            <Binding Path="ProjectId"/>
-                                            <Binding Path="Hours"/>
-                                            <Binding Path="Date"/>
-                                        </MultiBinding>
-                                    </Label.Text>
-                                </Label>
+	                            <Grid>
+		                            <Grid.ColumnDefinitions>
+			                            <ColumnDefinition Width="3*"/>
+			                            <ColumnDefinition Width="4*"/>
+		                            </Grid.ColumnDefinitions>
+		                            <Grid.RowDefinitions>
+			                            <RowDefinition Height="1*"/>
+			                            <RowDefinition Height="1*"/>
+		                            </Grid.RowDefinitions>
+		                            <Label Grid.Row="0" Grid.Column="0" TextColor="#000000" 
+		                                   Text="{Binding ClientName, StringFormat='Client: {0}'}"/>
+		                            <Label Grid.Row="0" Grid.Column="1" TextColor="#000000" 
+		                                   Text="{Binding ProjectName, StringFormat='Project: {0}'}"/>
+		                            <Label Grid.Row="1" Grid.Column="0" TextColor="#000000" 
+		                                   Text="{Binding Hours, StringFormat='Hours: {0:F2}'}"/>
+		                            <Label Grid.Row="1" Grid.Column="1" TextColor="#000000" 
+		                                   Text="{Binding Date, StringFormat='Date: {0:MM/dd/yy}'}"/>
+	                            </Grid>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>

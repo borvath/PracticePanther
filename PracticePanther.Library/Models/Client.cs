@@ -10,6 +10,7 @@ public class Client {
 	public DateTime? Close { get; set; }
 	public bool IsActive { get; set; }
 	public string? Notes { get; set; }
+	public bool HasNotes => Notes != null;
 	public string AsString => $"{Id}.   {Name}"; // IntelliSense says this is unused, that is untrue - used in TimeBuilder, do not delete
 	
 	public Client(int id, string name, DateTime open, DateTime? close, string? notes, bool isActive = true) {

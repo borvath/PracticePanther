@@ -17,7 +17,7 @@ public class TimeController : ControllerBase{
 	public List<TimeDTO?> Get(string? name = null) {
 		SqlCommand cmd;
 		if (name == null || (!name.ToLower().StartsWith("proj:") && (!name.ToLower().StartsWith("emp:")))) {
-			const string query = "SELECT id, project_id, employee_id, hours, due_date, summary, billed " +
+			const string query = "SELECT id, project_id, employee_id, bill_id, hours, due_date, summary " +
 			                     "FROM practicepanther.time "                                          +
 			                     "ORDER BY id";
 			cmd = new SqlCommand(query, MSSQLContext.Current().Connection);
@@ -26,7 +26,7 @@ public class TimeController : ControllerBase{
 			var query = String.Empty;
 			if (name.ToLower().StartsWith("proj:")) {
 				name = name.Split(':')[1];
-				query = "SELECT time.id, project_id, employee_id, hours, due_date, summary, billed " +
+				query = "SELECT time.id, project_id, employee_id, bill_id, hours, due_date, summary " +
 				        "FROM practicepanther.time JOIN practicepanther.project "               +
 				        "ON time.project_id = project.id "                                           +
 				        "WHERE project.name LIKE @p_name "                                      +
@@ -34,7 +34,7 @@ public class TimeController : ControllerBase{
 			}
 			if (name.ToLower().StartsWith("emp:")) {
 				name = name.Split(':')[1];
-				query = "SELECT time.id, project_id, employee_id, hours, due_date, summary, billed " +
+				query = "SELECT time.id, project_id, employee_id, bill_id, hours, due_date, summary " +
 				        "FROM practicepanther.time JOIN practicepanther.employee "               +
 				        "ON time.employee_id = employee.id "                                                                     +
 				        "WHERE name LIKE @p_name "                                              +
@@ -47,8 +47,8 @@ public class TimeController : ControllerBase{
 		SqlDataReader? reader = cmd.ExecuteReader();
 		while (reader.Read()) {
 			times.Add(new TimeDTO(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), 
-				reader.GetDecimal(3), reader.GetDateTime(4), reader.IsDBNull(5) ? null : reader.GetString(5),
-				reader.GetBoolean(6))
+				reader.IsDBNull(3) ? null : reader.GetInt32(3), reader.GetDecimal(4), reader.GetDateTime(5), 
+				reader.IsDBNull(6) ? null : reader.GetString(6))
 			);
 		}
 		reader.Close();
@@ -56,7 +56,7 @@ public class TimeController : ControllerBase{
 	}
 	[HttpGet("/Time/{id:int}")]
 	public TimeDTO? GetById(int id) {
-		const string query = "SELECT id, project_id, employee_id, hours, due_date, summary, billed " +
+		const string query = "SELECT id, project_id, employee_id, bill_id, hours, due_date, summary " +
 		                     "FROM practicepanther.time "                                          +
 		                     "WHERE id = @p_id";
 		var cmd = new SqlCommand(query, MSSQLContext.Current().Connection);
@@ -64,8 +64,8 @@ public class TimeController : ControllerBase{
 		SqlDataReader? reader = cmd.ExecuteReader();
 		while (reader.Read()) {
 			var t =  new TimeDTO(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), 
-				reader.GetDecimal(3), reader.GetDateTime(4), reader.IsDBNull(5) ? null : reader.GetString(5),
-				reader.GetBoolean(6));
+				reader.IsDBNull(3) ? null : reader.GetInt32(3), reader.GetDecimal(4), reader.GetDateTime(5), 
+				reader.IsDBNull(6) ? null : reader.GetString(6));
 			reader.Close();
 			return t;
 		}
@@ -73,8 +73,8 @@ public class TimeController : ControllerBase{
 		return null;
 	}
 	[HttpGet("/Time/proj/{id:int}")]
-	public List<TimeDTO>? GetByProject(int id) {
-		const string query = "SELECT id, project_id, employee_id, hours, due_date, summary, billed " +
+	public List<TimeDTO> GetByProject(int id) {
+		const string query = "SELECT id, project_id, employee_id, bill_id, hours, due_date, summary " +
 		                     "FROM practicepanther.time "                                            +
 		                     "WHERE project_id = @p_id ";
 		var cmd = new SqlCommand(query, MSSQLContext.Current().Connection);
@@ -83,17 +83,27 @@ public class TimeController : ControllerBase{
 		var times = new List<TimeDTO>();
 		while (reader.Read()) {
 			times.Add(new TimeDTO(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), 
-				reader.GetDecimal(3), reader.GetDateTime(4), reader.IsDBNull(5) ? null : reader.GetString(5),
-				reader.GetBoolean(6)));
+				reader.IsDBNull(3) ? null : reader.GetInt32(3), reader.GetDecimal(4), reader.GetDateTime(5), 
+				reader.IsDBNull(6) ? null : reader.GetString(6))
+			);
 		}
 		reader.Close();
 		return times;
 	}
 	[HttpDelete("Delete/{id:int}")]
 	public int Delete(int id) {
-		const string query = "DELETE FROM practicepanther.time " +
-		                     "WHERE id=@p_id";
+		var query = "SELECT bill_id FROM practicepanther.time WHERE id=@p_id; ";
 		var cmd = new SqlCommand(query, MSSQLContext.Current().Connection);
+		cmd.Parameters.AddWithValue("p_id", id);
+		var bill_id = (int)cmd.ExecuteScalar();
+		query = $"UPDATE practicepanther.time "      +
+		        $"SET bill_id = NULL "               +
+		        $"WHERE bill_id = {bill_id} "        +
+		        $"DELETE FROM practicepanther.bill " +
+		        $"WHERE id = {bill_id}; "            +
+		        $"DELETE FROM practicepanther.time " +
+		        $"WHERE id = @p_id ";
+		cmd = new SqlCommand(query, MSSQLContext.Current().Connection);
 		cmd.Parameters.AddWithValue("p_id", id);
 		return cmd.ExecuteNonQuery();
 	}
@@ -101,9 +111,9 @@ public class TimeController : ControllerBase{
 	public int AddOrUpdate([FromBody]TimeDTO t) {
 		if (t.Id == -1) {
 			const string query = "INSERT INTO practicepanther.time "                          +
-			                     "(project_id, employee_id, hours, due_date, summary, billed) " +
+			                     "(project_id, employee_id, hours, due_date, summary) " +
 			                     "VALUES "                                                       +
-			                     "(@p_pid, @p_empid, @p_hours, @p_due_date, @p_summary, '0')";
+			                     "(@p_pid, @p_empid, @p_hours, @p_due_date, @p_summary)";
 			var cmd = new SqlCommand(query, MSSQLContext.Current().Connection);
 			cmd.Parameters.AddWithValue("p_pid", t.ProjectId);
 			cmd.Parameters.AddWithValue("p_empid", t.EmployeeId);
@@ -112,18 +122,26 @@ public class TimeController : ControllerBase{
 			cmd.Parameters.AddWithValue("p_summary", t.Narrative == null ? DBNull.Value : t.Narrative);
 			return cmd.ExecuteNonQuery();
 		}
+		if (t.BillId == -1) {
+			const string query = "UPDATE practicepanther.time " +
+			                     "SET bill_id = (SELECT MAX(id) FROM practicepanther.bill) " +
+			                     "WHERE id = @p_id";
+			var cmd = new SqlCommand(query, MSSQLContext.Current().Connection);
+			cmd.Parameters.AddWithValue("p_id", t.Id);
+			return cmd.ExecuteNonQuery();
+		}
 		else {
 			const string query = "UPDATE practicepanther.time " +
-			                     "SET project_id=@p_pid, employee_id=@p_empid, hours=@p_hours, due_date=@p_due_date, summary=@p_summary, billed=@p_billed " +
+			                     "SET project_id=@p_pid, employee_id=@p_empid, bill_id=@p_billid, hours=@p_hours, due_date=@p_due_date, summary=@p_summary " +
 			                     "WHERE id=@p_id";
 			var cmd = new SqlCommand(query, MSSQLContext.Current().Connection);
 			cmd.Parameters.AddWithValue("p_id", t.Id);
 			cmd.Parameters.AddWithValue("p_pid", t.ProjectId);
 			cmd.Parameters.AddWithValue("p_empid", t.EmployeeId);
+			cmd.Parameters.AddWithValue("p_billid", t.BillId == null ? DBNull.Value : t.BillId);
 			cmd.Parameters.AddWithValue("p_hours", t.Hours);
 			cmd.Parameters.AddWithValue("p_due_date", t.Date);
 			cmd.Parameters.AddWithValue("p_summary", t.Narrative == null ? DBNull.Value : t.Narrative);
-			cmd.Parameters.AddWithValue("p_billed", t.HasBeenBilled);
 			return cmd.ExecuteNonQuery();
 		}
 	}

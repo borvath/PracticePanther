@@ -7,21 +7,21 @@ public class TimeDTO {
 	public int Id { get; }
 	public int ProjectId { get; }
 	public int EmployeeId { get; }
+	public int? BillId { get; }
 	public decimal Hours { get; }
 	public DateTime Date { get; }
 	public string? Narrative { get; }
-	public bool HasBeenBilled { get; }
 
-	public TimeDTO(int id, int projectId, int employeeId, decimal hours, DateTime date, string? narrative, bool hasBeenBilled) {
+	public TimeDTO(int id, int projectId, int employeeId, int? billid, decimal hours, DateTime date, string? narrative) {
 		Id = id;
 		ProjectId = projectId;
 		EmployeeId = employeeId;
+		BillId = billid;
 		Hours = hours;
 		Date = date;
 		Narrative = narrative;
-		HasBeenBilled = hasBeenBilled;
 	}
 	public Time ConvertToTime() {
-		return new Time(Id, ProjectId, EmployeeId, Hours, Date, Narrative, HasBeenBilled);
+		return new Time(Id, ProjectId, EmployeeId, BillId, Hours, Date, Narrative);
 	}
 }

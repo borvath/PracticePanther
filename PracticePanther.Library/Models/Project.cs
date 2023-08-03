@@ -34,6 +34,7 @@ public class Project : INotifyPropertyChanged {
 		get => _shortName;
 		set { _shortName = value; NotifyPropertyChanged(); }
 	}
+	public bool HasShortName => _shortName != null;
 	public string AsString => $"Project: {ShortName ?? Name}   Active: {IsActive}";
 	
 	public Project(int id, int c_id, string name, string? shortName, DateTime open, DateTime? close, bool active) {

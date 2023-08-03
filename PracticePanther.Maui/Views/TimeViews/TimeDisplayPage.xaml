@@ -15,20 +15,81 @@
 	                     HorizontalOptions="Center">
         <Label FontSize="48" HorizontalTextAlignment="Center" TextColor="#151515">Time Entry Info</Label>
 	    <Frame StyleClass="frame-entry">
-            <Label FontSize="22"
-                   StyleClass="entry-label">
-                <Label.Text>
-                    <MultiBinding StringFormat="ID: {0}&#x0a;Client: {1}&#x0a;Project: {2}&#x0a;Employee: {3}&#x0a;Hours: {5:F2}     Date: {4: MM/dd/yyyy}&#x0a;Entry Notes: {6}">
-	                    <Binding Path="DisplayedTime.Id"/>
-	                    <Binding Path="DisplayedTime.ClientName"/>
-	                    <Binding Path="DisplayedTime.ProjectName"/>
-	                    <Binding Path="DisplayedTime.EmployeeName"/>
-	                    <Binding Path="DisplayedTime.Date"/>
-                        <Binding Path="DisplayedTime.Hours"/>
-                        <Binding Path="DisplayedTime.Narrative"/>
-                    </MultiBinding>
-                </Label.Text>
-            </Label>
+		    <VerticalStackLayout BackgroundColor="#a9a9a9" Margin="10, 0, 10, 0" Spacing="3">
+				<HorizontalStackLayout Padding="0" Margin="0">
+					<Label Text="ID: "
+					       FontSize="22"
+					       StyleClass="entry-label"/>
+					<Label Text="{Binding DisplayedTime.Id}"
+					       Margin="5, 5, 10, 0"
+					       FontSize="18"
+					       StyleClass="entry-label" />
+				</HorizontalStackLayout>
+			    <HorizontalStackLayout Padding="0" Margin="0" IsVisible="{Binding DisplayedTime.Billed}">
+				    <Label Text="Bill: "
+				           FontSize="22"
+				           StyleClass="entry-label"/>
+				    <Label Text="{Binding DisplayedTime.BillId}"
+				           Margin="5, 5, 10, 0"
+				           FontSize="18"
+				           StyleClass="entry-label" />
+			    </HorizontalStackLayout>
+				<HorizontalStackLayout Padding="0" Margin="0">
+					<Label Text="Client: "
+					       FontSize="22"
+					       StyleClass="entry-label"/>
+					<Label Text="{Binding DisplayedTime.ClientName}"
+					       Margin="5, 5, 10, 0"
+					       FontSize="18"
+					       StyleClass="entry-label" />
+				</HorizontalStackLayout>
+			    <HorizontalStackLayout Padding="0" Margin="0">
+				    <Label Text="Project: "
+				           FontSize="22"
+				           StyleClass="entry-label"/>
+				    <Label Text="{Binding DisplayedTime.ProjectName}"
+				           Margin="5, 5, 10, 0"
+				           FontSize="18"
+				           StyleClass="entry-label" />
+			    </HorizontalStackLayout>
+			    <HorizontalStackLayout Padding="0" Margin="0">
+					<Label Text="Employee: "
+					       FontSize="22"
+					       StyleClass="entry-label"/>
+					<Label Text="{Binding DisplayedTime.EmployeeName}"
+					       FontSize="18"
+					       Margin="5, 5, 10, 0"
+					       StyleClass="entry-label"/>
+				</HorizontalStackLayout>
+				<HorizontalStackLayout Padding="0" Margin="0">
+					<Label Text="Date: "
+					       FontSize="22"
+					       StyleClass="entry-label"/>
+					<Label Text="{Binding DisplayedTime.Date, StringFormat='{0:MM/dd/yyyy}'}"
+					       Margin="5, 5, 10, 0"
+					       FontSize="18"
+					       StyleClass="entry-label"/>
+				</HorizontalStackLayout>
+			    <HorizontalStackLayout Padding="0" Margin="0">
+				    <Label Text="Employee: "
+				           FontSize="22"
+				           StyleClass="entry-label"/>
+				    <Label Text="{Binding DisplayedTime.Hours, StringFormat='{0:F2}'}"
+				           FontSize="18"
+				           Margin="5, 5, 10, 0"
+				           StyleClass="entry-label"/>
+			    </HorizontalStackLayout>
+			    <HorizontalStackLayout Padding="0" Margin="0" IsVisible="{Binding DisplayedTime.HasNarrative}">
+				    <Label TextColor="#000000" FontSize="22" Text="Narrative:" Padding="0" />
+				    <ScrollView BackgroundColor="#a9a9a9" Margin="5, 5, 10, 0" MaximumHeightRequest="150" HorizontalOptions="Start">
+					    <Label Text="{Binding DisplayedTime.Narrative}"
+					           FontSize="18"
+					           WidthRequest="450"
+					           LineBreakMode="WordWrap"
+					           StyleClass="entry-label" />
+				    </ScrollView>
+			    </HorizontalStackLayout>
+		    </VerticalStackLayout>
         </Frame>
     </VerticalStackLayout>
 </ContentPage>

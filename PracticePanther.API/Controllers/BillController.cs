@@ -47,19 +47,26 @@ public class BillController {
 	}
 	[HttpDelete("Delete/{id:int}")]
 	public int Delete(int id) {
-		const string query = "DELETE FROM practicepanther.bill " +
-		                     "WHERE id = @p_id";
+		string query = "UPDATE practicepanther.time " + 
+		               "SET bill_id = NULL "          + 
+		               "WHERE bill_id = @p_id ";
 		var cmd = new SqlCommand(query, MSSQLContext.Current().Connection);
+		cmd.Parameters.AddWithValue("p_id", id);
+		cmd.ExecuteNonQuery();
+		
+		query = "DELETE FROM practicepanther.bill " +
+		        "WHERE id = @p_id";
+		cmd = new SqlCommand(query, MSSQLContext.Current().Connection);
 		cmd.Parameters.AddWithValue("p_id", id);
 		return cmd.ExecuteNonQuery();
 	}
 	[HttpPost]
 	public int AddOrUpdate([FromBody]BillDTO b) {
 		if (b.Id == -1) {
-			const string query = "INSERT INTO practicepanther.bill "                          +
-			                     "(project_id, total_amount, due_date) " +
-			                     "VALUES "                                                       +
-			                     "(@p_pid, @p_total, @p_due_date)";
+			const string query = "INSERT INTO practicepanther.bill "     + 
+			                     "(project_id, total_amount, due_date) " + 
+			                     "VALUES "                               +
+			                     "(@p_pid, @p_total, @p_due_date); ";
 			var cmd = new SqlCommand(query, MSSQLContext.Current().Connection);
 			cmd.Parameters.AddWithValue("p_pid", b.ProjectId);
 			cmd.Parameters.AddWithValue("p_total", b.TotalAmount);
@@ -67,12 +74,14 @@ public class BillController {
 			return cmd.ExecuteNonQuery();
 		}
 		else {
-			const string query = "UPDATE practicepanther.bill " +
-			                     "SET project_id=@p_pid, total_amount=@p_total, due_date=@p_due_date " +
-			                     "WHERE id=@p_id";
+			const string query = "UPDATE practicepanther.time "                         +
+			                     "SET bill_id = NULL "                                  +
+			                     "WHERE bill_id = @p_id; "                              +
+			                     "UPDATE practicepanther.bill "                         +
+			                     "SET total_amount = @p_total, due_date = @p_due_date " +
+			                     "WHERE id = @p_id; ";
 			var cmd = new SqlCommand(query, MSSQLContext.Current().Connection);
 			cmd.Parameters.AddWithValue("p_id", b.Id);
-			cmd.Parameters.AddWithValue("p_pid", b.ProjectId);
 			cmd.Parameters.AddWithValue("p_total", b.TotalAmount);
 			cmd.Parameters.AddWithValue("p_due_date", b.DueDate);
 			return cmd.ExecuteNonQuery();

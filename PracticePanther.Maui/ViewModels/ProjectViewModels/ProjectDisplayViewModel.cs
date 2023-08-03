@@ -13,7 +13,8 @@ public class ProjectDisplayViewModel : INotifyPropertyChanged, IQueryAttributabl
 	public Project? DisplayedProject { get; set; }
 	public List<Time>? Times { get; set; }
 	public List<Bill>? Bills { get; set; }
-	
+	public Bill? SelectedBill { get; set; }
+
 	public void ApplyQueryAttributes(IDictionary<string, object> query) {
 		Int32.TryParse((query["ProjectId"] as string), out int projectId);
 		DisplayedProject = ProjectService.GetProject(projectId);
@@ -28,8 +29,22 @@ public class ProjectDisplayViewModel : INotifyPropertyChanged, IQueryAttributabl
 	public void CreateBill(Shell s) {
 		if (DisplayedProject != null)
 			s.GoToAsync(nameof(BillBuilderPage), new Dictionary<string, object> {
-				{"ProjectId", DisplayedProject.Id.ToString()}
+				{"ProjectId", DisplayedProject.Id.ToString()},
+				{"BillId", "-1"}
 			});
+	}
+	public void EditBill(Shell s) {
+		if (DisplayedProject != null && SelectedBill != null)
+			s.GoToAsync(nameof(BillBuilderPage), new Dictionary<string, object> {
+				{"ProjectId", DisplayedProject.Id.ToString()},
+				{"BillId", SelectedBill.Id.ToString()}
+			});
+		SelectedBill = null;
+	}
+	public void DeleteBill() {
+		if (DisplayedProject != null && SelectedBill != null)
+			BillService.Delete(SelectedBill.Id);
+		SelectedBill = null;
 	}
 	public void RefreshView() {
 		NotifyPropertyChanged(nameof(DisplayedProject));

@@ -16,19 +16,68 @@
                          HorizontalOptions="Center">
         <Label FontSize="48" HorizontalTextAlignment="Center" TextColor="#151515">Project Info</Label>
 	    <Frame StyleClass="frame-entry">
-		    <Label TextColor="#000000" StyleClass="entry-label" FontSize="22" Margin="10, 0, 0, 0">
-			    <Label.Text>
-				    <MultiBinding StringFormat="{}Project Name: {0}&#x0a;Client ID: {1}     Project Id: {2}&#x0a;Short Name: {3}&#x0a;Dates: {4:MM/dd/yyyy} - {5:MM/dd/yyyy}&#x0a;Active: {6}">
-					    <Binding Path="DisplayedProject.Name"/>
-					    <Binding Path="DisplayedProject.ClientId"/>
-					    <Binding Path="DisplayedProject.Id"/>
-					    <Binding Path="DisplayedProject.ShortName"/>
-					    <Binding Path="DisplayedProject.Open"/>
-					    <Binding Path="DisplayedProject.Close"/>
-					    <Binding Path="DisplayedProject.IsActive"/>
-				    </MultiBinding>
-			    </Label.Text>
-		    </Label>
+		    <VerticalStackLayout BackgroundColor="#a9a9a9" Margin="10, 0, 10, 0" Spacing="3">
+				<HorizontalStackLayout Padding="0" Margin="0">
+					<Label Text="Name: "
+					       FontSize="22"
+					       StyleClass="entry-label"/>
+					<Label Text="{Binding DisplayedProject.Name}"
+					       Margin="5, 5, 10, 0"
+					       FontSize="18"
+					       StyleClass="entry-label" />
+				</HorizontalStackLayout>
+				<HorizontalStackLayout Padding="0" Margin="0">
+					<Label Text="Client: "
+					       FontSize="22"
+					       StyleClass="entry-label"/>
+					<Label Text="{Binding DisplayedProject.ClientName}"
+					       Margin="5, 5, 10, 0"
+					       FontSize="18"
+					       StyleClass="entry-label" />
+				</HorizontalStackLayout>
+			    <HorizontalStackLayout Padding="0" Margin="0">
+				    <Label Text="Project ID: "
+				           FontSize="22"
+				           StyleClass="entry-label"/>
+				    <Label Text="{Binding DisplayedProject.Id}"
+				           Margin="5, 5, 10, 0"
+				           FontSize="18"
+				           StyleClass="entry-label" />
+			    </HorizontalStackLayout>
+			    <HorizontalStackLayout Padding="0" Margin="0" IsVisible="{Binding DisplayedProject.HasShortName}">
+				    <Label Text="Short Name: "
+				           FontSize="22"
+				           StyleClass="entry-label"/>
+				    <Label Text="{Binding DisplayedProject.ShortName}"
+				           Margin="5, 5, 10, 0"
+				           FontSize="18"
+				           StyleClass="entry-label" />
+			    </HorizontalStackLayout>
+				<HorizontalStackLayout Padding="0" Margin="0">
+					<Label Text="Dates: "
+					       FontSize="22"
+					       StyleClass="entry-label"/>
+					<Label FontSize="18"
+					       Margin="5, 5, 10, 0"
+					       StyleClass="entry-label">
+						<Label.Text>
+							<MultiBinding StringFormat="{}{0:MM/dd/yyyy} - {1:MM/dd/yyyy}">
+								<Binding Path="DisplayedProject.Open"/>
+								<Binding Path="DisplayedProject.Close"/>
+							</MultiBinding>
+						</Label.Text>
+					</Label>
+				</HorizontalStackLayout>
+				<HorizontalStackLayout Padding="0" Margin="0">
+					<Label Text="Active: "
+					       FontSize="22"
+					       StyleClass="entry-label"/>
+					<Label Text="{Binding DisplayedProject.IsActive}"
+					       Margin="5, 5, 10, 0"
+					       FontSize="18"
+					       StyleClass="entry-label"/>
+				</HorizontalStackLayout>
+		    </VerticalStackLayout>
 	    </Frame>
 	    <Frame StyleClass="frame-entry">
             <VerticalStackLayout Margin="10, 0">
@@ -60,7 +109,7 @@
 		    <VerticalStackLayout Margin="10, 0">
 			    <Label Text="Bills: " FontSize="22" TextColor="#000000"/>
 			    <ListView ItemsSource="{Binding Bills}"
-			              SelectionMode="None"
+			              SelectedItem="{Binding SelectedBill}"
 			              BackgroundColor="Transparent"
 			              Margin="10, 0, 10, 0">
 				    <ListView.ItemTemplate>
@@ -88,6 +137,18 @@
                     HeightRequest="50"
                     BackgroundColor="#008888"
                     Clicked="CreateBillClicked"/>
+            <Button Text="Edit Bill" 
+                    TextColor="#ffffff"
+                    HorizontalOptions="Fill" 
+                    HeightRequest="50"
+                    BackgroundColor="#BB8000"
+                    Clicked="EditBillClicked"/>
+            <Button Text="Delete Bill" 
+                    TextColor="#ffffff"
+                    HorizontalOptions="Fill" 
+                    HeightRequest="50"
+                    BackgroundColor="#8b0000"
+                    Clicked="DeleteBillClicked"/>
         </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>
