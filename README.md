@@ -29,7 +29,7 @@ EmployeeId
 
 Your UX should also incorporate a way to perform CRUD on central lists of Employee and Time objects. This functionality can be on the main screen of the application or separated into different views.
 
-
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Expand the Time functionality of your application by implementing a simplified billing process. The requirements are:
 
@@ -39,3 +39,27 @@ A TotalAmount property that shows the amount of the bill as calculated by multip
 A DueDate property that shows the date the bill is due
 You must have the ability to show all bills for a project when showing the details of a project.
 You must have the ability to show all bills for all projects on a client when showing the details of a client.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Now that we have discussed WebAPI and how to use it to stand up your own REST API, you will build a REST API for one of the basic entities for your application. To get full credit, you must implement the following for either Projects, Clients, Employees, Time Entries (Time), or Bills:
+
+A server-side list that contains the object that were once managed entirely on the client side in programming assignments 1, 2, and 3.
+A GET method that returns an object by id
+A GET method that returns a list of objects with an optional string filter for searching
+A GET or DELETE method that removes an object from the list by Id
+A POST method that supports adding new and updating existing objects in the list
+Integration of these features into your existing application
+To demonstrate functionality, you should provide a video that shows these steps:
+
+Create an object from the client application
+Show that the object was added to the server side application via a web browser and your GET method
+Show that upon relaunching the client-side application that the object is still there
+Show that you can delete an object and that it is deleted on the server
+Show that you can update an object and that it is deleted on the server
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+For the final project in the course, you will add persistence to your application. The only requirement is that all of the CRUD functionality we have discussed is implemented for at least one of the entities (Client, Project, Time, Employee, Bill) such that when both the client and server-side code is turned off and then back on data retains its state. That is, if I add a client, edit a client, or delete a client, those changes are reflected in the data even after I stop both instances of Visual Studio. For a "light touch" approach you can use Filebase.cs Download Filebase.cs. Alternatively, you can use a database platform like MSSQL, MySql, MongoDB Atlas, or Firebase.
+
+For this assignment you MUST supply a video showing off your work for the semester. If you are unable to finish persistence, that is OK, show me what you have and you will be given partial credit commensurate with the amount you have accomplished.
