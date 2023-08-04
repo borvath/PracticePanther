@@ -44,6 +44,7 @@ public class ProjectDisplayViewModel : INotifyPropertyChanged, IQueryAttributabl
 	public void DeleteBill() {
 		if (DisplayedProject != null && SelectedBill != null)
 			BillService.Delete(SelectedBill.Id);
+		NotifyPropertyChanged(nameof(Bills));
 		SelectedBill = null;
 	}
 	public void RefreshView() {

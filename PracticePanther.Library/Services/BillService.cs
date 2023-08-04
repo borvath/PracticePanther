@@ -13,7 +13,7 @@ public static class BillService {
 		new WebRequestHandler().Post("/Bill", b).Wait();
 	}
 	public static void Delete(int id) {
-		new WebRequestHandler().Delete($"/Time/Delete/{id}").Wait();
+		new WebRequestHandler().Delete($"/Bill/Delete/{id}").Wait();
 	}
 	public static Bill? GetBill(int id) {
 		string? response = new WebRequestHandler().Get($"/Bill/{id}").Result;
