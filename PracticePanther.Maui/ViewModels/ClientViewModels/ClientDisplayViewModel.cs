@@ -43,9 +43,12 @@ public class ClientDisplayViewModel : IQueryAttributable, INotifyPropertyChanged
 		if (SelectedProject != null) {
 			SelectedProject.Close = DateTime.Now;
 			SelectedProject.IsActive = false;
+			ProjectService.AddOrUpdate(new ProjectDTO(SelectedProject.Id, SelectedProject.ClientId, SelectedProject.Name, 
+				SelectedProject.ShortName, SelectedProject.Open, SelectedProject.Close, SelectedProject.IsActive)
+			);
+			NotifyPropertyChanged(nameof(Projects));
+			NotifyPropertyChanged(nameof(Closable));
 		}
-		NotifyPropertyChanged(nameof(Projects));
-		NotifyPropertyChanged(nameof(Closable));
 	}
 	public void CloseClient() {
 		if (DisplayedClient != null) {
@@ -54,8 +57,8 @@ public class ClientDisplayViewModel : IQueryAttributable, INotifyPropertyChanged
 			ClientService.AddOrUpdate(new ClientDTO(DisplayedClient.Id, DisplayedClient.Name, 
 				DisplayedClient.Open, DisplayedClient.Close, DisplayedClient.Notes, DisplayedClient.IsActive)
 			);
+			NotifyPropertyChanged(nameof(DisplayedClient));
 		}
-		NotifyPropertyChanged(nameof(DisplayedClient));
 	}
 	private bool AllProjectsClosed() {
 		return ProjectService.GetProjects().Where(p => p.ClientId == DisplayedClient?.Id && p.IsActive).ToList().Count == 0;
